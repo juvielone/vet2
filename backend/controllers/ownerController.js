@@ -4,13 +4,9 @@
 const asyncHandler = require('express-async-handler');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
-const Owner = require('../models/ownerModel')
+const Owner = require('../models/ownerModel');
 
 
-// @desc    Get User
-// @route   GET api/owners
-// @acess   Private - Admin
-//====================================
 
 // @desc    Registers User
 // @route   POST api/owners/register
@@ -64,6 +60,50 @@ const registerUser = asyncHandler(async (req, res) => {
 
 
 
+// @desc    Authenticate User
+// @route   POST api/owners/login
+// @acess   Public
+const loginUser = asyncHandler(async (req, res) => {
+
+    const { email, password } = req.body
+
+    const user = await Owner.findOne({ email })
+
+    if (user && (await bcrypt.compare(password, user.password))) {
+        res.status(201).json({
+            _id: user.id,
+            name: user.name,
+            email: user.email,
+            token: generateToken(user._id)
+        });
+    } else {
+        res.status(400)
+        throw new Error('Invalid Credentials')
+    }
+
+
+})
+
+
+
+// @desc    Get user info
+// @route   POST api/owners/me
+// @acess   Private
+const getMe = asyncHandler(async (req, res) => {
+
+    res.status(200).json(req.user)
+
+})
+
+
+
+
+
+
+
+
+
+
 
 // Generate JWT
 const generateToken = (id) => {
@@ -75,7 +115,7 @@ const generateToken = (id) => {
 
 
 module.exports = {
-    registerUser
+    registerUser, loginUser, getMe
 }
 
 
