@@ -3,7 +3,6 @@
 // express routes and passing them to our express error handlers
 const asyncHandler = require('express-async-handler');
 const Appointment = require('../models/appointmentModel')
-const Owner = require('../models/ownerModel')
 
 
 
@@ -14,7 +13,7 @@ const Owner = require('../models/ownerModel')
 // @route   GET api/appointment
 // @acess   Private
 const getAppoint = asyncHandler(async (req, res) => {
-    const appointment = await Appointment.find({ user: req.user })
+    const appointment = await Appointment.find()
     res.json(appointment);
 
 })
@@ -36,8 +35,7 @@ const sendAppoint = asyncHandler(async (req, res) => {
     const appointment = await Appointment.create({
         date: date,
         service: service,
-        petName: petName,
-        user: req.user.id
+        petName: petName
     })
 
 
@@ -49,33 +47,18 @@ const sendAppoint = asyncHandler(async (req, res) => {
 // @route   PUT api/appointment
 // @acess   Private
 const updateAppoint = asyncHandler(async (req, res) => {
+    const id = req.params.id
 
+    const exist = await Appointment.findById(id);
 
-    const appoint = await Appointment.findById(req.params.id);
-
-    if (!appoint) {
+    if (!exist) {
         res.status(400);
         throw new Error('No Appointment exists');
+
+
     }
 
-    const user = await Owner.findById(req.user.id)
-
-    //Check if user doesn' exist
-    if (!user) {
-        res.status(400);
-        throw new Error('User not found');
-    }
-
-    //Mathce appointment's user to user id
-    if (appoint.user.toString() !== req.user.id) {
-        res.status(401);
-        throw new Error('User not Authorize');
-    }
-
-
-
-
-    const updatedApm = await Appointment.findByIdAndUpdate(appoint, req.body, { new: true })
+    const updatedApm = await Appointment.findByIdAndUpdate(id, req.body, { new: true })
     res.json(updatedApm);
 
 });
@@ -86,32 +69,18 @@ const updateAppoint = asyncHandler(async (req, res) => {
 // @route   Delete api/appointment
 // @acess   Private
 const deleteAppoint = asyncHandler(async (req, res) => {
-    const appoint = await Appointment.findById(req.params.id);
+    const id = req.params.id
 
-    if (!appoint) {
+    const exist = await Appointment.findById(id);
+
+    if (!exist) {
         res.status(400);
         throw new Error('No Appointment exists');
+
+
     }
 
-    const user = await Owner.findById(req.user.id)
-
-    //Check if user doesn' exist
-    if (!user) {
-        res.status(400);
-        throw new Error('User not found');
-    }
-
-    //Mathce appointment's user to user id
-    if (appoint.user.toString() !== req.user.id) {
-        res.status(401);
-        throw new Error('User not Authorize');
-    }
-
-
-
-
-
-    await appoint.remove()
+    await exist.remove()
 
     res.json({ id: req.params.id });
 
