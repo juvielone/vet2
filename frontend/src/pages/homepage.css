@@ -1,0 +1,40 @@
+.heading-content {
+  /* background-color: aqua; */
+  margin-top: 5rem;
+}
+
+.heading-content h1 {
+  font-family: "Ubuntu", sans-serif;
+  font-size: 4rem;
+  font-weight: Bold;
+}
+
+.heading-content p {
+  font-family: "Ubuntu", sans-serif;
+  font-size: 1.5em;
+  width: 35rem;
+}
+
+.btn-register {
+  font-family: "Ubuntu", sans-serif;
+  background-color: #e48d3d;
+  color: white;
+  width: 10rem;
+}
+
+.btn-login {
+  font-family: "Ubuntu", sans-serif;
+  font-size: 1.5rem;
+  color: #e48d3d;
+  width: 10rem;
+  margin-left: 1rem;
+  text-decoration: none;
+}
+
+.dog-container {
+  padding-bottom: 10rem;
+}
+
+.dog-pic {
+  margin-left: 10rem;
+}

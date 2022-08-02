@@ -1,10 +1,13 @@
 import React from 'react';
-
+import Homepage from './pages/Homepage';
 
 function App() {
   return (
     <div className="App">
-      <h1>Hello world</h1>
+      <div style={{ backgroundColor: "#dbf0f8", zIndex: "1" }}>
+        <Homepage />
+
+      </div>
     </div>
   );
 }
