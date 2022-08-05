@@ -18,8 +18,16 @@
 .btn-register {
   font-family: "Ubuntu", sans-serif;
   background-color: #e48d3d;
-  color: white;
   width: 10rem;
+}
+
+.btn-link {
+  text-decoration: none;
+  color: white;
+}
+
+.btn-link :hover {
+  color: black;
 }
 
 .btn-login {

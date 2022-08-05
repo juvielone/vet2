@@ -1,0 +1,30 @@
+.register-section {
+  padding-bottom: 2.5rem;
+}
+
+.signup-content {
+  color: rgb(70, 70, 70);
+}
+
+.form-container {
+  /* background-color: #047ea8; */
+  padding-bottom: 3rem;
+}
+
+input {
+  box-shadow: inset 0 0 2px #000000;
+  -moz-box-shadow: inset 0 0 2px #000000;
+  -webkit-box-shadow: inset 0 0 2px #000000;
+
+  background: transparent;
+}
+
+form div {
+  padding-bottom: 1rem;
+}
+
+.btn-register {
+  font-family: "Ubuntu", sans-serif;
+  background-color: #e48d3d;
+  width: 32rem;
+}

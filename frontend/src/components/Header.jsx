@@ -1,19 +1,23 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import "./header.css";
 import logo from "../img/vet-logo.png";
 
 const Header = () => {
   return (
-    <nav class="navbar navbar-expand-lg  container" style={{ zIndex: 1 }}>
-      <div class="container">
-        <a className="navbar-brand" href="#">
+    <nav
+      className="navbar navbar-expand-lg container"
+      style={{ backgroundColor: "#dbf0f8", zIndex: 1 }}
+    >
+      <div className="container">
+        <Link to="/" className="navbar-brand">
           <h1 className="logo-title">
             <img src={logo} alt="" width="140" height="148"></img>
             The Vet Project
           </h1>
-        </a>
+        </Link>
         <button
-          class="navbar-toggler"
+          className="navbar-toggler"
           type="button"
           data-bs-toggle="collapse"
           data-bs-target="#navbarNavDropdown"
@@ -21,25 +25,25 @@ const Header = () => {
           aria-expanded="false"
           aria-label="Toggle navigation"
         >
-          <span class="navbar-toggler-icon"></span>
+          <span className="navbar-toggler-icon"></span>
         </button>
 
-        <div class="collapse navbar-collapse" id="navbarNavDropdown ">
-          <ul class="navbar-nav ms-auto gap-5">
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#">
+        <div className="collapse navbar-collapse" id="navbarNavDropdown ">
+          <ul className="navbar-nav ms-auto gap-5">
+            <li className="nav-item">
+              <Link to="/" className="nav-link active" aria-current="page">
                 Home
-              </a>
+              </Link>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">
+            <li className="nav-item">
+              <Link to="/about" className="nav-link">
                 About Us
-              </a>
+              </Link>
             </li>
-            <li class="nav-item">
-              <a class="btn btn-lg btn-contact" href="#">
+            <li className="nav-item">
+              <Link to="/contact" className="btn btn-lg btn-contact">
                 Contact Us
-              </a>
+              </Link>
             </li>
           </ul>
         </div>

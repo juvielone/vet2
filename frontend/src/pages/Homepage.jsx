@@ -1,5 +1,6 @@
 import React, { Fragment } from "react";
-import Header from "../components/Header";
+import { Link } from "react-router-dom";
+
 import paw from "../img/paw.svg";
 import doggo from "../img/dog-hero.png";
 
@@ -7,7 +8,6 @@ import "./homepage.css";
 const Homepage = () => {
   return (
     <Fragment>
-      <Header />
       <div class="container text-center">
         <div class="row">
           <div class="col-lg-6">
@@ -20,9 +20,11 @@ const Homepage = () => {
                 eiusmod tempor incididunt ut labore et dolore magna aliqua.{" "}
               </p>
 
-              <button className="btn btn-register btn-lg mt-4">
+              <button className="btn btn-register btn-primary btn-lg mt-4">
                 <img src={paw} width="45" height="41" className="paw" />
-                Register
+                <Link to="/register" className="btn-link">
+                  Register
+                </Link>
               </button>
 
               <button className="btn btn-link btn-login mt-4">
