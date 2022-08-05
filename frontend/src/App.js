@@ -4,7 +4,7 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import Homepage from './pages/Homepage';
 import Register from './pages/Register';
-
+import UserDashboard from './pages/UserDashboard';
 function App() {
   return (
     <div className="App">
@@ -15,6 +15,8 @@ function App() {
           <Routes>
             <Route path="/" element={<Homepage />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/mydashboard" element={<UserDashboard />} />
+
 
 
           </Routes>
