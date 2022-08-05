@@ -91,7 +91,7 @@ const Register = () => {
               />
             </div>
 
-            <button className="btn btn-success btn-register btn-lg">
+            <button className="btn btn-success btn-signup btn-lg">
               <img src={paw} width="45" height="41" className="paw" />
               Sign Up
             </button>
@@ -106,7 +106,7 @@ const Register = () => {
             data-bs-ride="carousel"
           >
             <div class="carousel-inner ms-5">
-              <div class="carousel-item active">
+              <div class="carousel-item active" data-bs-interval="2000">
                 <img src={pic1} class="d-block w-100" alt="..." />
               </div>
               <div class="carousel-item">
@@ -114,6 +114,10 @@ const Register = () => {
               </div>
               <div class="carousel-item">
                 <img src={pic3} class="d-block w-100" alt="..." />
+              </div>
+
+              <div class="carousel-item">
+                <img src={pic4} class="d-block w-100" alt="..." />
               </div>
             </div>
           </div>

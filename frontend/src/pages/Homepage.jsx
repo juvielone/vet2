@@ -22,9 +22,9 @@ const Homepage = () => {
 
               <button className="btn btn-register btn-primary btn-lg mt-4">
                 <img src={paw} width="45" height="41" className="paw" />
-                <Link to="/register" className="btn-link">
+                <a href="/register" className="btn-link">
                   Register
-                </Link>
+                </a>
               </button>
 
               <button className="btn btn-link btn-login mt-4">
