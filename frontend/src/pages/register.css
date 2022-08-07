@@ -28,3 +28,8 @@ form div {
   background-color: #e48d3d;
   width: 32rem;
 }
+
+.btn-signup:hover {
+  background-color: #d4853b;
+  border-color: #f59c48;
+}

@@ -20,12 +20,13 @@ const Homepage = () => {
                 eiusmod tempor incididunt ut labore et dolore magna aliqua.{" "}
               </p>
 
-              <button className="btn btn-register btn-primary btn-lg mt-4">
+              <a
+                href="/register"
+                className="btn btn-register btn-primary btn-lg mt-4 btn-link"
+              >
                 <img src={paw} width="45" height="41" className="paw" />
-                <a href="/register" className="btn-link">
-                  Register
-                </a>
-              </button>
+                Register
+              </a>
 
               <button className="btn btn-link btn-login mt-4">
                 <i class="bi bi-person-fill me-1"></i>

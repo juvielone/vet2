@@ -19,6 +19,12 @@
   font-family: "Ubuntu", sans-serif;
   background-color: #e48d3d;
   width: 10rem;
+  border-color: #e48d3d;
+}
+
+.btn-register:hover {
+  background-color: #d4853b;
+  border-color: #f59c48;
 }
 
 .btn-link {
@@ -45,4 +51,33 @@
 
 .dog-pic {
   margin-left: 10rem;
+}
+
+/* 415 lower */
+@media only screen and (max-width: 415px) {
+  .heading-content h1 {
+    font-size: 3rem;
+  }
+
+  .heading-content p {
+    font-size: 1.5em;
+    width: fit-content;
+    margin-right: 2rem;
+  }
+
+  .dog-pic {
+    width: 20rem;
+    height: 25rem;
+    margin-top: 5rem;
+    margin-left: 1rem;
+  }
+}
+
+@media only screen and (min-width: 700px) {
+  .dog-pic {
+    width: 20rem;
+    height: 25rem;
+    margin-top: 5rem;
+    margin-right: 5rem;
+  }
 }

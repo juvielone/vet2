@@ -6,8 +6,8 @@ import logo from "../img/vet-logo.png";
 const Header = () => {
   return (
     <nav
-      className="navbar navbar-expand-lg container"
-      style={{ backgroundColor: "#dbf0f8", zIndex: 1 }}
+      className="navbar navbar-expand-lg"
+      style={{ backgroundColor: "#dbf0f8" }}
     >
       <div className="container">
         <Link to="/" className="navbar-brand">
@@ -28,7 +28,7 @@ const Header = () => {
           <span className="navbar-toggler-icon"></span>
         </button>
 
-        <div className="collapse navbar-collapse" id="navbarNavDropdown ">
+        <div className="collapse navbar-collapse" id="navbarNavDropdown">
           <ul className="navbar-nav ms-auto gap-5">
             <li className="nav-item">
               <Link to="/" className="nav-link active" aria-current="page">
@@ -41,7 +41,7 @@ const Header = () => {
               </Link>
             </li>
             <li className="nav-item">
-              <Link to="/contact" className="btn btn-lg btn-contact">
+              <Link to="/contact" className="nav-link btn btn-lg btn-contact">
                 Contact Us
               </Link>
             </li>
