@@ -1,0 +1,25 @@
+.addApp-btn {
+  background-color: #047ea8;
+  height: 4rem;
+  margin-left: 10rem;
+}
+
+.app-msg {
+  color: rgb(89, 88, 88);
+}
+
+.addApp-btn h3 {
+  font-size: 1.5rem;
+}
+
+@media only screen and (max-width: 415px) {
+  .app-msg {
+    padding-bottom: 2rem;
+  }
+
+  .addApp-btn {
+    background-color: #047ea8;
+    height: 4rem;
+    margin-left: 1rem;
+  }
+}
