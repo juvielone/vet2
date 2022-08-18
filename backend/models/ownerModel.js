@@ -21,9 +21,14 @@ const ownerSchema = mongoose.Schema({
         required: [true, 'Please add phone number']
     },
 
-    addr: {
+    streetNo: {
         type: String,
         required: [true, 'Please add address']
+    },
+
+    city: {
+        type: String,
+        required: [true, 'Please add City']
     },
 
     password: {

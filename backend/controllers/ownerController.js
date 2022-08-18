@@ -12,10 +12,10 @@ const Owner = require('../models/ownerModel');
 // @route   POST api/owners/register
 // @acess   Public
 const registerUser = asyncHandler(async (req, res) => {
-    const { fname, lname, email, phone, addr, password } = req.body
+    const { fname, lname, email, phone, city, streetNo, password } = req.body
 
     //Checks all null fields
-    if (!fname || !lname || !email || !phone || !addr || !password) {
+    if (!fname || !lname || !email || !phone || !city || !streetNo || !password) {
         res.status(400)
         throw new Error('Please add all fields')
     }
@@ -38,7 +38,8 @@ const registerUser = asyncHandler(async (req, res) => {
         lname,
         email,
         phone,
-        addr,
+        streetNo,
+        city,
         password: hashedPassword
     })
 

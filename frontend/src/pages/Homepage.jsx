@@ -28,10 +28,10 @@ const Homepage = () => {
                 Register
               </a>
 
-              <button className="btn btn-link btn-login mt-4">
+              <a href="/login" className="btn btn-link btn-login mt-4">
                 <i class="bi bi-person-fill me-1"></i>
                 Login
-              </button>
+              </a>
             </div>
           </div>
 

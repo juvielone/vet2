@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 import paw from "../img/paw.svg";
 import pic1 from "../img/pic1.png";
 import pic2 from "../img/pic2.png";
@@ -6,6 +6,24 @@ import pic3 from "../img/pic3.png";
 import pic4 from "../img/pic4.png";
 
 const Login = () => {
+  const [userData, setUserData] = useState({
+    email: "",
+    password: "",
+  });
+
+  // Destructuring userdata
+  const { email, password } = userData;
+
+  const handleChange = (e) => {
+    setUserData((prevState) => ({
+      ...prevState,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  };
   return (
     <div className="container register-section">
       <div className="row">
@@ -20,13 +38,15 @@ const Login = () => {
             excepturi cupiditate delectus.
           </p>
           {/* Form */}
-          <form className="row ms-3 mt-3">
+          <form className="row ms-3 mt-3" onSubmit={handleSubmit}>
             {/* Email */}
             <div className="col-lg-10">
               <input
                 className="form-control "
                 type="email"
+                value={email}
                 name="email"
+                onChange={handleChange}
                 placeholder="Email(Required)"
               />
             </div>
@@ -35,12 +55,14 @@ const Login = () => {
               <input
                 className="form-control "
                 type="password"
+                value={password}
                 name="password"
+                onChange={handleChange}
                 placeholder="Password"
               />
             </div>
 
-            <button className="btn btn-success btn-signup btn-lg">
+            <button type="submit" className="btn btn-success btn-signup btn-lg">
               <img src={paw} width="45" height="41" className="paw" />
               Login
             </button>
