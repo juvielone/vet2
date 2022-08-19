@@ -40,8 +40,9 @@ const Register = () => {
       toast.error(message);
     }
 
+    // If registration is success navigate to dashboard
     if (isSuccess || user) {
-      navigate("/");
+      navigate("/me");
     }
 
     // calls reset reducer after either of two are called

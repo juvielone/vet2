@@ -8,7 +8,7 @@ const { protect } = require('../middleware/authMid')
 
 router.route('/register').post(registerUser)
 router.route('/login').post(loginUser)
-router.get('/me', protect, getMe)
+router.get('/mydashboard', protect, getMe)
 
 module.exports = router
 

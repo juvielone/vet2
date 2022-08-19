@@ -1,4 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { reset, login } from "../features/auth/authSlice";
+import Spinner from "../components/Spinner";
 import paw from "../img/paw.svg";
 import pic1 from "../img/pic1.png";
 import pic2 from "../img/pic2.png";
@@ -14,6 +19,32 @@ const Login = () => {
   // Destructuring userdata
   const { email, password } = userData;
 
+  // Initialize Navigate and Dispatch
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  // Calling states using useSelector
+  const { user, isLoading, isError, isSuccess, message } = useSelector(
+    (state) => state.auth
+  );
+
+  // UseEffect =====================================================
+  useEffect(() => {
+    if (isError) {
+      toast.error(message);
+    }
+
+    // If registration is success navigate to dashboard
+    if (isSuccess || user) {
+      navigate("/mydashboard");
+    }
+
+    // calls reset reducer after either of two are called
+    dispatch(reset());
+  }, [user, isError, isSuccess, message, navigate, dispatch]);
+
+  // UseEffect =====================================================
+
   const handleChange = (e) => {
     setUserData((prevState) => ({
       ...prevState,
@@ -23,7 +54,17 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const userData = { email, password };
+
+    // Calling regiter in our authSlice
+    // Passing userDate in the register
+    dispatch(login(userData));
   };
+
+  if (isLoading) {
+    return <Spinner />;
+  }
+
   return (
     <div className="container register-section">
       <div className="row">
