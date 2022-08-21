@@ -42,7 +42,7 @@ const Register = () => {
 
     // If registration is success navigate to dashboard
     if (isSuccess || user) {
-      navigate("/me");
+      navigate("/mydashboard");
     }
 
     // calls reset reducer after either of two are called

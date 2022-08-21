@@ -73,8 +73,12 @@ const loginUser = asyncHandler(async (req, res) => {
     if (user && (await bcrypt.compare(password, user.password))) {
         res.status(201).json({
             _id: user.id,
-            name: user.name,
+            fname: user.fname,
+            lname: user.lname,
             email: user.email,
+            phone: user.phone,
+            streetNo: user.streetNo,
+            city: user.city,
             token: generateToken(user._id)
         });
     } else {

@@ -1,10 +1,25 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import avatar from "../img/avatar.png";
 import AppointmentForm from "../components/AppointmentForm";
 import "./user.css";
 
 const UserDashboard = () => {
   const [appointment, setAppointment] = useState(false);
+
+  // Initialize Navigate  & Dispatch
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  // Call user state
+  const { user } = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    if (!user) {
+      navigate("/login");
+    }
+  }, [user, navigate]);
 
   return (
     <section className="container mt-5 pb-5">
@@ -13,12 +28,14 @@ const UserDashboard = () => {
           <div class="card-info mt-5 rounded row">
             <img src={avatar} class="card-img-top avatar" />
             <div class="card-body">
-              <h2 class="card-title text-center">Juvielone Lagos</h2>
+              <h2 class="card-title text-center">
+                {user && user.fname + " " + user.lname}
+              </h2>
               <p class="card-text">
                 {/* Email */}
                 <h5 className="text-center mt-3">
                   <i class="bi bi-envelope col-lg-6"></i>
-                  <span className="ms-5"> jj@gmail.com </span>
+                  <span className="ms-5"> {user && user.email} </span>
                 </h5>
                 {/* Phone Number */}
                 <h5 className="text-center mt-3">
@@ -31,7 +48,8 @@ const UserDashboard = () => {
                   <i class="bi bi-geo-alt-fill"></i>
 
                   <span className="ms-5">
-                    Lives in <strong>San Antonio Homes Quezon City</strong>
+                    Lives in{" "}
+                    <strong>{user && user.streetNo + " " + user.city}</strong>
                   </span>
                 </h5>
               </p>
