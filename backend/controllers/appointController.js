@@ -13,7 +13,7 @@ const Appointment = require('../models/appointmentModel')
 // @route   GET api/appointment
 // @acess   Private
 const getAppoint = asyncHandler(async (req, res) => {
-    const appointment = await Appointment.find()
+    const appointment = await Appointment.find({ user: req.user.id })
     res.json(appointment);
 
 })
@@ -23,19 +23,24 @@ const getAppoint = asyncHandler(async (req, res) => {
 // @route   POST api/appointment
 // @acess   Private
 const sendAppoint = asyncHandler(async (req, res) => {
-    const { date, service, petName, } = req.body
+    const { date, time, petName, petType, petAge, breed, service } = req.body
 
 
     //send error if any field is missing
-    if (!date || !service || !petName) {
+    if (!date || !time || !petName || !petType || !petAge || !breed || !service) {
         res.status(400)
         throw new Error('Please add a text field')
 
     }
     const appointment = await Appointment.create({
+        user: req.user.id,
         date: date,
-        service: service,
-        petName: petName
+        time: time,
+        petName: petName,
+        petType: petType,
+        petAge: petAge,
+        breed: breed,
+        service: service
     })
 
 

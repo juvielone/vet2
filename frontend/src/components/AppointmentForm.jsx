@@ -1,7 +1,52 @@
-import React from "react";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { createAppointment } from "../features/appointment/apmSlice";
 import "./appointmentForm.css";
 
 const AppointmentForm = () => {
+  const [userApm, setUserApm] = useState({
+    petName: "",
+    petType: "",
+    petAge: "",
+    breed: "",
+    date: "",
+    time: "",
+  });
+
+  const { petName, petType, petAge, breed, date, time } = userApm;
+
+  // Options Services
+  const options = [
+    { value: "", text: "--Choose Service--" },
+    { value: "Check Up", text: "Check-Up 🩺" },
+    { value: "Vaccine", text: "Vaccine 💉" },
+    { value: "Grooming", text: "Grooming ✂" },
+  ];
+
+  const [service, setService] = useState(options[0].value);
+  const dispatch = useDispatch();
+
+  const onChange = (e) => {
+    setUserApm((prevState) => ({
+      ...prevState,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+
+    const apmData = {
+      petName,
+      petType,
+      petAge,
+      breed,
+      service,
+      date,
+      time,
+    };
+    dispatch(createAppointment(apmData));
+  };
   return (
     <div className="col-lg-12 mt-5 pb-5">
       <h1 className="text-center mt-5 app-msg">You have no appointment</h1>
@@ -39,8 +84,8 @@ const AppointmentForm = () => {
               ></button>
             </div>
             <div class="modal-body">
-              {/* Form */}
-              <form className="row ms-3 mt-3">
+              {/* Form ==========================================*/}
+              <form className="row ms-3 mt-3" onSubmit={onSubmit}>
                 {/* Pet Name */}
                 <div className="col-lg-10">
                   <label for="exampleFormControlInput1" class="form-label">
@@ -49,7 +94,9 @@ const AppointmentForm = () => {
                   <input
                     className="form-control "
                     type="text"
-                    name="pname"
+                    name="petName"
+                    value={petName}
+                    onChange={onChange}
                     placeholder="Pet Name"
                   />
                 </div>
@@ -63,7 +110,9 @@ const AppointmentForm = () => {
                   <input
                     className="form-control "
                     type="text"
-                    name="lname"
+                    name="petType"
+                    value={petType}
+                    onChange={onChange}
                     placeholder="Dog, Cat, Snake"
                   />
                 </div>
@@ -77,6 +126,8 @@ const AppointmentForm = () => {
                     className="form-control "
                     type="petAge"
                     name="petAge"
+                    value={petAge}
+                    onChange={onChange}
                     placeholder="2 Months"
                   />
                 </div>
@@ -89,12 +140,14 @@ const AppointmentForm = () => {
                   <input
                     className="form-control "
                     type="text"
-                    name="fname"
+                    name="breed"
+                    value={breed}
+                    onChange={onChange}
                     placeholder="Golden Retriever, Poodle, Bulldog"
                   />
                 </div>
 
-                {/* Services */}
+                {/* Services =======================*/}
                 <div className="col-lg-10">
                   <label for="exampleFormControlInput1" class="form-label">
                     Services
@@ -103,10 +156,14 @@ const AppointmentForm = () => {
                   <select
                     class="form-select"
                     aria-label="Default select example"
+                    value={service}
+                    onChange={(e) => setService(e.target.value)}
                   >
-                    <option value="Check-up">Check-Up</option>
-                    <option value="Vaccines">Vaccines</option>
-                    <option value="Grooming">Grooming</option>
+                    {options.map((option) => (
+                      <option key={option.value} value={option.value}>
+                        {option.text}
+                      </option>
+                    ))}
                   </select>
                 </div>
 
@@ -115,7 +172,13 @@ const AppointmentForm = () => {
                   <label for="exampleFormControlInput1" class="form-label">
                     Date
                   </label>
-                  <input className="form-control " type="date" name="time" />
+                  <input
+                    className="form-control"
+                    onChange={onChange}
+                    type="date"
+                    name="date"
+                    value={date}
+                  />
                 </div>
 
                 {/* Time */}
@@ -126,24 +189,24 @@ const AppointmentForm = () => {
                   <input
                     className="form-control "
                     type="time"
-                    name="fname"
-                    placeholder="Golden Retriever, Poodle, Bulldog"
+                    name="time"
+                    value={time}
+                    onChange={onChange}
                   />
                 </div>
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-bs-dismiss="modal"
+                  >
+                    Close
+                  </button>
+                  <button type="submit" class="btn btn-primary">
+                    Set Appointment
+                  </button>
+                </div>
               </form>
-            </div>
-
-            <div class="modal-footer">
-              <button
-                type="button"
-                class="btn btn-secondary"
-                data-bs-dismiss="modal"
-              >
-                Close
-              </button>
-              <button type="button" class="btn btn-primary">
-                Set Appointment
-              </button>
             </div>
           </div>
         </div>
