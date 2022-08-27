@@ -18,9 +18,22 @@ const createApm = async (apmData, token) => {
 
 }
 
+const getApm = async (token) => {
+
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    }
+
+    const response = await axios.get(API_URL, config)
+
+    return response.data
+}
+
 
 const apmService = {
-    createApm
+    createApm, getApm
 }
 
 export default apmService;

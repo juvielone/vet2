@@ -1,12 +1,15 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import avatar from "../img/avatar.png";
 import AppointmentForm from "../components/AppointmentForm";
+import AppointmentItem from "../components/AppointmentItem";
+import Spinner from "../components/Spinner";
+import { getAppointments, reset } from "../features/appointment/apmSlice";
+import avatar from "../img/avatar.png";
 import "./user.css";
 
 const UserDashboard = () => {
-  const [appointment, setAppointment] = useState(false);
+  const [appointmentExist, setAppointmentExist] = useState(false);
 
   // Initialize Navigate  & Dispatch
   const navigate = useNavigate();
@@ -14,12 +17,33 @@ const UserDashboard = () => {
 
   // Call user state
   const { user } = useSelector((state) => state.auth);
+  // Call appointment state
+  const { appointment, isLoading, isError, message } = useSelector(
+    (state) => state.appointment
+  );
 
   useEffect(() => {
+    if (isError) {
+      console.log(message);
+    }
+
+    // Check if user is logged in
     if (!user) {
       navigate("/login");
     }
-  }, [user, navigate]);
+
+    // Fetch appointments
+    dispatch(getAppointments());
+
+    // Clear appointment state when user unmounts(leave) the dashboard
+    return () => {
+      dispatch(reset());
+    };
+  }, [user, navigate, isError, message, dispatch]);
+
+  if (isLoading) {
+    return <Spinner />;
+  }
 
   return (
     <section className="container mt-5 pb-5">
@@ -79,58 +103,10 @@ const UserDashboard = () => {
 
           {/* Appointment Info */}
 
-          {appointment ? (
-            <div className="col-lg-12 mt-5">
-              <button
-                class="btn btn-primary btn-app"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#collapseExample"
-                aria-expanded="false"
-                aria-controls="collapseExample"
-              >
-                <h5>
-                  Appoint No: <span className="pe-5">DOG3330AVC</span>
-                  <i class="bi bi-box-arrow-up-right"></i>
-                </h5>
-              </button>
-              <div class="collapse" id="collapseExample">
-                <div class="card card-body app-pop">
-                  <p class="card-text">
-                    {/* Pet Name */}
-                    <h5 className="text-center mt-3">
-                      Pet Name:
-                      <span className="ms-5"> Yob </span>
-                    </h5>
-                    {/* Pet Type   */}
-                    <h5 className="text-center mt-3">
-                      Pet Type:
-                      <span className="ms-5"> Dog </span>
-                    </h5>
-
-                    {/* Age   */}
-                    <h5 className="text-center mt-3">
-                      <span className="ms-4"> Age: </span>
-                      <span className="ms-5"> 5 (Months) </span>
-                    </h5>
-
-                    {/* Breed   */}
-                    <h5 className="text-center mt-3">
-                      Breed:
-                      <span className="ms-5"> Pitbull </span>
-                    </h5>
-
-                    {/* Services   */}
-                    <h5 className="text-center mt-3">
-                      <i class="bi bi-clipboard-check"></i>
-                      <span className="ms-4"> Check-up </span>
-                    </h5>
-                  </p>
-
-                  <div class="card-footer">Schedule in Nov 18 2022</div>
-                </div>
-              </div>
-            </div>
+          {appointment.length > 0 ? (
+            appointment.map((apm) => (
+              <AppointmentItem key={apm._id} appointment={apm} />
+            ))
           ) : (
             <AppointmentForm />
             // <h1>Whehehe</h1>

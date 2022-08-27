@@ -12,6 +12,7 @@ const initialState = {
 
 }
 
+// Create Goals
 export const createAppointment = createAsyncThunk('appointment/createAppointment',
     async (apmData, thunkAPI) => {
         try {
@@ -30,6 +31,24 @@ export const createAppointment = createAsyncThunk('appointment/createAppointment
     })
 
 
+// Fetch Goals
+export const getAppointments = createAsyncThunk('appointment/getAll',
+    async (_, thunkAPI) => {
+        try {
+            // Get token from another state(slice) using thunkAPI
+            const token = thunkAPI.getState().auth.user.token
+            return await apmService.getApm(token)
+
+        } catch (error) {
+            const message = (error.response && error.response.data &&
+                error.response.data.message) || error.message || error.toString()
+
+            return thunkAPI.rejectWithValue(message)
+        }
+
+    })
+
+
 export const apmSlice = createSlice({
     name: 'appointment',
     initialState,
@@ -43,6 +62,7 @@ export const apmSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
+            // Create Appointments ============================================
             .addCase(createAppointment.pending, (state) => {
                 state.isLoading = true
 
@@ -54,6 +74,22 @@ export const apmSlice = createSlice({
             })
 
             .addCase(createAppointment.rejected, (state, action) => {
+                state.isLoading = false
+                state.isError = true
+                state.message = action.payload
+            })
+            // Get Appointments =====================================
+            .addCase(getAppointments.pending, (state) => {
+                state.isLoading = true
+
+            })
+            .addCase(getAppointments.fulfilled, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = true
+                state.appointment = action.payload
+            })
+
+            .addCase(getAppointments.rejected, (state, action) => {
                 state.isLoading = false
                 state.isError = true
                 state.message = action.payload
