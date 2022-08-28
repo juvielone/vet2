@@ -1,19 +1,16 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { createAppointment } from "../features/appointment/apmSlice";
-import "./appointmentForm.css";
 
-const AppointmentForm = () => {
+function Samp({ appointment }) {
+  const { petName, petType, petAge, breed, service, date, time } = appointment;
+  //   Update State
   const [userApm, setUserApm] = useState({
-    petName: "",
-    petType: "",
-    petAge: "",
-    breed: "",
-    date: "",
-    time: "",
+    pName: petName,
+    pType: petType,
+    pAge: petAge,
+    breedType: breed,
+    pDate: date,
+    pTime: time,
   });
-
-  const { petName, petType, petAge, breed, date, time } = userApm;
 
   // Options Services
   const options = [
@@ -23,8 +20,8 @@ const AppointmentForm = () => {
     { value: "Grooming", text: "Grooming ✂" },
   ];
 
-  const [service, setService] = useState(options[0].value);
-  const dispatch = useDispatch();
+  const [services, setServices] = useState(options[0].value);
+  const { pName, pType, pAge, breedType, pDate, pTime } = userApm;
 
   const onChange = (e) => {
     setUserApm((prevState) => ({
@@ -37,35 +34,37 @@ const AppointmentForm = () => {
     e.preventDefault();
 
     const apmData = {
-      petName,
-      petType,
-      petAge,
-      breed,
-      service,
-      date,
-      time,
+      petName: pName,
+      petType: pType,
+      petAge: pAge,
+      breed: breedType,
+      services: service,
+      date: pDate,
+      time: time,
     };
-    dispatch(createAppointment(apmData));
   };
+
+  //   Btn Modal ID's
+  const apmId = appointment._id.toString().slice(0, 5);
+  const modalId = petName + apmId;
   return (
-    <div className="col-lg-12 mt-5 pb-5">
-      <h1 className="text-center mt-5 app-msg">You have no appointment</h1>
+    <>
       <button
         type="button"
         className="btn btn-primary mt-5 addApp-btn"
         data-bs-toggle="modal"
-        data-bs-target="#exampleModal"
+        data-bs-target={"#" + modalId}
       >
         <h3>
           <i class="bi bi-calendar-plus me-3"></i>
-          Set Appointment
+          {modalId}
         </h3>
       </button>
 
       {/* Modal Pop */}
       <div
         class="modal fade"
-        id="exampleModal"
+        id={modalId}
         tabindex="-1"
         aria-labelledby="exampleModalLabel"
         aria-hidden="true"
@@ -94,8 +93,8 @@ const AppointmentForm = () => {
                   <input
                     className="form-control "
                     type="text"
-                    name="petName"
-                    value={petName}
+                    name="pName"
+                    value={pName}
                     onChange={onChange}
                     placeholder="Pet Name"
                   />
@@ -110,8 +109,8 @@ const AppointmentForm = () => {
                   <input
                     className="form-control "
                     type="text"
-                    name="petType"
-                    value={petType}
+                    name="pType"
+                    value={pType}
                     onChange={onChange}
                     placeholder="Dog, Cat, Snake"
                   />
@@ -125,8 +124,8 @@ const AppointmentForm = () => {
                   <input
                     className="form-control "
                     type="petAge"
-                    name="petAge"
-                    value={petAge}
+                    name="pAge"
+                    value={pAge}
                     onChange={onChange}
                     placeholder="2 Months"
                   />
@@ -140,8 +139,8 @@ const AppointmentForm = () => {
                   <input
                     className="form-control "
                     type="text"
-                    name="breed"
-                    value={breed}
+                    name="breedType"
+                    value={breedType}
                     onChange={onChange}
                     placeholder="Golden Retriever, Poodle, Bulldog"
                   />
@@ -157,7 +156,7 @@ const AppointmentForm = () => {
                     class="form-select"
                     aria-label="Default select example"
                     value={service}
-                    onChange={(e) => setService(e.target.value)}
+                    onChange={(e) => setServices(e.target.value)}
                   >
                     {options.map((option) => (
                       <option key={option.value} value={option.value}>
@@ -176,8 +175,8 @@ const AppointmentForm = () => {
                     className="form-control"
                     onChange={onChange}
                     type="date"
-                    name="date"
-                    value={date}
+                    name="pDate"
+                    value={pDate}
                   />
                 </div>
 
@@ -189,8 +188,8 @@ const AppointmentForm = () => {
                   <input
                     className="form-control "
                     type="time"
-                    name="time"
-                    value={time}
+                    name="pTime"
+                    value={pTime}
                     onChange={onChange}
                   />
                 </div>
@@ -211,8 +210,8 @@ const AppointmentForm = () => {
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
-};
+}
 
-export default AppointmentForm;
+export default Samp;

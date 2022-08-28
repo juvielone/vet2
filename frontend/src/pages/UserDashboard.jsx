@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import AppointmentForm from "../components/AppointmentForm";
 import AppointmentItem from "../components/AppointmentItem";
+import Samp from "../components/Samp";
 import Spinner from "../components/Spinner";
 import { getAppointments, reset } from "../features/appointment/apmSlice";
 import avatar from "../img/avatar.png";
@@ -104,9 +105,7 @@ const UserDashboard = () => {
           {/* Appointment Info */}
 
           {appointment.length > 0 ? (
-            appointment.map((apm) => (
-              <AppointmentItem key={apm._id} appointment={apm} />
-            ))
+            appointment.map((apm) => <Samp key={apm._id} appointment={apm} />)
           ) : (
             <AppointmentForm />
             // <h1>Whehehe</h1>
