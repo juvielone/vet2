@@ -15,9 +15,14 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }))
 
 
-
+// Appointment
 app.use('/api/appointment', require('./routes/appointRoute'))
+// Owners 
 app.use('/api/', require('./routes/ownerRoute'))
+
+// Admin
+app.use('/admin/', require('./routes/adminRoute'))
+
 
 
 // @desc implement default error handling in express

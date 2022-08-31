@@ -1,7 +1,13 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
+
+import { updateAppointments } from "../features/appointment/apmSlice";
 
 function Samp({ appointment }) {
-  const { petName, petType, petAge, breed, service, date, time } = appointment;
+  const dispatch = useDispatch();
+
+  const { petName, petType, petAge, breed, service, date, time, _id } =
+    appointment;
   //   Update State
   const [userApm, setUserApm] = useState({
     pName: petName,
@@ -13,8 +19,9 @@ function Samp({ appointment }) {
   });
 
   // Options Services
+  const dbService = service.toString();
   const options = [
-    { value: "", text: "--Choose Service--" },
+    { value: service, text: dbService },
     { value: "Check Up", text: "Check-Up 🩺" },
     { value: "Vaccine", text: "Vaccine 💉" },
     { value: "Grooming", text: "Grooming ✂" },
@@ -34,14 +41,19 @@ function Samp({ appointment }) {
     e.preventDefault();
 
     const apmData = {
+      _id,
       petName: pName,
       petType: pType,
       petAge: pAge,
       breed: breedType,
-      services: service,
+      service: services,
       date: pDate,
       time: time,
     };
+
+    dispatch(updateAppointments(apmData));
+    // Refresh component
+    window.location.reload(false);
   };
 
   //   Btn Modal ID's
@@ -155,7 +167,7 @@ function Samp({ appointment }) {
                   <select
                     class="form-select"
                     aria-label="Default select example"
-                    value={service}
+                    value={services}
                     onChange={(e) => setServices(e.target.value)}
                   >
                     {options.map((option) => (
@@ -201,8 +213,8 @@ function Samp({ appointment }) {
                   >
                     Close
                   </button>
-                  <button type="submit" class="btn btn-primary">
-                    Set Appointment
+                  <button type="submit" class="btn btn-success">
+                    Update Appointment
                   </button>
                 </div>
               </form>

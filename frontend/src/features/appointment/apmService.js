@@ -18,6 +18,26 @@ const createApm = async (apmData, token) => {
 
 }
 
+
+// Create Appointment
+const updateApm = async (apmData, token) => {
+
+
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    }
+
+    const response = await axios.put(`/api/appointment/${apmData._id}`, apmData, config)
+
+    return response.data
+
+}
+
+
+
+
 const getApm = async (token) => {
 
     const config = {
@@ -33,7 +53,7 @@ const getApm = async (token) => {
 
 
 const apmService = {
-    createApm, getApm
+    createApm, getApm, updateApm
 }
 
 export default apmService;

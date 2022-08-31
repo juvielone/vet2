@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import AppointmentForm from "../components/AppointmentForm";
-import AppointmentItem from "../components/AppointmentItem";
 import Samp from "../components/Samp";
 import Spinner from "../components/Spinner";
 import { getAppointments, reset } from "../features/appointment/apmSlice";
@@ -10,8 +9,6 @@ import avatar from "../img/avatar.png";
 import "./user.css";
 
 const UserDashboard = () => {
-  const [appointmentExist, setAppointmentExist] = useState(false);
-
   // Initialize Navigate  & Dispatch
   const navigate = useNavigate();
   const dispatch = useDispatch();
