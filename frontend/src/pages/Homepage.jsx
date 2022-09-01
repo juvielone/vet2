@@ -1,6 +1,5 @@
 import React, { Fragment } from "react";
-import { Link } from "react-router-dom";
-
+import Header from "../components/Header";
 import paw from "../img/paw.svg";
 import doggo from "../img/dog-hero.png";
 
@@ -8,6 +7,7 @@ import "./homepage.css";
 const Homepage = () => {
   return (
     <Fragment>
+      <Header />
       <div class="container text-center">
         <div class="row">
           <div class="col-lg-6">

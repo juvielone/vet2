@@ -8,18 +8,20 @@ import Homepage from './pages/Homepage';
 import Register from './pages/Register';
 import Login from './pages/Login';
 import UserDashboard from './pages/UserDashboard';
+import AdminPanel from './pages/Admin/AdminPanel';
 function App() {
   return (
     <div className="App">
       <Router>
-        <div style={{ backgroundColor: "#dbf0f8" }}>
 
-          <Header />
+        <div style={{ backgroundColor: "#dbf0f8" }}>
+          {/* <Header /> */}
           <Routes>
             <Route path="/" element={<Homepage />} />
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
             <Route path="/mydashboard" element={<UserDashboard />} />
+            <Route path="/admin" element={<AdminPanel />} />
 
 
 
