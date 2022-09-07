@@ -52,7 +52,7 @@ function Samp({ appointment }) {
     };
 
     dispatch(updateAppointments(apmData));
-    // Refresh component
+    // Refresh component upon submission
     window.location.reload(false);
   };
 

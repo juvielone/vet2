@@ -31,6 +31,8 @@ const ownerSchema = mongoose.Schema({
         required: [true, 'Please add City']
     },
 
+
+
     password: {
         type: String,
         required: [true, 'Please add password']

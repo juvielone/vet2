@@ -25,12 +25,22 @@ const Header = () => {
       style={{ backgroundColor: "#dbf0f8" }}
     >
       <div className="container">
-        <Link to="/" className="navbar-brand">
-          <h1 className="logo-title">
-            <img src={logo} alt="" width="140" height="148"></img>
-            The Vet Project
-          </h1>
-        </Link>
+        {user ? (
+          <Link to="#" className="navbar-brand">
+            <h1 className="logo-title">
+              <img src={logo} alt="" width="140" height="148"></img>
+              The Vet Project
+            </h1>
+          </Link>
+        ) : (
+          <Link to="/" className="navbar-brand">
+            <h1 className="logo-title">
+              <img src={logo} alt="" width="140" height="148"></img>
+              The Vet Project
+            </h1>
+          </Link>
+        )}
+
         <button
           className="navbar-toggler"
           type="button"

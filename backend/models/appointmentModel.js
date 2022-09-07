@@ -7,6 +7,11 @@ const appointmentSchema = mongoose.Schema({
         ref: 'Owner',
     },
 
+    apmStatus: {
+        type: String,
+        required: [true, 'Please add City']
+    },
+
     date: {
         type: String,
         required: [true, 'Please add a date']

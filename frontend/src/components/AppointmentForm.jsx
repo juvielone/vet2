@@ -46,6 +46,8 @@ const AppointmentForm = () => {
       time,
     };
     dispatch(createAppointment(apmData));
+    // Refresh component
+    window.location.reload(false);
   };
   return (
     <div className="col-lg-12 mt-5 pb-5">

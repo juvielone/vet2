@@ -36,6 +36,7 @@ const sendAppoint = asyncHandler(async (req, res) => {
         user: req.user.id,
         date: date,
         time: time,
+        apmStatus: "Pending",
         petName: petName,
         petType: petType,
         petAge: petAge,

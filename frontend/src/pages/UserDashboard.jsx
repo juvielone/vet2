@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import AppointmentForm from "../components/AppointmentForm";
@@ -65,7 +65,7 @@ const UserDashboard = () => {
                   {/* Phone Number */}
                   <h5 className="text-center mt-3">
                     <i class="bi bi-telephone"></i>
-                    <span className="ms-5"> 09458120633 </span>
+                    <span className="ms-5"> {user && user.phone} </span>
                   </h5>
 
                   {/* Address */}
@@ -83,7 +83,15 @@ const UserDashboard = () => {
                   <h4 className="status col-lg-4 col-sm-12">Status </h4>
                   <button class="btn btn-light col-lg-3 col-sm-12 btn-stat">
                     <i class="bi bi-person-plus-fill me-3"></i>
-                    New Member
+                    {appointment.length <= 0 ? (
+                      <span>No Appointment</span>
+                    ) : (
+                      <span>
+                        {appointment.map((apm) => (
+                          <span>{apm.apmStatus}</span>
+                        ))}
+                      </span>
+                    )}
                   </button>
                 </div>
               </div>
