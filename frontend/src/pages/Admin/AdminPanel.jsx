@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import UserTable from "../../components/admin/UserTable";
+import ApmTable from "../../components/admin/ApmTable";
 
 import {
   getUsers,
@@ -38,7 +39,6 @@ const AdminPanel = () => {
       dispatch(reset());
     };
   }, [navigate, isError, message]);
-  console.log(users);
   return (
     <>
       {/* Navigation ======================= */}
@@ -179,45 +179,13 @@ const AdminPanel = () => {
               </div>
             </div>
 
-            <div className="table-responsive">
-              <table className="table table-striped table-sm">
-                <thead>
-                  <tr>
-                    <th scope="col">Appointment #</th>
-                    <th scope="col">Date</th>
-                    <th scope="col">Time</th>
-                    <th scope="col">Service</th>
-                    <th scope="col">Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>1,001</td>
-                    <td>random</td>
-                    <td>data</td>
-                    <td>placeholder</td>
-                    <td>
-                      <button type="button" class="btn btn-info">
-                        View
-                      </button>
-                      <button type="button" class="ms-2 btn btn-danger">
-                        Delete
-                      </button>
-                    </td>
-                  </tr>
+            {viewUser ? (
+              <UserTable users={users} />
+            ) : (
+              <ApmTable appointments={appointments} />
+            )}
 
-                  {viewUser ? (
-                    <UserTable users={users} />
-                  ) : (
-                    <tr>
-                      <td>Appointments</td>
-                    </tr>
-                  )}
-
-                  {/* ====================================== */}
-                </tbody>
-              </table>
-            </div>
+            {/* ====================================== */}
           </main>
         </div>
       </div>

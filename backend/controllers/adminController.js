@@ -13,6 +13,20 @@ const getOwners = asyncHandler(async (req, res) => {
 
 })
 
+// @desc See One Users
+const getOne = asyncHandler(async (req, res) => {
+    const id = req.params.id
+
+    const owner = await Owner.findById(id)
+
+    if (!owner) {
+        res.status(400);
+        throw new Error('No User exists');
+    }
+    res.send(owner);
+
+})
+
 
 // @desc See all Appointments
 const getApm = asyncHandler(async (req, res) => {
@@ -64,5 +78,5 @@ const deleteAppoint = asyncHandler(async (req, res) => {
 
 
 module.exports = {
-    getOwners, getApm, updateAppoint, deleteAppoint
+    getOwners, getOne, getApm, updateAppoint, deleteAppoint
 }
