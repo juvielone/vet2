@@ -1,6 +1,6 @@
 import React from "react";
 import "./footer.css";
-
+import AdminForm from "./admin/AdminForm";
 const Footer = () => {
   return (
     <section className="footer-sec">
@@ -27,19 +27,20 @@ const Footer = () => {
             </button>
             <button
               type="button"
+              data-bs-toggle="modal"
+              data-bs-target="#adminModal"
               className="btn btn-primary btn-lg btn-floating mx-2"
             >
-              <i class="bi bi-linkedin"></i>
+              <i class="bi bi-key"></i>
             </button>
+            {/* Admin Form Modal */}
+            <AdminForm />
           </div>
 
           {/* Copyright  */}
           <div className="text-center text-black p-3 copyright">
-            © 2020 Copyright:
-            <a href="https://mdbootstrap.com/" />
-            Juvielone Joshua Lagos
+            © 2020 Copyright: Juvielone Joshua Lagos
           </div>
-          {/* Copyright  */}
         </footer>
       </div>
     </section>
