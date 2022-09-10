@@ -11,7 +11,6 @@ const UserTable = ({ users }) => {
               <th scope="col">Last Name</th>
               <th scope="col">Email</th>
               <th scope="col">City</th>
-              <th scope="col">Action</th>
             </tr>
           </thead>
           <tbody>
@@ -21,16 +20,6 @@ const UserTable = ({ users }) => {
                 <td>{eachUser.lname}</td>
                 <td>{eachUser.email}</td>
                 <td>{eachUser.city}</td>
-
-                {/* Ation Buttons */}
-                <td>
-                  <button type="button" class="btn btn-info">
-                    View
-                  </button>
-                  <button type="button" class="ms-2 btn btn-danger">
-                    Delete
-                  </button>
-                </td>
               </tr>
             ))}
           </tbody>

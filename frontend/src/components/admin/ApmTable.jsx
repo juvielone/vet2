@@ -25,10 +25,6 @@ const ApmTable = ({ appointments }) => {
                 <td>
                   {/* View Button ========================================*/}
                   <ApmForm key={apm._id} apm={apm} />
-                  {/*Delete Button ============================================ */}
-                  <button type="button" class="ms-2 btn btn-danger">
-                    Delete
-                  </button>
                 </td>
               </tr>
             ))}

@@ -41,6 +41,8 @@ const ApmForm = ({ apm }) => {
     }));
   };
 
+  // Approve and Update Button =====================================================================
+
   const handleUpdate = () => {
     const apmData = {
       _id,
@@ -52,6 +54,18 @@ const ApmForm = ({ apm }) => {
       date: pDate,
       time: time,
       apmStatus: "Approved",
+    };
+
+    dispatch(updateAppointment(apmData));
+    // Refresh component upon submission
+    window.location.reload(false);
+  };
+
+  // Reject Butoon =====================================================================
+  const handleReject = () => {
+    const apmData = {
+      _id,
+      apmStatus: "Reject",
     };
 
     dispatch(updateAppointment(apmData));
@@ -233,10 +247,10 @@ const ApmForm = ({ apm }) => {
                 <div class="modal-footer">
                   <button
                     type="button"
-                    class="btn btn-secondary"
-                    data-bs-dismiss="modal"
+                    class="btn btn-danger"
+                    onClick={handleReject}
                   >
-                    Close
+                    Reject
                   </button>
                   <button onClick={handleUpdate} class="btn btn-success">
                     Approve

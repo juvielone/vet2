@@ -39,6 +39,23 @@ const AdminPanel = () => {
       dispatch(reset());
     };
   }, [navigate, isError, message]);
+
+  // Approve Filter
+  const approveFilter = appointments.filter((apm) =>
+    apm.apmStatus.includes("Approved")
+  );
+
+  // Pending Filter
+  const pendingFilter = appointments.filter((apm) =>
+    apm.apmStatus.includes("Pending")
+  );
+
+  // Reject Filter
+  const rejectFilter = appointments.filter((apm) =>
+    apm.apmStatus.includes("Reject")
+  );
+
+  console.log(approveFilter);
   return (
     <>
       {/* Navigation ======================= */}
@@ -130,7 +147,7 @@ const AdminPanel = () => {
                     <i class="bi bi-calendar-plus"></i>
                   </span>
                   <span className="card-desc">Pending</span>
-                  <h5>5</h5>
+                  <h5>{pendingFilter.length}</h5>
                 </div>
               </div>
 
@@ -141,7 +158,7 @@ const AdminPanel = () => {
                     <i class="bi bi-calendar2-check-fill"></i>
                   </span>
                   <span className="card-desc">Approved</span>
-                  <h5>8</h5>
+                  <h5>{approveFilter.length}</h5>
                 </div>
               </div>
 
@@ -152,7 +169,7 @@ const AdminPanel = () => {
                     <i class="bi bi-calendar-x-fill"></i>
                   </span>
                   <span className="card-desc">Rejected</span>
-                  <h5>2</h5>
+                  <h5>{rejectFilter.length}</h5>
                 </div>
               </div>
             </div>
