@@ -7,6 +7,8 @@ import Footer from './components/Footer';
 import Homepage from './pages/Homepage';
 import Register from './pages/Register';
 import Login from './pages/Login';
+import About from './pages/About';
+import Contact from './pages/Contact';
 import UserDashboard from './pages/UserDashboard';
 import AdminPanel from './pages/Admin/AdminPanel';
 function App() {
@@ -22,6 +24,10 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/mydashboard" element={<UserDashboard />} />
             <Route path="/admin" element={<AdminPanel />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/contact" element={<Contact />} />
+
+
 
 
 
