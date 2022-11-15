@@ -7,24 +7,17 @@ const Footer = () => {
       <div className="">
         <footer className="text-center text-lg-start">
           <div className="container d-flex justify-content-center py-5">
+            {/* Links to facebook page */}
+          <a href="https://www.facebook.com/pettownph" target="_blank" rel="noreferrer">
             <button
               type="button"
               className="btn btn-primary btn-lg btn-floating mx-2"
-            >
+              >
               <i class="bi bi-facebook"></i>
             </button>
-            <button
-              type="button"
-              className="btn btn-primary btn-lg btn-floating mx-2"
-            >
-              <i class="bi bi-github"></i>
-            </button>
-            <button
-              type="button"
-              className="btn btn-primary btn-lg btn-floating mx-2"
-            >
-              <i class="bi bi-instagram"></i>
-            </button>
+              </a>
+         
+            {/* Admin Controls */}
             <button
               type="button"
               data-bs-toggle="modal"
@@ -39,7 +32,7 @@ const Footer = () => {
 
           {/* Copyright  */}
           <div className="text-center text-black p-3 copyright">
-            © 2020 Copyright: Juvielone Joshua Lagos
+            © 2022 Copyright: Group 9
           </div>
         </footer>
       </div>

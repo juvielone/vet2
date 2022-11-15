@@ -9,6 +9,7 @@ const AdminForm = () => {
     userId: "",
     password: "",
   });
+  const [close, setClose] = useState("");
 
   const { userId, password } = userData;
 
@@ -19,11 +20,14 @@ const AdminForm = () => {
     }));
   };
 
+  // data-bs-dismiss="modal"
   const onSubmit = (e) => {
     if (userId === "admin" && password === "admin") {
+      setClose()
       navigate("/admin");
+      toast.success("Welcome Admin");
     } else {
-      console.log("nope");
+      toast.error("Invalid admin credentials");
     }
   };
 
@@ -53,7 +57,7 @@ const AdminForm = () => {
               ></button>
             </div>
             <div class="modal-body">
-              <form onSubmit={onSubmit}>
+              <form>
                 <div class="form-floating">
                   {/* User Id */}
                   <input
@@ -79,7 +83,10 @@ const AdminForm = () => {
                   <label for="floatingPassword">Password</label>
                 </div>
 
-                <button class="w-100 btn btn-lg btn-primary" type="submit">
+                <button class="w-100 btn btn-lg btn-primary" 
+                type="button" 
+                data-bs-dismiss="modal"
+                onClick={onSubmit} >
                   Sign in
                 </button>
                 <p class="mt-5 mb-3 text-muted">

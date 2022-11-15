@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { reset, register } from "../features/auth/authSlice";
 import Header from "../components/Header";
+import Footer from "../components/Footer";
 import Spinner from "../components/Spinner";
 import paw from "../img/paw.svg";
 import pic1 from "../img/pic1.png";
@@ -214,6 +215,7 @@ const Register = () => {
           </div>
         </div>
       </div>
+      <Footer/>
     </>
   );
 };

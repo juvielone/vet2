@@ -1,5 +1,6 @@
 import React from "react";
 import Header from "../components/Header";
+import Footer from "../components/Footer";
 import pic2 from "../img/pic2.png";
 
 function Contact() {
@@ -29,6 +30,7 @@ function Contact() {
           </div>
         </div>
       </div>
+      <Footer/>
     </>
   );
 }

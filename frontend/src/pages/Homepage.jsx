@@ -1,5 +1,6 @@
 import React, { Fragment } from "react";
 import Header from "../components/Header";
+import Footer from "../components/Footer";
 import paw from "../img/paw.svg";
 import doggo from "../img/dog-hero.png";
 
@@ -40,6 +41,7 @@ const Homepage = () => {
           </div>
         </div>
       </div>
+      <Footer/>
     </Fragment>
   );
 };
