@@ -29,7 +29,7 @@ const sendAppoint = asyncHandler(async (req, res) => {
     //send error if any field is missing
     if (!date || !time || !petName || !petType || !petAge || !breed || !service) {
         res.status(400)
-        throw new Error('Please add a text field')
+        throw new Error('Please complete all text field');
 
     }
     const appointment = await Appointment.create({

@@ -1,5 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
+import { toast } from "react-toastify";
+
 
 import { updateAppointments } from "../features/appointment/apmSlice";
 
@@ -37,8 +39,9 @@ function Samp({ appointment }) {
     }));
   };
 
-  const onSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
+    toast.success("Appointment updated successfully");
 
     const apmData = {
       _id,
@@ -52,8 +55,11 @@ function Samp({ appointment }) {
     };
 
     dispatch(updateAppointments(apmData));
-    // Refresh component upon submission
-    window.location.reload(false);
+
+       // Refresh component
+       window.location.reload(false);
+ 
+
   };
 
   //   Btn Modal ID's
@@ -63,7 +69,8 @@ function Samp({ appointment }) {
     <>
       <button
         type="button"
-        className="btn btn-primary mt-5 addApp-btn"
+        style={{width: "inherit"}}
+        className="btn btn-primary mt-5"
         data-bs-toggle="modal"
         data-bs-target={"#" + modalId}
       >
@@ -78,13 +85,13 @@ function Samp({ appointment }) {
         class="modal fade"
         id={modalId}
         tabindex="-1"
-        aria-labelledby="exampleModalLabel"
+        aria-labelledby={modalId}
         aria-hidden="true"
       >
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">
+              <h5 class="modal-title" id={modalId}>
                 Appointment Form
               </h5>
               <button
@@ -96,7 +103,7 @@ function Samp({ appointment }) {
             </div>
             {/* Form ==========================================*/}
             <div class="modal-body">
-              <form className="row ms-3 mt-3" onSubmit={onSubmit}>
+              <form className="row ms-3 mt-3" >
                 {/* Pet Name */}
                 <div className="col-lg-10">
                   <label for="exampleFormControlInput1" class="form-label">
@@ -213,7 +220,7 @@ function Samp({ appointment }) {
                   >
                     Close
                   </button>
-                  <button type="submit" class="btn btn-success">
+                  <button type="button" onClick={handleSubmit} data-bs-dismiss="modal" class="btn btn-success">
                     Update Appointment
                   </button>
                 </div>

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
+import { toast } from "react-toastify";
 import { createAppointment } from "../features/appointment/apmSlice";
 import "./appointmentForm.css";
 
@@ -26,6 +27,8 @@ const AppointmentForm = () => {
   const [service, setService] = useState(options[0].value);
   const dispatch = useDispatch();
 
+  
+
   const onChange = (e) => {
     setUserApm((prevState) => ({
       ...prevState,
@@ -33,8 +36,9 @@ const AppointmentForm = () => {
     }));
   };
 
-  const onSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
+
 
     const apmData = {
       petName,
@@ -47,7 +51,7 @@ const AppointmentForm = () => {
     };
     dispatch(createAppointment(apmData));
     // Refresh component
-    window.location.reload(false);
+    toast.success("Appointment created successfully")
   };
   return (
     <div className="col-lg-12 mt-5 pb-5">
@@ -87,19 +91,20 @@ const AppointmentForm = () => {
             </div>
             {/* Form ==========================================*/}
             <div class="modal-body">
-              <form className="row ms-3 mt-3" onSubmit={onSubmit}>
+              <form className="row ms-3 mt-3 needs-validation" novalidate>
                 {/* Pet Name */}
                 <div className="col-lg-10">
                   <label for="exampleFormControlInput1" class="form-label">
                     Pet Name
                   </label>
-                  <input
-                    className="form-control "
+                 <input
+                    className="form-control"
                     type="text"
                     name="petName"
                     value={petName}
                     onChange={onChange}
                     placeholder="Pet Name"
+                    required
                   />
                 </div>
 
@@ -116,6 +121,7 @@ const AppointmentForm = () => {
                     value={petType}
                     onChange={onChange}
                     placeholder="Dog, Cat, Snake"
+                    required
                   />
                 </div>
                 {/* Pet Age */}
@@ -131,6 +137,7 @@ const AppointmentForm = () => {
                     value={petAge}
                     onChange={onChange}
                     placeholder="2 Months"
+                    required
                   />
                 </div>
 
@@ -146,6 +153,7 @@ const AppointmentForm = () => {
                     value={breed}
                     onChange={onChange}
                     placeholder="Golden Retriever, Poodle, Bulldog"
+                    required
                   />
                 </div>
 
@@ -180,6 +188,7 @@ const AppointmentForm = () => {
                     type="date"
                     name="date"
                     value={date}
+                    required
                   />
                 </div>
 
@@ -194,6 +203,7 @@ const AppointmentForm = () => {
                     name="time"
                     value={time}
                     onChange={onChange}
+                    required
                   />
                 </div>
                 <div class="modal-footer">
@@ -204,7 +214,7 @@ const AppointmentForm = () => {
                   >
                     Close
                   </button>
-                  <button type="submit" class="btn btn-primary">
+                  <button type="button" onClick={handleSubmit} data-bs-dismiss="modal" class="btn btn-primary">
                     Set Appointment
                   </button>
                 </div>

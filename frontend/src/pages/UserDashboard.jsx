@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import AppointmentForm from "../components/AppointmentForm";
 import Samp from "../components/Samp";
 import Spinner from "../components/Spinner";
@@ -23,13 +24,20 @@ const UserDashboard = () => {
 
   useEffect(() => {
     if (isError) {
-      console.log(message);
+      toast.error(message);
+      // console.log(message);
     }
 
     // Check if user is logged in
     if (!user) {
       navigate("/login");
     }
+
+    // Notifications
+    // toast.success(`Welcome ${user.fname}`, {
+    //   position: toast.POSITION.TOP_CENTER,
+    //   toastId: user.email
+    // });
 
     // Fetch appointments
     dispatch(getAppointments());
@@ -84,7 +92,7 @@ const UserDashboard = () => {
                   <button class="btn btn-light col-lg-3 col-sm-12 btn-stat">
                     <i class="bi bi-person-plus-fill me-3"></i>
                     {appointment.length <= 0 ? (
-                      <span>No Appointment</span>
+                      <span>No Apxpointment</span>
                     ) : (
                       <span>
                         {appointment.map((apm) => (
