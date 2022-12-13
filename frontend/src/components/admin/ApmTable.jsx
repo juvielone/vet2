@@ -6,7 +6,7 @@ const ApmTable = ({ appointments }) => {
     <>
       <div className="table-responsive">
         <table className="table table-striped table-sm">
-          <thead>
+          <thead className="table-dark">
             <tr>
               <th scope="col">Appointment Status</th>
               <th scope="col">Date</th>

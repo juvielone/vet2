@@ -5,12 +5,21 @@ const API_URL = '/admin/'
 
 const getUsers = async () => {
 
-
-
     const response = await axios.get(API_URL + "owners")
 
     return response.data
 }
+
+// Create Appointment
+const createApm = async (apmData) => {
+
+    const response = await axios.post(API_URL +"create/apm", apmData)
+
+    return response.data
+
+}
+
+
 
 // Get One user data
 const getOne = async (id) => {
@@ -40,7 +49,7 @@ const updateAppointment = async (apmData) => {
 
 
 const adminService = {
-    getUsers, getAppointments, updateAppointment, getOne
+    getUsers, getAppointments, createApm, updateAppointment, getOne
 }
 
 export default adminService;

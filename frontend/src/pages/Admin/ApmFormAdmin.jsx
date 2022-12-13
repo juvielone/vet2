@@ -1,19 +1,23 @@
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
-import { createAppointment } from "../features/appointment/apmSlice";
-import "./appointmentForm.css";
+import {addAppointments} from "../../features/admin/adminSlice"
+import Datetime from "react-datetime";
+import AdminNav from "./AdminNav";
+import apmFormPic from "../../img/apmForm.svg"
+import "react-datetime/css/react-datetime.css";
 
-const AppointmentForm = () => {
+function ApmFormAdmin() {
   const [userApm, setUserApm] = useState({
+    ownerName: "",
+    ownerAddr: "",
     petName: "",
     petType: "",
     petAge: "",
     breed: "",
-    date: new Date(),
   });
 
-  const { petName, petType, petAge, breed, date} = userApm;
+  const { petName, petType, petAge, breed, ownerName, ownerAddr } = userApm;
 
   // Options Services
   const options = [
@@ -24,9 +28,8 @@ const AppointmentForm = () => {
   ];
 
   const [service, setService] = useState(options[0].value);
+  const [date, setDate] = useState(new Date());
   const dispatch = useDispatch();
-
-  
 
   const onChange = (e) => {
     setUserApm((prevState) => ({
@@ -37,65 +40,95 @@ const AppointmentForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-
     const apmData = {
+      ownerName,
+      ownerAddr,
       petName,
       petType,
       petAge,
       breed,
       service,
-      date
+      date,
     };
-    dispatch(createAppointment(apmData));
-    // Refresh component
-    toast.success("Appointment created successfully")
+    // Send data to controllers
+      dispatch(addAppointments(apmData));
+      toast.success("Appointment created successfully")
+
+      console.log(apmData);
+    //   refresh inputs
+      setUserApm({
+        ownerName: "",
+        ownerAddr: "",
+        petName: "",
+        petType: "",
+        petAge: "",
+        breed: "",
+      });
+      setService(options[0].value);
+      setDate(new Date());
   };
   return (
-    <div className="col-lg-12 mt-5 pb-5">
-      <h1 className="text-center mt-5 app-msg">You have no appointment</h1>
-      <button
-        type="button"
-        className="btn btn-primary mt-5 addApp-btn"
-        data-bs-toggle="modal"
-        data-bs-target="#exampleModal"
-      >
-        <h3>
-          <i class="bi bi-calendar-plus me-3"></i>
-          Set Appointment
-        </h3>
-      </button>
-
-      {/* Modal Pop */}
+    <Fragment>
+      <AdminNav />
       <div
-        class="modal fade"
-        id="exampleModal"
-        tabindex="-1"
-        aria-labelledby="exampleModalLabel"
-        aria-hidden="true"
+        className="row container pb-5"
+        style={{
+         
+          position: "relative",
+          top: "1rem",
+          left: "15.5rem",
+          width: "80.2rem",
+          height:"80%"
+        }}
       >
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">
-                Appointment Form
-              </h5>
-              <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
-            </div>
-            {/* Form ==========================================*/}
-            <div class="modal-body">
-              <form className="row ms-3 mt-3 needs-validation" novalidate>
+        {/* Form appointment */}
+        <div  className="col-lg-6 pb-2">
+          <div class="card">
+            <div className="card-body">
+            <h5 className="card-title pb-3">
+            <i class="bi bi-pencil pe-3"></i>
+                Create Appointment
+            </h5>
+              <form className="row" onSubmit={handleSubmit}>
+                {/* Pet Type */}
+
+                <div className="col-lg-10">
+                  <label for="exampleFormControlInput1" class="form-label">
+                    Owner Name
+                  </label>
+                  <input
+                    className="form-control "
+                    type="text"
+                    name="ownerName"
+                    value={ownerName}
+                    onChange={onChange}
+                    required
+                  />
+                </div>
+
+                {/* Pet Age */}
+
+                <div className="col-lg-10">
+                  <label for="exampleFormControlInput1" class="form-label">
+                    Complete Address
+                  </label>
+                  <input
+                    className="form-control "
+                    type="text"
+                    name="ownerAddr"
+                    value={ownerAddr}
+                    onChange={onChange}
+                    placeholder="123 Main Street"
+                    required
+                  />
+                </div>
+
                 {/* Pet Name */}
                 <div className="col-lg-10">
                   <label for="exampleFormControlInput1" class="form-label">
                     Pet Name
                   </label>
-                 <input
+                  <input
                     className="form-control"
                     type="text"
                     name="petName"
@@ -176,29 +209,19 @@ const AppointmentForm = () => {
                 </div>
 
                 {/* Date */}
-                <div className="col-lg-5">
+
+                <div className="col-lg-10">
                   <label for="exampleFormControlInput1" class="form-label">
-                    Date
+                    Date and Time
                   </label>
-                  <input
-                    className="form-control"
-                    onChange={onChange}
-                    type="date"
-                    name="date"
+                  <Datetime
                     value={date}
-                    required
+                    onChange={(date) => setDate(date._d)}
                   />
                 </div>
 
-                <div class="modal-footer">
-                  <button
-                    type="button"
-                    class="btn btn-secondary"
-                    data-bs-dismiss="modal"
-                  >
-                    Close
-                  </button>
-                  <button type="button" onClick={handleSubmit} data-bs-dismiss="modal" class="btn btn-primary">
+                <div>
+                  <button type="submit" className="btn btn-primary col-lg-10">
                     Set Appointment
                   </button>
                 </div>
@@ -206,9 +229,14 @@ const AppointmentForm = () => {
             </div>
           </div>
         </div>
+        <div className="col-lg-5" >
+          <img src={apmFormPic} className="pt-5 mt-5"
+          style={{position:"relative", top:"10rem"}}
+          />
+        </div>
       </div>
-    </div>
+    </Fragment>
   );
-};
+}
 
-export default AppointmentForm;
+export default ApmFormAdmin;

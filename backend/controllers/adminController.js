@@ -36,6 +36,38 @@ const getApm = asyncHandler(async (req, res) => {
 })
 
 
+// @desc Create Appointment
+const createAppoint = asyncHandler(async (req, res) => {
+    const { date, petName, petType, petAge, breed,
+         service, ownerName, ownerAddr } = req.body
+
+
+    //send error if any field is missing
+    if (!date || !petName || !petType || !petAge || !breed ||
+         !service || !ownerName || !ownerAddr ) {
+        res.status(400)
+        throw new Error('Please complete all text field');
+
+    }
+    const appointment = await Appointment.create({
+        ownerName: ownerName,
+        ownerAddr : ownerAddr,
+        date: date,
+        apmStatus: "Approved",
+        petName: petName,
+        petType: petType,
+        petAge: petAge,
+        breed: breed,
+        service: service
+    })
+
+
+    res.status(200).json(appointment);
+
+});
+
+
+
 // @desc Update Appointment
 const updateAppoint = asyncHandler(async (req, res) => {
     const id = req.params.id
@@ -78,5 +110,5 @@ const deleteAppoint = asyncHandler(async (req, res) => {
 
 
 module.exports = {
-    getOwners, getOne, getApm, updateAppoint, deleteAppoint
+    getOwners, getOne, getApm, createAppoint, updateAppoint, deleteAppoint
 }

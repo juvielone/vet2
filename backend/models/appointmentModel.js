@@ -3,23 +3,30 @@ const mongoose = require('mongoose');
 const appointmentSchema = mongoose.Schema({
     user: {
         type: mongoose.Schema.Types.ObjectId,
-        required: true,
         ref: 'Owner',
     },
 
+        // Admin inputs
+    ownerName: {
+        type:String,
+    },
+
+    // Admin inputs
+    ownerAddr: {
+        type:String,
+    },
     apmStatus: {
         type: String,
         required: [true, 'Please add City']
     },
 
     date: {
-        type: String,
+        type: Date,
         required: [true, 'Please add a date']
     },
 
     time: {
         type: String,
-        required: [true, 'Please add a time']
 
     },
 

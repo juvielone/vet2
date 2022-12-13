@@ -1,5 +1,5 @@
 .logo-title {
-  color: #faad16;
+  color: #272727;
   font-family: "Ubuntu", sans-serif;
   font-weight: Bold;
 }
@@ -7,10 +7,10 @@
 .nav-item {
   font-family: "Ubuntu", sans-serif;
   font-weight: Medium;
-  font-size: 20px;
+  font-size: 1.2rem;
 }
 
 .btn-contact {
-  background-color: #e48d3d;
+  background-color: #E0AF49;
   color: white;
 }

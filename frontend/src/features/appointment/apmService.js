@@ -19,7 +19,7 @@ const createApm = async (apmData, token) => {
 }
 
 
-// Create Appointment
+// Update Appointment
 const updateApm = async (apmData, token) => {
 
 

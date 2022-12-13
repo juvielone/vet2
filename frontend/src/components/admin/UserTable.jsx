@@ -3,9 +3,9 @@ import React from "react";
 const UserTable = ({ users }) => {
   return (
     <>
-      <div className="table-responsive">
+      <div className="table-responsive-sm container">
         <table className="table table-striped table-sm">
-          <thead>
+          <thead className="table-dark">
             <tr>
               <th scope="col">Name</th>
               <th scope="col">Last Name</th>

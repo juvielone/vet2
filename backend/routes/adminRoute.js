@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { getOwners, getOne, getApm, updateAppoint, deleteAppoint } = require('../controllers/adminController');
+const { getOwners, getOne, getApm, createAppoint, updateAppoint, deleteAppoint } = require('../controllers/adminController');
 const {createAdmin} = require("../controllers/configController");
 
 // http://localhost:Port/admin/
@@ -15,6 +15,9 @@ router.route('/sched').get(getApm);
 
 // Get Certain User
 router.route('/:id').get(getOne)
+
+// Create Appointment without user
+router.route('/create/apm').post(createAppoint)
 
 
 // Update and Delete Specific Appointment

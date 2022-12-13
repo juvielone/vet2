@@ -163,7 +163,7 @@ const Register = () => {
                   name="streetNo"
                   value={streetNo}
                   onChange={handleChange}
-                  placeholder="Street No"
+                  placeholder="Street Name & No, Brgy."
                 />
               </div>
 

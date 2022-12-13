@@ -1,4 +1,4 @@
-import React from 'react';
+import {useState} from 'react';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css"
@@ -11,21 +11,37 @@ import About from './pages/About';
 import Contact from './pages/Contact';
 import UserDashboard from './pages/UserDashboard';
 import AdminPanel from './pages/Admin/AdminPanel';
+import Calendar from './pages/Admin/calendar/Calendar';
+import ApmFormAdmin from './pages/Admin/ApmFormAdmin';
 function App() {
+
+
+
+  const [viewApm, setViewApm] = useState(true);
+  const handleFilter = (viewState) => {
+      setViewApm(viewState);
+      console.log(viewApm);
+  }
+
+
   return (
     <div className="App">
       <Router>
 
-        <div style={{ backgroundColor: "#dbf0f8" }}>
+        <div>
           {/* <Header /> */}
           <Routes>
             <Route path="/" element={<Homepage />} />
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
             <Route path="/mydashboard" element={<UserDashboard />} />
-            <Route path="/admin" element={<AdminPanel />} />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
+            {/* ============================================ */}
+            <Route path="/admin" element={<AdminPanel handleFilter={handleFilter} viewApm={viewApm}/>} />
+            <Route path ="/admin/cal" element={<Calendar/>} />
+            <Route path ="/admin/apmform" element={<ApmFormAdmin/>} />
+
 
 
 

@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logout, reset } from "../features/auth/authSlice";
 import "./header.css";
-import logo from "../img/vet-logo.png";
+import logo from "../img/vetlogo.png";
 
 const Header = () => {
   // Initialize Navigate  & Dispatch
@@ -22,21 +22,19 @@ const Header = () => {
   return (
     <nav
       className="navbar navbar-expand-lg"
-      style={{ backgroundColor: "#dbf0f8" }}
+      style={{ backgroundColor: "#928CCA", paddingTop: "2rem" }}
     >
       <div className="container">
         {user ? (
           <Link to="#" className="navbar-brand">
             <h1 className="logo-title">
-              <img src={logo} alt="" width="140" height="148"></img>
-              The Vet Project
+            <img src={logo} alt="" width="340" height="128"></img>
             </h1>
           </Link>
         ) : (
           <Link to="/" className="navbar-brand">
-            <h1 className="logo-title">
-              <img src={logo} alt="" width="140" height="148"></img>
-              The Vet Project
+            <h1 className="logo-title ms-5">
+              <img src={logo} alt="" width="240" height="78"></img>
             </h1>
           </Link>
         )}
