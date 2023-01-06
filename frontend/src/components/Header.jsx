@@ -22,18 +22,18 @@ const Header = () => {
   return (
     <nav
       className="navbar navbar-expand-lg"
-      style={{ backgroundColor: "#928CCA", paddingTop: "2rem" }}
+      style={{ backgroundColor: "#EFEEF7", paddingTop: "2rem" }}
     >
       <div className="container">
         {user ? (
-          <Link to="#" className="navbar-brand">
+          <Link to="/" className="navbar-brand">
             <h1 className="logo-title">
-            <img src={logo} alt="" width="340" height="128"></img>
+              <img src={logo} width="340" height="128"></img>
             </h1>
           </Link>
         ) : (
           <Link to="/" className="navbar-brand">
-            <h1 className="logo-title ms-5">
+            <h1 className="logo-title ">
               <img src={logo} alt="" width="240" height="78"></img>
             </h1>
           </Link>
@@ -65,12 +65,16 @@ const Header = () => {
             ) : (
               <>
                 <li className="nav-item">
-                  <Link to="/" className="nav-link active" aria-current="page">
+                  <Link
+                    to="/"
+                    className="nav-link home-nav"
+                    aria-current="page"
+                  >
                     Home
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <Link to="/about" className="nav-link">
+                  <Link to="/about" className="nav-link home-nav">
                     About Us
                   </Link>
                 </li>

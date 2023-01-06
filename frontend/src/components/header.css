@@ -6,11 +6,19 @@
 
 .nav-item {
   font-family: "Ubuntu", sans-serif;
-  font-weight: Medium;
+  font-weight: Bold;
   font-size: 1.2rem;
 }
 
+.home-nav {
+  color: #212529;
+}
+
+.home-nav:hover {
+  color: #867dd9;
+}
+
 .btn-contact {
-  background-color: #E0AF49;
+  background-color: #867dd9;
   color: white;
 }

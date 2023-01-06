@@ -1,5 +1,6 @@
-.homepage-sec{
-  background-color: #928CCA;
+.homepage-sec {
+  background-color: #efeef7;
+  /* height: 30rem; */
 }
 
 .heading-content {
@@ -10,33 +11,36 @@
 
 .heading-content h1 {
   font-family: "Ubuntu", sans-serif;
-  font-size: 3.5rem;
+  font-size: 3rem;
   font-weight: Bold;
-  
+  text-align: left;
 }
 
 .heading-content p {
   font-family: "Ubuntu", sans-serif;
   font-size: 1.3em;
+  text-align: left;
   width: 35rem;
+}
+.msg-intro {
+  color: #89523d;
 }
 
 .btn-register {
+  background-color: #867dd9;
+  border-color: #867dd9;
   font-family: "Ubuntu", sans-serif;
   font-weight: 500;
-  background-color: #E0AF49;
   width: 10rem;
-  border-color: #e48d3d;
 }
 
 .btn-register:hover {
-  background-color: #e0b049d1;
-  border-color: #f59c48;
+  background-color: #867dd9;
 }
 
 .btn-link {
   text-decoration: none;
-  color:#2B2623;
+  color: #2b2623;
 }
 
 .btn-link :hover {
@@ -56,6 +60,10 @@
   padding-bottom: 10rem;
 }
 
+.dog-pic {
+  position: relative;
+  bottom: 4rem;
+}
 
 /* 415 lower */
 @media only screen and (max-width: 415px) {

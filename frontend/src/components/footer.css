@@ -1,11 +1,13 @@
 .footer-sec {
-  background-color: #2c8eb3;
+  background-color: #867dd9;
 }
 
 .btn-floating {
-  background-color: #e48d3d;
+  background-color: #4b438c;
+  border-color: #4b438c;
 }
 
 .copyright {
+  color: aliceblue;
   background-color: rgba(0, 0, 0, 0.2);
 }
