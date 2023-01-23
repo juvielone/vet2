@@ -12,7 +12,7 @@ import pic2 from "../img/pic2.png";
 import pic3 from "../img/pic3.png";
 import pic4 from "../img/pic4.png";
 
-import "./register.css";
+import "./css/register.css";
 
 const Register = () => {
   const [userData, setUserData] = useState({

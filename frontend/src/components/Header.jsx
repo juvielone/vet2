@@ -5,7 +5,7 @@ import { logout, reset } from "../features/auth/authSlice";
 import "./header.css";
 import logo from "../img/vetlogo.png";
 
-const Header = () => {
+const Header = ({ bgColor }) => {
   // Initialize Navigate  & Dispatch
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -22,13 +22,16 @@ const Header = () => {
   return (
     <nav
       className="navbar navbar-expand-lg"
-      style={{ backgroundColor: "#EFEEF7", paddingTop: "2rem" }}
+      style={{
+        backgroundColor: bgColor ? bgColor : "#EFEEF7",
+        paddingTop: "2rem",
+      }}
     >
       <div className="container">
         {user ? (
           <Link to="/" className="navbar-brand">
             <h1 className="logo-title">
-              <img src={logo} width="340" height="128"></img>
+              <img src={logo} width="240"></img>
             </h1>
           </Link>
         ) : (
@@ -54,14 +57,52 @@ const Header = () => {
         <div className="collapse navbar-collapse" id="navbarNavDropdown">
           <ul className="navbar-nav ms-auto gap-5">
             {user ? (
-              <li className="nav-item">
-                <button
-                  onClick={onLogout}
-                  className="nav-link btn btn-lg btn-contact"
-                >
-                  Log Out
-                </button>
-              </li>
+              <>
+                {/* Dashboard */}
+                <li className="nav-item">
+                  <button className="nav-link btn-lg btn btn-light">
+                    <i class="bi bi-house me-2"></i>
+                    Dashboard
+                  </button>
+                </li>
+
+                {/* Appointment */}
+                <li class="nav-item dropdown ">
+                  <a
+                    class="nav-link dropdown-toggle"
+                    href="#"
+                    role="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                    style={{ color: "white" }}
+                  >
+                    <i class="bi bi-calendar-event me-2"></i>
+                    Appointment
+                  </a>
+                  <ul class="dropdown-menu">
+                    <li>
+                      <a class="dropdown-item" href="#">
+                        Action
+                      </a>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="#">
+                        Another action
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+
+                {/* Log out */}
+                <li className="nav-item">
+                  <button
+                    onClick={onLogout}
+                    className="nav-link btn btn-lg btn-contact"
+                  >
+                    Log Out
+                  </button>
+                </li>
+              </>
             ) : (
               <>
                 <li className="nav-item">

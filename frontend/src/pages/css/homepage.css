@@ -26,7 +26,7 @@
   color: #89523d;
 }
 
-.btn-register {
+.btn-register-cta {
   background-color: #867dd9;
   border-color: #867dd9;
   font-family: "Ubuntu", sans-serif;
@@ -34,7 +34,7 @@
   width: 10rem;
 }
 
-.btn-register:hover {
+.btn-register-cta:hover {
   background-color: #867dd9;
 }
 
@@ -47,7 +47,7 @@
   color: black;
 }
 
-.btn-login {
+.btn-login-cta {
   font-family: "Ubuntu", sans-serif;
   font-size: 1.5rem;
   color: #392921;

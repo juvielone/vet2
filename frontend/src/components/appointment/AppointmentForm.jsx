@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
-import { createAppointment } from "../features/appointment/apmSlice";
+import { createAppointment } from "../../features/appointment/apmSlice";
 import "./appointmentForm.css";
 
 const AppointmentForm = () => {
@@ -13,7 +13,7 @@ const AppointmentForm = () => {
     date: new Date(),
   });
 
-  const { petName, petType, petAge, breed, date} = userApm;
+  const { petName, petType, petAge, breed, date } = userApm;
 
   // Options Services
   const options = [
@@ -26,8 +26,6 @@ const AppointmentForm = () => {
   const [service, setService] = useState(options[0].value);
   const dispatch = useDispatch();
 
-  
-
   const onChange = (e) => {
     setUserApm((prevState) => ({
       ...prevState,
@@ -38,18 +36,17 @@ const AppointmentForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-
     const apmData = {
       petName,
       petType,
       petAge,
       breed,
       service,
-      date
+      date,
     };
     dispatch(createAppointment(apmData));
     // Refresh component
-    toast.success("Appointment created successfully")
+    toast.success("Appointment created successfully");
   };
   return (
     <div className="col-lg-12 mt-5 pb-5">
@@ -95,7 +92,7 @@ const AppointmentForm = () => {
                   <label for="exampleFormControlInput1" class="form-label">
                     Pet Name
                   </label>
-                 <input
+                  <input
                     className="form-control"
                     type="text"
                     name="petName"
@@ -198,7 +195,12 @@ const AppointmentForm = () => {
                   >
                     Close
                   </button>
-                  <button type="button" onClick={handleSubmit} data-bs-dismiss="modal" class="btn btn-primary">
+                  <button
+                    type="button"
+                    onClick={handleSubmit}
+                    data-bs-dismiss="modal"
+                    class="btn btn-primary"
+                  >
                     Set Appointment
                   </button>
                 </div>

@@ -1,0 +1,75 @@
+.bread-container {
+  /* margin-left: 10rem; */
+  width: fit-content;
+}
+
+.bread {
+  background-color: #867dd9;
+  color: white;
+  margin-left: 3.8rem;
+}
+
+.bread:hover {
+  background-color: #867dd9;
+  color: white;
+}
+
+.bread:active {
+  background-color: rgb(36, 36, 36);
+}
+
+.bread-line {
+  width: 50rem;
+  height: 0;
+  border: 1px solid #867dd9;
+  /* margin-left: 9rem; */
+}
+.btn-next {
+  color: aliceblue;
+  background-color: #42a5f5;
+}
+.btn-next:hover {
+  color: aliceblue;
+  background-color: #3d98e2;
+}
+
+/* dateForm Css */
+.btn-prev-carousel,
+.btn-next-carousel {
+  background-color: #867dd9;
+  color: rgb(247, 247, 247);
+}
+
+.btn-prev-carousel {
+  margin-left: 4rem;
+}
+.dayTime {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-left: 6rem;
+}
+.btn-next-carousel {
+  margin-left: 5rem;
+}
+
+.timeslot-container {
+  width: 20rem;
+  margin-left: 4rem;
+  margin-top: 2rem;
+}
+
+.btn-time {
+  background-color: #867dd9;
+  margin-left: 2rem;
+  margin-top: 1rem;
+}
+
+.btn-time:hover {
+  /* background-color: #867dd9; */
+  background-color: #867dd9;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  filter: invert(100%);
+}

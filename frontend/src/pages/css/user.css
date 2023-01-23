@@ -1,0 +1,95 @@
+.card-info {
+  background-color: #ffffff;
+  border-radius: 30px;
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+  width: 38rem;
+}
+
+.card-title {
+  font-family: "Ubuntu", sans-serif;
+  font-style: Bold;
+}
+.profile-line {
+  width: 18rem;
+  height: 0;
+  border: 1px solid #867dd9;
+}
+
+.status {
+  margin-left: 10rem;
+}
+
+/* Appointment Content Preview */
+.card-appointment {
+  background: linear-gradient(180deg, #ffffff 0%, rgba(255, 255, 255, 0) 100%);
+  border-radius: 30px;
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+  width: 38rem;
+  height: min-content;
+}
+
+.card-line {
+  width: 80%;
+  height: 0;
+  border: 1px solid #867dd9;
+}
+
+.app-content {
+  height: 12rem;
+}
+
+.btn-app {
+  width: 30rem;
+  height: 4rem;
+}
+
+.app-pop {
+  width: 30rem;
+}
+
+.btn-apm {
+  width: 2px;
+}
+
+.profile-cta {
+  background: linear-gradient(
+    180deg,
+    #ffffff 0%,
+    rgba(255, 255, 255, 255) 100%
+  );
+  filter: drop-shadow(2px 4px 4px rgba(0, 0, 0, 0.25));
+  border-radius: 17px;
+  margin-left: 2rem;
+  width: 15rem;
+  height: 10rem;
+}
+
+@media only screen and (max-width: 415px) {
+  .card-info {
+    width: 22rem;
+  }
+
+  .avatar {
+    margin-left: 3rem;
+  }
+
+  .status {
+    width: fit-content;
+    margin-left: 8rem;
+  }
+
+  .btn-stat {
+    width: 18rem;
+    margin-left: 2rem;
+  }
+
+  .btn-app {
+    text-align: center;
+    height: 4rem;
+    width: 19rem;
+  }
+
+  .app-pop {
+    width: 20rem;
+  }
+}

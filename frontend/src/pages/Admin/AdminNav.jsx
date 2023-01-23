@@ -1,14 +1,13 @@
 import { Fragment } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import {addAppointments } from "../../features/admin/adminSlice";
+import { addAppointments } from "../../features/admin/adminSlice";
 import logo from "../../img/vetlogo.png";
 import CalModal from "./calendar/CalModal";
 
 function AdminNav({ handleFilter }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
 
   // Handle Form Call back
   const handleForm = (formData) => {
@@ -21,7 +20,7 @@ function AdminNav({ handleFilter }) {
       {/* Navigation ======================= */}
       <header
         className="navbar navbar-dark sticky-top  flex-md-nowrap p-0 shadow"
-        style={{ backgroundColor: "#928CCA",  }}
+        style={{ backgroundColor: "#928CCA" }}
       >
         <nav className="navbar-brand">
           <img src={logo} width="240" height="78" />
@@ -42,15 +41,144 @@ function AdminNav({ handleFilter }) {
             id="sidebarMenu"
             className="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse"
           >
-            <div className="position-sticky pt-3 sidebar-sticky">
+            <div className="position-sticky sidebar-sticky">
               <ul className="nav flex-column" style={{ paddingTop: "4.5rem" }}>
+                {/* Dashboard */}
+
                 <li className="nav-item">
-                  <button className="btn btn-light">
-                    <i class="bi bi-house pe-2"></i>
-                    Dashboard
-                  </button>
+                  <Link
+                    to="/admin"
+                    className="btn btn-light"
+                    style={{ width: "100%" }}
+                  >
+                    <span className="me-5 fs-5  mr-3">
+                      <i class="bi bi-house-fill fs-4 pe-2"></i>
+                      Dashboard
+                    </span>
+                  </Link>
                 </li>
-                <li className="nav-item">
+
+                {/* View Calendar */}
+                <li className="nav-item mt-3">
+                  <Link
+                    to="/admin/cal"
+                    className="btn btn-light"
+                    style={{ width: "100%" }}
+                  >
+                    <span className="me-4 fs-5 ">
+                      <i class="bi bi-calendar-event pe-2 "></i>
+                      View Calendar
+                    </span>
+                  </Link>
+                </li>
+
+                {/*Our Services */}
+                <li className="nav-item mt-3">
+                  <Link
+                    to="/admin/cal"
+                    className="btn btn-light"
+                    style={{ width: "100%" }}
+                  >
+                    <span className="me-5 fs-5 ">
+                      <i class="bi bi-people-fill pe-2"></i>
+                      Our Services
+                    </span>
+                  </Link>
+                </li>
+
+                <li class="border-top my-3 mt-3"></li>
+
+                {/* Appointment Collapse */}
+                <li class="mb-1 mt-3">
+                  <button
+                    class=" fs-5 btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#apm-collapse"
+                    aria-expanded="true"
+                  >
+                    Appointment
+                    <i class="bi bi-calendar3 ms-3"></i>
+                  </button>
+                  <div class="collapse show" id="apm-collapse">
+                    <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small fs-6">
+                      <li>
+                        <a
+                          className="link-dark d-inline-flex text-decoration-none rounded"
+                          onClick={() => {
+                            navigate("/admin/apmform");
+                          }}
+                        >
+                          Add Appointment
+                        </a>
+                        <a
+                          href="#"
+                          class="link-dark d-inline-flex text-decoration-none rounded"
+                        >
+                          Updates
+                        </a>
+                      </li>
+                      <li>
+                        <a
+                          href="#"
+                          class="link-dark d-inline-flex text-decoration-none rounded"
+                        >
+                          Reports
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </li>
+
+                {/* Services Collpase */}
+                <li class="mb-1 mt-3">
+                  <button
+                    class=" fs-5 btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#service-collapse"
+                    aria-expanded="true"
+                  >
+                    Time & Service
+                    <i class="bi bi-funnel-fill ms-3"></i>
+                  </button>
+                  <div class="collapse show" id="service-collapse">
+                    <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small fs-6">
+                      <li>
+                        <a
+                          href="#"
+                          class="link-dark d-inline-flex text-decoration-none rounded"
+                        >
+                          Update Service
+                        </a>
+                      </li>
+                      <li>
+                        <a
+                          href="#"
+                          class="link-dark d-inline-flex text-decoration-none rounded"
+                        >
+                          Reports
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </li>
+
+                <li class="border-top my-3"></li>
+
+                {/* Account Setting */}
+                <li className="nav-item mt-5">
+                  <Link
+                    to="/admin"
+                    className="btn btn-light"
+                    style={{ width: "100%" }}
+                  >
+                    <span className="me-5 fs-5">
+                      <i class="bi bi-gear-fill pe-2"></i>
+                      Account
+                    </span>
+                  </Link>
+                </li>
+
+                {/* <li className="nav-item">
                   <button
                     className="btn btn-light"
                     onClick={() => {
@@ -61,8 +189,9 @@ function AdminNav({ handleFilter }) {
                     <i class="bi bi-people pe-2"></i>
                     Users
                   </button>
-                </li>
-                <li className="nav-item">
+                </li> */}
+                {/* =================================================== */}
+                {/* <li className="nav-item">
                   <button
                     className="btn btn-light"
                     onClick={() => {
@@ -73,30 +202,7 @@ function AdminNav({ handleFilter }) {
                     <i class="bi bi-clipboard-data-fill pe-2"></i>
                     Appointments
                   </button>
-                </li>
-                <li className="nav-item">
-                  <button className="btn btn-light"
-                   onClick={() =>{
-                     navigate("/admin/apmform") ;
-                    }
-                  }>
-                  <i class="bi bi-calendar-plus pe-2"></i>
-                    Add Appointment
-                  </button>
-
-                </li>
-              </ul>
-
-              <h6 className="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted text-uppercase">
-                <span>Calendar View</span>
-              </h6>
-              <ul className="nav flex-column mb-2">
-                <li className="nav-item">
-                  <Link to="/admin/cal" className="btn btn-light">
-                    <i class="bi bi-calendar-event pe-2"></i>
-                    View Calendar
-                  </Link>
-                </li>
+                </li> */}
               </ul>
             </div>
           </nav>

@@ -4,7 +4,7 @@ import Footer from "../components/Footer";
 import paw from "../img/paw.svg";
 import homePic from "../img/home-pic.png";
 
-import "./homepage.css";
+import "./css/homepage.css";
 const Homepage = () => {
   return (
     <Fragment>
@@ -29,14 +29,14 @@ const Homepage = () => {
                 <div style={{ width: "fit-content" }}>
                   <a
                     href="/register"
-                    className="btn btn-register btn-primary btn-lg mt-4 btn-link"
-                    style={{ color: "white" }}
+                    className="btn btn-register-cta btn-primary btn-lg mt-4 btn-link "
+                    style={{ color: "white", width: "18rem" }}
                   >
                     <img src={paw} width="45" height="41" className="paw" />
-                    Register
+                    Set Appointment
                   </a>
 
-                  <a href="/login" className="btn btn-link btn-login mt-4">
+                  <a href="/login" className="btn btn-link btn-login-cta mt-4">
                     <i class="bi bi-person-fill me-1"></i>
                     Login
                   </a>
