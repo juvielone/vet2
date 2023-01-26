@@ -11,7 +11,7 @@ import {
   reset,
 } from "../../features/admin/adminSlice";
 
-import "./admin.css";
+import "../css/admin.css";
 const AdminPanel = ({ handleFilter, viewApm }) => {
   // Initialize Navigate  & Dispatch
   const navigate = useNavigate();

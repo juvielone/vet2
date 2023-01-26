@@ -7,8 +7,8 @@ import {
   ButtonNext,
 } from "pure-react-carousel";
 import Flatpickr from "react-flatpickr";
-import "pure-react-carousel/dist/react-carousel.es.css";
 import "flatpickr/dist/themes/material_blue.css";
+import "pure-react-carousel/dist/react-carousel.es.css";
 const DatetimeForm = ({ setTime, time, setUserApm, userApm }) => {
   const [dayTime, setDayTime] = useState("AM");
 

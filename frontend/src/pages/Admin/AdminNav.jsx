@@ -144,18 +144,22 @@ function AdminNav({ handleFilter }) {
                     <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small fs-6">
                       <li>
                         <a
-                          href="#"
+                          onClick={() => {
+                            navigate("/admin/timeslot");
+                          }}
                           class="link-dark d-inline-flex text-decoration-none rounded"
                         >
-                          Update Service
+                          Update Time Slot
                         </a>
                       </li>
                       <li>
                         <a
-                          href="#"
+                          onClick={() => {
+                            navigate("/admin/service");
+                          }}
                           class="link-dark d-inline-flex text-decoration-none rounded"
                         >
-                          Reports
+                          Services
                         </a>
                       </li>
                     </ul>

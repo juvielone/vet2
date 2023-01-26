@@ -1,10 +1,10 @@
 import { Fragment, useState } from "react";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
-import {addAppointments} from "../../features/admin/adminSlice"
+import { addAppointments } from "../../features/admin/adminSlice";
 import Datetime from "react-datetime";
 import AdminNav from "./AdminNav";
-import apmFormPic from "../../img/apmForm.svg"
+import apmFormPic from "../../img/apmForm.svg";
 import "react-datetime/css/react-datetime.css";
 
 function ApmFormAdmin() {
@@ -51,21 +51,21 @@ function ApmFormAdmin() {
       date,
     };
     // Send data to controllers
-      dispatch(addAppointments(apmData));
-      toast.success("Appointment created successfully")
+    dispatch(addAppointments(apmData));
+    toast.success("Appointment created successfully");
 
-      console.log(apmData);
+    console.log(apmData);
     //   refresh inputs
-      setUserApm({
-        ownerName: "",
-        ownerAddr: "",
-        petName: "",
-        petType: "",
-        petAge: "",
-        breed: "",
-      });
-      setService(options[0].value);
-      setDate(new Date());
+    setUserApm({
+      ownerName: "",
+      ownerAddr: "",
+      petName: "",
+      petType: "",
+      petAge: "",
+      breed: "",
+    });
+    setService(options[0].value);
+    setDate(new Date());
   };
   return (
     <Fragment>
@@ -73,22 +73,21 @@ function ApmFormAdmin() {
       <div
         className="row container pb-5"
         style={{
-         
           position: "relative",
           top: "1rem",
           left: "15.5rem",
           width: "80.2rem",
-          height:"80%"
+          height: "80%",
         }}
       >
         {/* Form appointment */}
-        <div  className="col-lg-6 pb-2">
+        <div className="col-lg-6 pb-2">
           <div class="card">
             <div className="card-body">
-            <h5 className="card-title pb-3">
-            <i class="bi bi-pencil pe-3"></i>
+              <h5 className="card-title pb-3">
+                <i class="bi bi-pencil pe-3"></i>
                 Create Appointment
-            </h5>
+              </h5>
               <form className="row" onSubmit={handleSubmit}>
                 {/* Pet Type */}
 
@@ -229,9 +228,11 @@ function ApmFormAdmin() {
             </div>
           </div>
         </div>
-        <div className="col-lg-5" >
-          <img src={apmFormPic} className="pt-5 mt-5"
-          style={{position:"relative", top:"10rem"}}
+        <div className="col-lg-5">
+          <img
+            src={apmFormPic}
+            className="pt-5 mt-5"
+            style={{ position: "relative", top: "10rem" }}
           />
         </div>
       </div>

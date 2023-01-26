@@ -11,9 +11,11 @@ import Login from "./pages/Login";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import UserDashboard from "./pages/UserDashboard";
-import AdminPanel from "./pages/Admin/AdminPanel";
+import AdminPanel from "./pages/Admin/AdminHome";
 import Calendar from "./pages/Admin/calendar/Calendar";
-import ApmFormAdmin from "./pages/Admin/ApmFormAdmin";
+import ApmFormAdmin from "./pages/Admin/AddApmPage";
+import TimeSlotPage from "./pages/Admin/TimeSlotPage";
+import ServicePage from "./pages/Admin/ServicePage";
 function App() {
   const [viewApm, setViewApm] = useState(true);
   const handleFilter = (viewState) => {
@@ -42,6 +44,8 @@ function App() {
             />
             <Route path="/admin/cal" element={<Calendar />} />
             <Route path="/admin/apmform" element={<ApmFormAdmin />} />
+            <Route path="/admin/timeslot" element={<TimeSlotPage />} />
+            <Route path="/admin/service" element={<ServicePage />} />
           </Routes>
         </div>
       </Router>

@@ -65,7 +65,7 @@ const ApmForm = ({ apm }) => {
   const handleReject = () => {
     const apmData = {
       _id,
-      apmStatus: "Reject",
+      apmStatus: "Cancelled",
     };
 
     dispatch(updateAppointment(apmData));
@@ -89,11 +89,12 @@ const ApmForm = ({ apm }) => {
     <>
       <button
         type="button"
-        className="btn btn-primary"
+        className="btn btn-dark"
         data-bs-toggle="modal"
         data-bs-target={"#" + modalId}
         onClick={handleClick}
       >
+        <i class="bi bi-pencil-square pe-3"></i>
         View
       </button>
 
@@ -245,15 +246,18 @@ const ApmForm = ({ apm }) => {
                   />
                 </div>
                 <div class="modal-footer">
+                  <button class="btn btn-primary" disabled>
+                    Reschedule
+                  </button>
+                  <button onClick={handleUpdate} class="btn btn-success">
+                    Approve
+                  </button>
                   <button
                     type="button"
                     class="btn btn-danger"
                     onClick={handleReject}
                   >
                     Reject
-                  </button>
-                  <button onClick={handleUpdate} class="btn btn-success">
-                    Approve
                   </button>
                 </div>
               </form>
