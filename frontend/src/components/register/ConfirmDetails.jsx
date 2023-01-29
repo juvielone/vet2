@@ -1,7 +1,8 @@
 import ModalSubmit from "./ModalSubmit";
+import pawSvg from "../../img/paw.svg";
 
-const ConfirmDetails = ({ newUser, userApm }) => {
-  const { fname, lname, addr, mobileNo, email, password, password2 } = newUser;
+const ConfirmDetails = ({ newUser, userApm, handleSubmit }) => {
+  const { fname, lname, addr, mobileNo, email, city } = newUser;
   const { petName, petAge, breed, petType, service } = userApm;
   return (
     <>
@@ -46,7 +47,7 @@ const ConfirmDetails = ({ newUser, userApm }) => {
               </div>
 
               {/* Address */}
-              <div class="col-sm-12">
+              <div class="col-sm-8">
                 <label for="address" class="form-label">
                   Address
                 </label>
@@ -55,6 +56,20 @@ const ConfirmDetails = ({ newUser, userApm }) => {
                   class="form-control"
                   id="address"
                   placeholder={addr}
+                  readonly
+                />
+              </div>
+
+              {/* City */}
+              <div class="col-sm-4">
+                <label for="address" class="form-label">
+                  City
+                </label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="city"
+                  placeholder={city}
                   readonly
                 />
               </div>
@@ -178,7 +193,22 @@ const ConfirmDetails = ({ newUser, userApm }) => {
               </div>
             </div>
           </form>
-          <ModalSubmit />
+
+          <button
+            type="button"
+            class="btn btn-primary"
+            onClick={() => handleSubmit()}
+            style={{
+              backgroundColor: "#867DD9",
+              color: "white",
+              borderColor: "#867DD9",
+            }}
+          >
+            <img src={pawSvg} style={{ width: "2rem" }} />
+            Confirm Your Appointment
+          </button>
+
+          {/* <ModalSubmit /> */}
         </div>
       </div>
     </>

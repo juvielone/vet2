@@ -1,7 +1,14 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import moment from "moment";
+import { useSelector, useDispatch } from "react-redux";
+import { reset, register } from "../features/auth/authSlice";
+import { createSchedule } from "../features/schedule/schedSlice";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import Spinner from "../components/Spinner";
 import DatetimeForm from "../components/register/DatetimeForm";
 import PatientForm from "../components/register/PatientForm";
 import ConfirmDetails from "../components/register/ConfirmDetails";
@@ -44,17 +51,12 @@ function RegisterX() {
     { value: "Fish", label: "Fish" },
   ];
 
-  // Service State ===========================
-  const [service, setService] = useState(serviceOptions[0].value);
-
-  // Pet Type State =================================
-  const [petType, setPetType] = useState(petOptions[0].value);
-
   // Owner Registration State ==============================
   const [newUser, setNewUser] = useState({
     fname: "",
     lname: "",
     addr: "",
+    city: "",
     mobileNo: "",
     email: "",
     password: "",
@@ -63,27 +65,76 @@ function RegisterX() {
 
   // Appointment State ==============================
   const [userApm, setUserApm] = useState({
-    apmDate: new Date("2023-01-25"),
+    apmDate: new Date(),
     apmTime: "",
     petName: "",
+    petType: petOptions[0].value,
     petAge: "",
     breed: "",
     service: serviceOptions[0].value,
-    petType: petOptions[0].value,
   });
 
-  // Submit Appointment
-  // const submitAppointment = (userApm) => {
-  //   setUserApm({
-  //     ...userApm,
-  //     [userApm.apmDate]: date,
-  //     [userApm.service]: service,
-  //   });
-  //   console.log(userApm);
-  // };
+  // Initialize Navigate  & Dispatch
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  // Calling states using useSelector
+  const { user, isLoading, isError, isSuccess, message } = useSelector(
+    (state) => state.auth
+  );
+
+  useEffect(() => {
+    if (isError) {
+      toast.error(message);
+    }
+
+    // If registration is success navigate to dashboard
+    if (isSuccess || user) {
+      navigate("/mydashboard");
+    }
+
+    // calls reset reducer after either of two are called
+    dispatch(reset());
+  }, [user, isError, isSuccess, message, navigate, dispatch]);
+
+  const handleSubmit = () => {
+    console.log("Submit Reached!");
+
+    const userData = {
+      fname: newUser.fname,
+      lname: newUser.lname,
+      email: newUser.email,
+      password: newUser.password,
+      phone: newUser.mobileNo,
+      streetNo: newUser.addr,
+      city: newUser.city,
+    };
+
+    const schedData = {
+      email: newUser.email,
+      date: userApm.apmDate,
+      time: userApm.apmTime,
+      petName: userApm.petName,
+      petType: userApm.petType,
+      petAge: userApm.petAge,
+      breed: userApm.breed,
+      service: userApm.service,
+    };
+
+    // Calls and pass schedData to schedSlice
+    dispatch(createSchedule(schedData));
+    // Calls and pass userData to authSlice
+
+    dispatch(register(userData));
+  };
   console.log(newUser);
+  console.log("=============");
   console.log(userApm);
-  console.log("sadsa");
+
+  if (isLoading) {
+    return <Spinner />;
+  }
+
   return (
     <>
       <Header />
@@ -170,7 +221,11 @@ function RegisterX() {
                 </div>
                 {/*  */}
                 <div class="carousel-item">
-                  <ConfirmDetails newUser={newUser} userApm={userApm} />
+                  <ConfirmDetails
+                    newUser={newUser}
+                    userApm={userApm}
+                    handleSubmit={handleSubmit}
+                  />
                 </div>
               </div>
             </div>

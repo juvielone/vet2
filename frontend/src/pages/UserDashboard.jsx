@@ -7,9 +7,8 @@ import Samp from "../components/Samp";
 import Spinner from "../components/Spinner";
 import Header from "../components/Header";
 import { getAppointments, reset } from "../features/appointment/apmSlice";
-import avatar from "../img/avatar.png";
-import faqIcon from "../img/faqIcon.svg";
-import instructionsIcon from "../img/instructions-icon.svg";
+import { getSchedules } from "../features/schedule/schedSlice";
+import ScheduleCard from "../components/user/scheduleCard";
 import "./css/user.css";
 
 const UserDashboard = () => {
@@ -24,6 +23,7 @@ const UserDashboard = () => {
     (state) => state.appointment
   );
 
+  const { schedule } = useSelector((state) => state.schedule);
   useEffect(() => {
     if (isError) {
       toast.error(message);
@@ -35,14 +35,10 @@ const UserDashboard = () => {
       navigate("/login");
     }
 
-    // Notifications
-    // toast.success(`Welcome ${user.fname}`, {
-    //   position: toast.POSITION.TOP_CENTER,
-    //   toastId: user.email
-    // });
-
     // Fetch appointments
     dispatch(getAppointments());
+    const userEmail = user.email.toString();
+    dispatch(getSchedules(userEmail));
 
     // Clear appointment state when user unmounts(leave) the dashboard
     return () => {
@@ -54,6 +50,9 @@ const UserDashboard = () => {
     return <Spinner />;
   }
 
+  const latestSched = schedule.length - 1;
+  const latestResult = schedule.slice(latestSched, latestSched + 1);
+  console.log(latestResult);
   return (
     <>
       <Header bgColor={"#867DD9"} />
@@ -105,94 +104,14 @@ const UserDashboard = () => {
             </div>
 
             {/* Appointment Content Preview ===================================================== */}
+            {/* {schedule.map((sched) => (
+              <ScheduleCard sched={sched} />
+            ))} */}
 
-            <div className="col-lg-6 row mt-5">
-              <div class="card card-appointment">
-                <div class="card-body">
-                  <h3>
-                    {" "}
-                    <i class="bi bi-check-circle-fill me-3"></i> Appointment
-                    Booked !
-                  </h3>
-                  <p className="ms-5 pt-2">
-                    Please check your email for updates and reminders
-                  </p>
-                  <div className="card-line ms-3"></div>
-                  <div className="row pt-2">
-                    <span className="fs-5 pb-3" style={{ color: "#585252" }}>
-                      Booked for
-                    </span>
-                    <div className="col-lg-6 fs-5">
-                      {/* Pet Name */}
-                      <p>
-                        <span style={{ color: "#585252" }}>Pet Name: </span>
-                        <span className="fw-bold">Sachi </span>
-                      </p>
-
-                      {/* Pet Type */}
-                      <p>
-                        <span style={{ color: "#585252" }}>Pet Type: </span>
-                        <span className="fw-bold">Dog </span>
-                      </p>
-
-                      {/* Breed */}
-                      <p>
-                        <span style={{ color: "#585252" }}>Breed: </span>
-                        <span className="fw-bold">Shitxu </span>
-                      </p>
-                    </div>
-                    {/* Service */}
-                    <div className="col-lg-6 fs-5">
-                      {/* Pet Service */}
-                      <p>
-                        <span style={{ color: "#585252" }}>Pet Service: </span>
-                        <span className="fw-bold">Vaccine </span>
-                      </p>
-
-                      {/* Pet Fee */}
-                      <p>
-                        <span style={{ color: "#585252" }}>Pet Fee: </span>
-                        <span className="fw-bold">500.00 </span>
-                      </p>
-                    </div>
-                  </div>
-                  {/* Date and Button */}
-                  <div className="row mt-2">
-                    <div className="col-lg-6">
-                      <p className="fs-5">Date and Time</p>
-                      <p className="fw-bold fs-6">6:00 AM Sat, 08 Feb 2023</p>
-                    </div>
-                    <div className="col-lg-6 d-grid">
-                      {" "}
-                      <button
-                        className="btn btn-outline-primary mt-3"
-                        style={{ height: "3rem" }}
-                      >
-                        <h5>Reschedule</h5>
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Instruction CTA Button */}
-              <button className="btn col-lg-6 mb-5 profile-cta ">
-                <img
-                  className="me-5"
-                  src={instructionsIcon}
-                  style={{ width: "10rem" }}
-                />
-              </button>
-              {/* FAQ CTA Button */}
-              <button className="btn col-lg-6 mb-5 profile-cta ">
-                <img
-                  className="me-5"
-                  src={faqIcon}
-                  style={{ width: "9rem", marginLeft: "2rem" }}
-                />
-              </button>
-            </div>
-
+            {/* Render Latest Schedule */}
+            {latestResult.map((sched) => (
+              <ScheduleCard current={sched} />
+            ))}
             {/* <div className="col-lg-6 row mt-5 pb-5 app-form app-content">
               <div className="col-lg-10 col-sm-6 col-xs-6">
                 <h4>My Appointment</h4>

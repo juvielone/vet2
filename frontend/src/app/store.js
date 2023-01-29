@@ -1,12 +1,14 @@
-import { configureStore } from '@reduxjs/toolkit';
-import authReducer from '../features/auth/authSlice';
-import apmReducer from '../features/appointment/apmSlice';
-import adminReducer from '../features/admin/adminSlice';
+import { configureStore } from "@reduxjs/toolkit";
+import authReducer from "../features/auth/authSlice";
+import apmReducer from "../features/appointment/apmSlice";
+import adminReducer from "../features/admin/adminSlice";
+import schedReducer from "../features/schedule/schedSlice";
 
 export const store = configureStore({
   reducer: {
     auth: authReducer,
     appointment: apmReducer,
-    admin: adminReducer
+    admin: adminReducer,
+    schedule: schedReducer,
   },
 });

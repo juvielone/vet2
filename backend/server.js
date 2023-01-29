@@ -1,12 +1,12 @@
-const path = require('path');
-const express = require('express');
-const colors = require('colors');
-const dotenv = require('dotenv').config();
-const { errorHandler } = require('./middleware/errorMid');
-const connectDB = require('./config/db');
+const path = require("path");
+const express = require("express");
+const colors = require("colors");
+const dotenv = require("dotenv").config();
+const { errorHandler } = require("./middleware/errorMid");
+const connectDB = require("./config/db");
 const app = express();
 
-const port = process.env.PORT || 5000
+const port = process.env.PORT || 5000;
 
 //Connect to database
 connectDB();
@@ -15,17 +15,17 @@ connectDB();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-
 // Main (http://localhost:Port/)
 // Appointment
-app.use('/api/appointment', require('./routes/appointRoute'));
-// Owners 
-app.use('/api/', require('./routes/ownerRoute'));
+app.use("/api/appointment", require("./routes/appointRoute"));
+// Owners
+app.use("/api/", require("./routes/ownerRoute"));
+
+// Schedule
+app.use("/api/schedule", require("./routes/schedRoute"));
 
 // Admin
-app.use('/admin/', require('./routes/adminRoute'));
-
-
+app.use("/admin/", require("./routes/adminRoute"));
 
 // Serve frontend
 // if (process.env.NODE_ENV === 'production') {
@@ -40,14 +40,9 @@ app.use('/admin/', require('./routes/adminRoute'));
 //     app.get('/', (req, res) => res.send('Please set to production'));
 // }
 
-
-
-
-
 // @desc implement default error handling in express
-app.use(errorHandler)
-
+app.use(errorHandler);
 
 app.listen(port, () => {
-    console.log(`Server port is running at port ${port}`)
-})
+  console.log(`Server port is running at port ${port}`);
+});

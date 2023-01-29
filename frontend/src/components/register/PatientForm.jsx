@@ -12,7 +12,8 @@ const PatientForm = ({
   petOptions,
   // submitAppointment,
 }) => {
-  const { fname, lname, addr, mobileNo, email, password, password2 } = newUser;
+  const { fname, lname, addr, city, mobileNo, email, password, password2 } =
+    newUser;
   const { petName, petAge, breed, petType, service } = userApm;
   // Slide validation
   let isComplete = false;
@@ -22,6 +23,7 @@ const PatientForm = ({
     fname != "" &&
     lname != "" &&
     addr != "" &&
+    city != "" &&
     mobileNo != "" &&
     email != "" &&
     password != "" &&
@@ -80,7 +82,7 @@ const PatientForm = ({
             </div>
 
             {/* Address */}
-            <div class="col-sm-12">
+            <div class="col-sm-8">
               <label for="address" class="form-label">
                 Address
               </label>
@@ -91,7 +93,27 @@ const PatientForm = ({
                 onChange={onChangeOwner}
                 value={addr}
                 name="addr"
-                placeholder="Street No, Brgy. City"
+                placeholder="Street No, Brgy"
+                required
+              />
+              <div class="invalid-feedback">
+                Please enter your complete address.
+              </div>
+            </div>
+
+            {/* City */}
+            <div class="col-sm-4">
+              <label for="address" class="form-label">
+                City
+              </label>
+              <input
+                type="text"
+                class="form-control"
+                id="city"
+                onChange={onChangeOwner}
+                value={city}
+                name="city"
+                placeholder="City"
                 required
               />
               <div class="invalid-feedback">
