@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import Spinner from "../../components/Spinner";
 import {
   getOne,
   reset,
@@ -74,17 +75,24 @@ const ApmForm = ({ apm }) => {
   };
 
   // Call user admin
-  const { oneUser, isError, message } = useSelector((state) => state.admin);
+  const { oneUser, isError, message, isLoading } = useSelector(
+    (state) => state.admin
+  );
 
   const handleClick = () => {
-    const apmUserId = apm.user.toString();
-    dispatch(getOne(apmUserId));
+    const apmEmail = "asdas";
+    dispatch(getOne(apm.email));
+    console.log(apm.email);
   };
 
   //   Btn Modal ID's
   const apmId = apm._id.toString().slice(0, 5);
   const modalId = petName + apmId;
-  console.log(oneUser);
+
+  if (isLoading) {
+    return <Spinner />;
+  }
+
   return (
     <>
       <button
@@ -246,9 +254,6 @@ const ApmForm = ({ apm }) => {
                   />
                 </div>
                 <div class="modal-footer">
-                  <button class="btn btn-primary" disabled>
-                    Reschedule
-                  </button>
                   <button onClick={handleUpdate} class="btn btn-success">
                     Approve
                   </button>

@@ -1,55 +1,49 @@
-import axios from 'axios'
+import axios from "axios";
 
 // admin/owners
-const API_URL = '/admin/'
+const API_URL = "/admin/";
 
 const getUsers = async () => {
+  const response = await axios.get(API_URL + "owners");
 
-    const response = await axios.get(API_URL + "owners")
-
-    return response.data
-}
+  return response.data;
+};
 
 // Create Appointment
 const createApm = async (apmData) => {
+  const response = await axios.post(API_URL + "create/apm", apmData);
 
-    const response = await axios.post(API_URL +"create/apm", apmData)
-
-    return response.data
-
-}
-
-
+  return response.data;
+};
 
 // Get One user data
-const getOne = async (id) => {
+const getOne = async (email) => {
+  const response = await axios.get(API_URL + email);
 
-    const response = await axios.get(API_URL + id)
-
-    return response.data
-}
+  return response.data;
+};
 
 //  Fetch all appointments
 const getAppointments = async () => {
+  const response = await axios.get(API_URL + "sched");
 
-    const response = await axios.get(API_URL + "sched")
-
-    return response.data
-}
-
+  return response.data;
+};
 
 // Update Appointment
 const updateAppointment = async (apmData) => {
-    const apmId = apmData._id.toString();
-    const response = await axios.put(API_URL + apmId, apmData)
+  const apmId = apmData._id.toString();
+  const response = await axios.put(API_URL + apmId, apmData);
 
-    return response.data
-}
-
-
+  return response.data;
+};
 
 const adminService = {
-    getUsers, getAppointments, createApm, updateAppointment, getOne
-}
+  getUsers,
+  getAppointments,
+  createApm,
+  updateAppointment,
+  getOne,
+};
 
 export default adminService;

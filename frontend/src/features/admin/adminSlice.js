@@ -31,18 +31,23 @@ export const getUsers = createAsyncThunk(
 );
 
 // Fetch One User
-export const getOne = createAsyncThunk("admin/getOne", async (id, thunkAPI) => {
-  try {
-    return await adminService.getOne(id);
-  } catch (error) {
-    const message =
-      (error.response && error.response.data && error.response.data.message) ||
-      error.message ||
-      error.toString();
+export const getOne = createAsyncThunk(
+  "admin/getOne",
+  async (email, thunkAPI) => {
+    try {
+      return await adminService.getOne(email);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
 
-    return thunkAPI.rejectWithValue(message);
+      return thunkAPI.rejectWithValue(message);
+    }
   }
-});
+);
 
 // Fetch Appointment
 export const getAppointments = createAsyncThunk(
@@ -163,7 +168,7 @@ export const adminSlice = createSlice({
         state.message = action.payload;
       })
 
-       // 
+      //
       // Add Appointments =====================================
       .addCase(addAppointments.pending, (state) => {
         state.isLoading = true;
@@ -171,7 +176,7 @@ export const adminSlice = createSlice({
       .addCase(addAppointments.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
-        state.appointments.push(action.payload)
+        state.appointments.push(action.payload);
       })
 
       .addCase(addAppointments.rejected, (state, action) => {
