@@ -1,6 +1,7 @@
 import moment from "moment";
 import instructionsIcon from "../../img/instructions-icon.svg";
 import faqIcon from "../../img/faqIcon.svg";
+import ReschedBtn from "../user/reschedBtn";
 
 const ScheduleCard = ({ current }) => {
   const isDone = current.apmStatus == "Done" ? true : false;
@@ -75,12 +76,13 @@ const ScheduleCard = ({ current }) => {
                   </div>
                   <div className="col-lg-6 d-grid">
                     {" "}
-                    <button
+                    {/* <button
                       className="btn btn-outline-primary mt-3"
                       style={{ height: "3rem" }}
                     >
                       <h5>Reschedule</h5>
-                    </button>
+                    </button> */}
+                    <ReschedBtn currentApm={current} />
                   </div>
                 </div>
               </>

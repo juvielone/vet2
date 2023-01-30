@@ -29,14 +29,12 @@ export const createSchedule = createAsyncThunk(
   }
 );
 
-// Update Goals
+// Update Schedule
 export const updateSchedules = createAsyncThunk(
   "schedule/update",
   async (apmData, thunkAPI) => {
     try {
-      // Get token from another state(slice) using thunkAPI
-      const token = thunkAPI.getState().auth.user.token;
-      return await schedService.updateApm(apmData, token);
+      return await schedService.updateSchedule(apmData);
     } catch (error) {
       const message =
         (error.response &&

@@ -9,19 +9,10 @@ const createSched = async (apmData) => {
   return response.data;
 };
 
-// Update Appointment
-const updateApm = async (apmData, token) => {
-  const config = {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  };
-
-  const response = await axios.put(
-    `/api/appointment/${apmData._id}`,
-    apmData,
-    config
-  );
+// Update Schedule
+const updateSchedule = async (apmData) => {
+  const apmId = apmData._id.toString();
+  const response = await axios.put(API_URL + apmId, apmData);
 
   return response.data;
 };
@@ -36,7 +27,7 @@ const getSched = async (userEmail) => {
 const apmService = {
   createSched,
   getSched,
-  updateApm,
+  updateSchedule,
 };
 
 export default apmService;
