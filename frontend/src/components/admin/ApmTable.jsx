@@ -31,7 +31,7 @@ const ApmTable = ({ appointments }) => {
               <th scope="col">Time</th>
               <th scope="col">Status</th>
               <th scope="col">Service</th>
-              <th scope="col">User</th>
+              <th scope="col">User Email</th>
               <th scope="col">Action</th>
             </tr>
           </thead>
@@ -39,7 +39,7 @@ const ApmTable = ({ appointments }) => {
             {appointments.map((apm) => (
               <tr>
                 {/* APM No */}
-                <td>UXD598527451</td>
+                <td>{apm._id.toString().slice(0, 8).toUpperCase()}</td>
                 {/* APM Date */}
                 <td>{moment(apm.date).format("LL")}</td>
                 {/* APM Time */}
@@ -49,7 +49,7 @@ const ApmTable = ({ appointments }) => {
                 {/* APM Service */}
                 <td>{apm.service}</td>
                 {/* User Email */}
-                <td>jj@gmail.com</td>
+                <td>{apm.email}</td>
                 <td>
                   {/* View Button ========================================*/}
                   <ApmForm key={apm._id} apm={apm} />

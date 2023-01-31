@@ -6,6 +6,7 @@ import { addAppointments, reset } from "../../../features/admin/adminSlice";
 
 // CALENDAR IMPORT
 import { Calendar as CalDate, dateFnsLocalizer } from "react-big-calendar";
+import moment from "moment";
 import format from "date-fns/format";
 import parse from "date-fns/parse";
 import startOfWeek from "date-fns/startOfWeek";
@@ -15,7 +16,6 @@ import "react-big-calendar/lib/css/react-big-calendar.css";
 
 // Other Packeges
 import { toast } from "react-toastify";
-
 
 import AdminNav from "../AdminNav";
 import CalModal from "./CalModal";
@@ -33,10 +33,9 @@ const localizer = dateFnsLocalizer({
 });
 
 function Calendar() {
-   // Initialize Navigate  & Dispatch
+  // Initialize Navigate  & Dispatch
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
 
   // Call user admin
   const { appointments, isLoading, isError, message } = useSelector(
@@ -44,65 +43,68 @@ function Calendar() {
   );
 
   // Maps events
-  const events= appointments.map((apm)=>{
+  const events = appointments.map((apm) => {
+    // Merge DATE & TIME ============================================
+    // Data from appointment time
+    var time = apm.time;
+    // Convert to 24 hour format
+    var newTime = moment(time, ["h:mm A"]).format("HH:mm");
+    // Get Only Hour and Convert to Number
+    var apmHour = Number(newTime.slice(0, 2));
+    // Get Only Min and Convert to Number
+    var apmMin = newTime.slice(3);
+
+    // MERGE
+    var formatDate = moment(apm.date)
+      .set("hour", apmHour)
+      .set("minute", apmMin);
     return {
-      title:apm.service,
-      start: new Date(apm.date),
+      title: apm.service,
+      // start: new Date(apm.date),
+      start: new Date(formatDate),
       end: new Date(apm.date),
-      allDay: false
-    }
-  })
+      allDay: false,
+    };
+  });
 
   console.log(events);
-  
 
   // Handle Form Call back
   const handleForm = (formData) => {
     console.log(formData);
     dispatch(addAppointments(formData));
-
-  }
+  };
 
   useEffect(() => {
-    // Handles error 
-    if(isError){
+    // Handles error
+    if (isError) {
       toast.error(message);
     }
-    dispatch(reset())
-  },[isError]);
+    dispatch(reset());
+  }, [isError]);
 
-//   Loader 
+  //   Loader
   if (isLoading || !appointments.length === 0) {
     return <Spinner />;
   }
 
- 
   return (
     <Fragment>
-
-
-      <AdminNav/>
-      <div className="container mt-2 pb-5" 
-      style={{position: "relative", left:"8rem",
-      height: "100%"
-      }}
+      <AdminNav />
+      <div
+        className="container mt-2 pb-5"
+        style={{ position: "relative", left: "8rem", height: "100%" }}
       >
-        
-        <CalModal handleForm={handleForm}/>
-   
-      <CalDate
-        localizer={localizer}
-        events={events}
-        startAccessor="start"
-        endAccessor="end"
-        style={{ height: "700px", margin: "50px" }}
+        <CalModal handleForm={handleForm} />
+
+        <CalDate
+          localizer={localizer}
+          events={events}
+          startAccessor="start"
+          endAccessor="end"
+          style={{ height: "700px", margin: "50px" }}
         />
-
-
       </div>
-
-      
-
     </Fragment>
   );
 }
