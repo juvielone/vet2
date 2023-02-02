@@ -3,6 +3,7 @@ import authReducer from "../features/auth/authSlice";
 import apmReducer from "../features/appointment/apmSlice";
 import adminReducer from "../features/admin/adminSlice";
 import schedReducer from "../features/schedule/schedSlice";
+import timeReducer from "../features/time/timeSlice";
 
 export const store = configureStore({
   reducer: {
@@ -10,5 +11,6 @@ export const store = configureStore({
     appointment: apmReducer,
     admin: adminReducer,
     schedule: schedReducer,
+    timeslot: timeReducer,
   },
 });

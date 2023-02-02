@@ -38,6 +38,13 @@ const updateAppointment = async (apmData) => {
   return response.data;
 };
 
+// Create TimeSlot
+const createTimeSlot = async (apmData) => {
+  const response = await axios.post(API_URL + "timeslot", apmData);
+
+  return response.data;
+};
+
 const adminService = {
   getUsers,
   getAppointments,

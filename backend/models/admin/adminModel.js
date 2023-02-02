@@ -17,16 +17,6 @@ const adminSchema = mongoose.Schema({
   },
 
   filterDate: [{ date: Date }],
-
-  filterTime: [{ time: String }],
-
-  service: [
-    {
-      service_name: String,
-      service_desc: String,
-      service_price: Number,
-    },
-  ],
 });
 
 module.exports = mongoose.model("Admin", adminSchema);
