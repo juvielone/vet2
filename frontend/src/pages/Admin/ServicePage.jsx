@@ -1,8 +1,67 @@
-import React from "react";
-import ServiceForm from "../../components/admin/ServiceForm";
+import React, { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  createSrv,
+  getAllSrv,
+  deleteSrv,
+  updateSrv,
+  reset,
+} from "../../features/service/srvSlice";
+
 import AdminNav from "./AdminNav";
+import ServiceForm from "../../components/admin/ServiceForm";
+import EditService from "../../components/admin/EditService";
 
 const ServicePage = () => {
+  // Initialize Navigate  & Dispatch
+  const dispatch = useDispatch();
+
+  // Initial States  ===================================
+  const [srvData, setSrvData] = useState({
+    serviceName: "",
+    serviceDesc: "",
+    serviceFee: "",
+  });
+
+  // Modal for creating services
+  const [show, setShow] = useState(false);
+
+  const handleSubmit = () => {
+    dispatch(createSrv(srvData));
+    setShow(false);
+  };
+
+  const handleDelete = (id) => {
+    dispatch(deleteSrv(id));
+    console.log(id);
+  };
+
+  const handleUpdate = (srvData) => {
+    // Update Data
+    dispatch(updateSrv(srvData));
+    // Refresh component
+    window.location.reload(false);
+  };
+
+  // Call service
+  const { service, isLoading, isError, message } = useSelector(
+    (state) => state.service
+  );
+  useEffect(() => {
+    if (isError) {
+      console.log(message);
+    }
+
+    // Fetch all service
+    dispatch(getAllSrv());
+
+    // Clear appointment state when user unmounts(leave) the dashboard
+    return () => {
+      dispatch(reset());
+    };
+  }, [isError, message, dispatch]);
+  console.log(srvData);
+
   return (
     <>
       <AdminNav />
@@ -18,7 +77,13 @@ const ServicePage = () => {
           }}
         >
           <span className="pt-5 pb-3">
-            <ServiceForm />
+            <ServiceForm
+              srvData={srvData}
+              setSrvData={setSrvData}
+              handleSubmit={handleSubmit}
+              show={show}
+              setShow={setShow}
+            />
           </span>
           <table class="table table-striped table-sm">
             <thead className="table-dark">
@@ -33,78 +98,39 @@ const ServicePage = () => {
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <th scope="row">1</th>
-                <td>Vaccine</td>
-                <td style={{ width: "25rem" }}>
-                  <p>
-                    Vaccinations protect your dog against diseases, some of
-                    which are life threatening and can be easily spread to other
-                    dogs. Your puppy’s first vaccination will normally be at
-                    about eight weeks of age, with a second dose at 10-12 weeks.
-                    Your puppy won’t have full protection until two weeks after
-                    the second vaccination takes effect.
-                  </p>
-                </td>
-                <td style={{ color: "green", fontWeight: "bold" }}>545.00</td>
-                <td>
-                  <button type="button" className="btn btn-dark">
-                    <i class="bi bi-pencil-square pe-2"></i>
-                    Edit
-                  </button>
-                  <button type="button" className="btn btn-danger ms-3">
-                    <i class="bi bi-trash3 pe-2"></i>
-                    Delete
-                  </button>
-                </td>
-              </tr>
-              <tr>
-                <th scope="row">2</th>
-                <td>Grooming</td>
-                <td>
-                  <p>
-                    Hygienic care and cleaning of a dog, as well as a process by
-                    which a dog's physical appearance is enhanced for showing or
-                    other types of competition. A dog groomer (or simply
-                    "groomer") is a person who earns their living grooming dogs.
-                  </p>
-                </td>
-                <td style={{ color: "green", fontWeight: "bold" }}>450.00</td>
-                <td>
-                  <button type="button" className="btn btn-dark">
-                    <i class="bi bi-pencil-square pe-2"></i>
-                    Edit
-                  </button>
-                  <button type="button" className="btn btn-danger ms-3">
-                    <i class="bi bi-trash3 pe-2"></i>
-                    Delete
-                  </button>
-                </td>
-              </tr>
-              <tr>
-                <th scope="row">3</th>
-                <td>Check-Up</td>
-                <td>
-                  <p>
-                    Wellness exams for pets and they are your cat or dog's best
-                    opportunity to achieve long-term health and a high-quality
-                    life. However, you may be asking yourself, what happens at
-                    pet checkups to make them so important for my pet? Today our
-                    Front Worth veterinarians answer that question.
-                  </p>
-                </td>
-                <td style={{ color: "green", fontWeight: "bold" }}>650.00</td>
-                <td>
-                  <button type="button" className="btn btn-dark">
-                    <i class="bi bi-pencil-square pe-2"></i>
-                    Edit
-                  </button>
-                  <button type="button" className="btn btn-danger ms-3">
-                    <i class="bi bi-trash3 pe-2"></i>
-                    Delete
-                  </button>
-                </td>
-              </tr>
+              {/* Service from DB ======================== */}
+              {service.map((srv, index) => (
+                <tr>
+                  <th scope="row">1</th>
+                  <td>{srv.srvName}</td>
+                  <td style={{ width: "25rem" }}>
+                    <p>{srv.srvDesc}</p>
+                  </td>
+                  <td style={{ color: "green", fontWeight: "bold" }}>
+                    {srv.srvFee}
+                  </td>
+                  <td>
+                    {/* <button type="button" className="btn btn-dark">
+                      <i class="bi bi-pencil-square pe-2"></i>
+                      Edit
+                    </button> */}
+                    <EditService
+                      service={srv}
+                      handleUpdate={handleUpdate}
+                      index={index}
+                    />
+
+                    <button
+                      type="button"
+                      className="btn btn-danger ms-3"
+                      onClick={() => handleDelete(srv._id)}
+                    >
+                      <i class="bi bi-trash3 pe-2"></i>
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>

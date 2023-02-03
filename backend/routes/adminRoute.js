@@ -16,6 +16,12 @@ const {
   updateTime,
   sendDefaultTime,
 } = require("../controllers/timeSlotController");
+const {
+  sendService,
+  getAllService,
+  deleteService,
+  updateService,
+} = require("../controllers/serviceController");
 
 // http://localhost:Port/admin/
 
@@ -34,6 +40,12 @@ router.route("/timeslot/default").post(sendDefaultTime);
 
 // Delete timeslot
 router.route("/timeslot/:id").delete(deleteTime).put(updateTime);
+
+// Create and read Services
+router.route("/service").get(getAllService).post(sendService);
+
+// Update and Delete Specific Service
+router.route("/service/:id").put(updateService).delete(deleteService);
 
 // Get Certain User
 router.route("/:email").get(getOne);
