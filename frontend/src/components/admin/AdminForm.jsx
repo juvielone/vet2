@@ -1,17 +1,41 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { loginAdmin, reset } from "../../features/admin/adminSlice";
 
 const AdminForm = () => {
-  // Initialize Navigate
+  // Initialize Navigate and Dispatch
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const [userData, setUserData] = useState({
     userId: "",
     password: "",
   });
+  const { userId, password } = userData;
   const [close, setClose] = useState("");
 
-  const { userId, password } = userData;
+  // Calling states using useSelector
+  const { adminUser, isLoading, isError, isSuccess, message } = useSelector(
+    (state) => state.admin
+  );
+  // UseEffect =====================================================
+  useEffect(() => {
+    if (isError) {
+      toast.error(message);
+    }
+
+    // If registration is success navigate to dashboard
+    if (isSuccess && adminUser) {
+      navigate("/admin");
+    }
+
+    // calls reset reducer after either of two are called
+    dispatch(reset());
+  }, [adminUser, isError, isSuccess, message, navigate, dispatch]);
+
+  // UseEffect =====================================================
 
   const handleChange = (e) => {
     setUserData((prevState) => ({
@@ -22,13 +46,10 @@ const AdminForm = () => {
 
   // data-bs-dismiss="modal"
   const onSubmit = (e) => {
-    if (userId === "admin" && password === "admin") {
-      setClose()
-      navigate("/admin");
-      toast.success("Welcome Admin");
-    } else {
-      toast.error("Invalid admin credentials");
-    }
+    e.preventDefault();
+    const userData = { userId, password };
+    dispatch(loginAdmin(userData));
+    // console.log(userData);
   };
 
   return (
@@ -57,7 +78,7 @@ const AdminForm = () => {
               ></button>
             </div>
             <div class="modal-body">
-              <form>
+              <form onSubmit={onSubmit}>
                 <div class="form-floating">
                   {/* User Id */}
                   <input
@@ -83,10 +104,11 @@ const AdminForm = () => {
                   <label for="floatingPassword">Password</label>
                 </div>
 
-                <button class="w-100 btn btn-lg btn-primary" 
-                type="button" 
-                data-bs-dismiss="modal"
-                onClick={onSubmit} >
+                <button
+                  class="w-100 btn btn-lg btn-primary"
+                  type="submit"
+                  data-bs-dismiss="modal"
+                >
                   Sign in
                 </button>
                 <p class="mt-5 mb-3 text-muted">

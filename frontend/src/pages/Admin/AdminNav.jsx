@@ -1,7 +1,11 @@
 import { Fragment } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { addAppointments } from "../../features/admin/adminSlice";
+import {
+  addAppointments,
+  logout,
+  reset,
+} from "../../features/admin/adminSlice";
 import logo from "../../img/vetlogo.png";
 import CalModal from "./calendar/CalModal";
 
@@ -13,6 +17,12 @@ function AdminNav({ handleFilter }) {
   const handleForm = (formData) => {
     console.log(formData);
     dispatch(addAppointments(formData));
+  };
+
+  const onLogout = () => {
+    dispatch(logout());
+    navigate("/");
+    dispatch(reset);
   };
 
   return (
@@ -27,7 +37,7 @@ function AdminNav({ handleFilter }) {
         </nav>
         <div className="navbar-nav">
           <div className="nav-item text-nowrap">
-            <a className="nav-link px-3" href="#">
+            <a className="nav-link px-3" onClick={onLogout}>
               Sign out
             </a>
           </div>

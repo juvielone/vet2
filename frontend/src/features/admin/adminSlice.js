@@ -1,7 +1,10 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import adminService from "./adminService";
+// Get user from localStorage
+const adminUser = JSON.parse(localStorage.getItem("adminUser"));
 
 const initialState = {
+  adminUser: adminUser ? adminUser : null,
   users: [],
   oneUser: null,
   appointments: [],
@@ -106,6 +109,40 @@ export const updateAppointment = createAsyncThunk(
   }
 );
 
+// Login Admin
+// Login
+export const loginAdmin = createAsyncThunk(
+  "admin/login",
+  async (user, thunkAPI) => {
+    try {
+      return await adminService.loginAdmin(user);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+//  Admin Logout
+export const logout = createAsyncThunk("admin/logout", async (_, thunkAPI) => {
+  try {
+    await adminService.logoutAdmin();
+  } catch (error) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) ||
+      error.message ||
+      error.toString();
+
+    return thunkAPI.rejectWithValue(message);
+  }
+});
+
 export const adminSlice = createSlice({
   name: "admin",
   initialState,
@@ -199,6 +236,27 @@ export const adminSlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
+      })
+
+      // Login
+      .addCase(loginAdmin.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(loginAdmin.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.adminUser = action.payload;
+      })
+      .addCase(loginAdmin.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+        state.adminUser = null;
+      })
+
+      // Logout
+      .addCase(logout.fulfilled, (state) => {
+        state.adminUser = null;
       });
   },
 });

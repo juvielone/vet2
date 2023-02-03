@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import UserTable from "../../components/admin/UserTable";
 import ApmTable from "../../components/admin/ApmTable";
 import AdminNav from "./AdminNav";
+import Spinner from "../../components/Spinner";
 
 import {
   getUsers,
@@ -21,13 +22,17 @@ const AdminPanel = ({ handleFilter, viewApm }) => {
   const [filter, setFilter] = useState("Appointment");
 
   // Call user admin
-  const { users, appointments, isLoading, isError, message } = useSelector(
-    (state) => state.admin
-  );
+  const { users, adminUser, appointments, isLoading, isError, message } =
+    useSelector((state) => state.admin);
 
   useEffect(() => {
     if (isError) {
       console.log(message);
+    }
+
+    // Check if user is logged in
+    if (!adminUser) {
+      navigate("/");
     }
 
     // Fetch users
@@ -40,7 +45,7 @@ const AdminPanel = ({ handleFilter, viewApm }) => {
     return () => {
       dispatch(reset());
     };
-  }, [navigate, isError, message]);
+  }, [adminUser, navigate, isError, message, dispatch]);
 
   console.log(filter);
   // Approve Filter
@@ -57,6 +62,10 @@ const AdminPanel = ({ handleFilter, viewApm }) => {
   const rejectFilter = appointments.filter((apm) =>
     apm.apmStatus.includes("Reject")
   );
+
+  if (isLoading) {
+    return <Spinner />;
+  }
 
   return (
     <>

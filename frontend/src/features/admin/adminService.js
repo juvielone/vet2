@@ -45,12 +45,30 @@ const createTimeSlot = async (apmData) => {
   return response.data;
 };
 
+// Login User
+const loginAdmin = async (userData) => {
+  const response = await axios.post(API_URL + "config", userData);
+
+  if (response.data) {
+    localStorage.setItem("adminUser", JSON.stringify(response.data));
+  }
+
+  return response.data;
+};
+
+// Logout Admin
+const logoutAdmin = async () => {
+  localStorage.removeItem("adminUser");
+};
+
 const adminService = {
   getUsers,
   getAppointments,
   createApm,
   updateAppointment,
   getOne,
+  loginAdmin,
+  logoutAdmin,
 };
 
 export default adminService;

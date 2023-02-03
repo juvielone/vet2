@@ -8,7 +8,7 @@ const {
   updateAppoint,
   deleteAppoint,
 } = require("../controllers/adminController");
-const { createAdmin } = require("../controllers/configController");
+const { createAdmin, loginAdmin } = require("../controllers/configController");
 const {
   getAllTime,
   sendTime,
@@ -61,7 +61,7 @@ router.route("/:id").put(updateAppoint).delete(deleteAppoint);
 router.route("/config/dev").post(createAdmin);
 
 // Authenticate admin
-// router.route('/config').post(loginAdmin)
+router.route("/config").post(loginAdmin);
 
 // Update & Authorize Actions
 // router.route('/config').put(updateAdmin)
