@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
-import moment from "moment";
+import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { reset, register } from "../features/auth/authSlice";
 import { createSchedule } from "../features/schedule/schedSlice";
-import { useNavigate } from "react-router-dom";
+import { getTimeSlot } from "../features/time/timeSlice";
+import moment from "moment";
 import { toast } from "react-toastify";
 
 import Header from "../components/Header";
@@ -17,7 +18,7 @@ import "./css/registerX.css";
 function RegisterX() {
   // Date and Time State ==============================
   const [date, setDate] = useState(new Date());
-  const [time, setTime] = useState("");
+  // const [time, setTime] = useState("");
 
   // Onchange appointment
   const onChangeApm = (e) => {
@@ -83,6 +84,9 @@ function RegisterX() {
     (state) => state.auth
   );
 
+  // Call user admin
+  const { time } = useSelector((state) => state.timeslot);
+
   useEffect(() => {
     if (isError) {
       toast.error(message);
@@ -93,9 +97,20 @@ function RegisterX() {
       navigate("/mydashboard");
     }
 
+    //Fetch timeslot only
+    dispatch(getTimeSlot());
+
     // calls reset reducer after either of two are called
     dispatch(reset());
   }, [user, isError, isSuccess, message, navigate, dispatch]);
+
+  // Return array of timeslot if date from DB matches dateRef
+  const regTime = time.filter(
+    (timeSlotDB) =>
+      moment(timeSlotDB.date_ref).format("MM-DD-YYYY") ==
+      moment(userApm.apmDate).format("MM-DD-YYYY")
+  );
+  console.log(regTime);
 
   const handleSubmit = () => {
     console.log("Submit Reached!");
@@ -195,14 +210,13 @@ function RegisterX() {
                     <h3 className="text-center">
                       {moment(userApm.apmDate).format("ddd, MMMM Do YYYY")}
                     </h3>
-                    <h3 className="text-center">{time}</h3>
+                    <h3 className="text-center">{userApm.apmTime}</h3>
                   </div>
                   {/* Date time components */}
                   <DatetimeForm
                     userApm={userApm}
                     setUserApm={setUserApm}
-                    setTime={setTime}
-                    time={time}
+                    filterTime={regTime}
                   />
                 </div>
 

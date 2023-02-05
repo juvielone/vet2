@@ -9,7 +9,7 @@ import {
 import Flatpickr from "react-flatpickr";
 import "flatpickr/dist/themes/material_blue.css";
 import "pure-react-carousel/dist/react-carousel.es.css";
-const DatetimeForm = ({ setTime, time, setUserApm, userApm }) => {
+const DatetimeForm = ({ setUserApm, userApm, filterTime }) => {
   const [dayTime, setDayTime] = useState("AM");
 
   return (
@@ -23,6 +23,10 @@ const DatetimeForm = ({ setTime, time, setUserApm, userApm }) => {
               paddingBottom: "1rem",
             }}
           >
+            <h2 className="me-5 pb-3" style={{ color: "#867DD9" }}>
+              Select Date
+            </h2>
+
             <Flatpickr
               options={{
                 dateFormat: "Y-m-d H:i",
@@ -46,87 +50,37 @@ const DatetimeForm = ({ setTime, time, setUserApm, userApm }) => {
         </div>
         {/* Time */}
         <div className="col-lg-6">
-          <CarouselProvider
-            naturalSlideWidth={50}
-            naturalSlideHeight={25}
-            totalSlides={2}
-            dragEnabled={false}
-            // style={{ backgroundColor: "yellow" }}
-          >
-            <ButtonBack
-              className="btn btn-prev-carousel"
-              onClick={() => setDayTime("AM")}
-            >
-              <i class="bi bi-chevron-left"></i>
-            </ButtonBack>
-            <span className="dayTime">{dayTime}</span>
-            <ButtonNext
-              className="btn btn-next-carousel"
-              onClick={() => setDayTime("PM")}
-            >
-              <i class="bi bi-chevron-right"></i>
-            </ButtonNext>
-            <Slider>
-              <Slide index={0}>
-                <div className="container row timeslot-container">
-                  {/* TimeSlots */}
-                  <div className="col-lg-6">
-                    <button
-                      onClick={() =>
-                        setUserApm({
-                          ...userApm,
-                          apmTime: "10:00",
-                        })
-                      }
-                      className="btn btn-time"
-                    >
-                      10:00
-                    </button>
-                  </div>
-                  <div className="col-lg-6">
-                    <button
-                      onClick={() =>
-                        setUserApm({
-                          ...userApm,
-                          apmTime: "11:00",
-                        })
-                      }
-                      className="btn btn-time"
-                    >
-                      11:00
-                    </button>
-                  </div>
-                  <div className="col-lg-6">
-                    <button
-                      onClick={() =>
-                        setUserApm({
-                          ...userApm,
-                          apmTime: "09:00",
-                        })
-                      }
-                      className="btn btn-time"
-                    >
-                      09:00
-                    </button>
-                  </div>
-                  <div className="col-lg-6">
-                    <button
-                      onClick={() =>
-                        setUserApm({
-                          ...userApm,
-                          apmTime: "08:00",
-                        })
-                      }
-                      className="btn btn-time"
-                    >
-                      08:00
-                    </button>
-                  </div>
+          <h2 className="me-5 ps-5" style={{ color: "#867DD9" }}>
+            Select A Time
+          </h2>
+
+          <div className="container row timeslot-container">
+            {/* TimeSlots */}
+            {filterTime.length <= 0 ? (
+              <div className="text-center pt-5">
+                <i class="bi bi-calendar-x-fill fs-1 text-center"></i>
+                <h3 class="fw-bold mb-0 fs-4 pb-2 ">Sorry no slot available</h3>
+                <p>Please select another date.</p>
+              </div>
+            ) : (
+              filterTime.map((dateTime) => (
+                <div className="col-lg-6">
+                  <button
+                    style={{ width: "6.5rem" }}
+                    onClick={() =>
+                      setUserApm({
+                        ...userApm,
+                        apmTime: dateTime.time,
+                      })
+                    }
+                    className="btn btn-time"
+                  >
+                    {dateTime.time}
+                  </button>
                 </div>
-              </Slide>
-              <Slide index={1}>I am the second Slide.</Slide>
-            </Slider>
-          </CarouselProvider>
+              ))
+            )}
+          </div>
         </div>
       </div>
       {userApm.apmTime != "" && (

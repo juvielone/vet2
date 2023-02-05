@@ -27,7 +27,7 @@ const AdminForm = () => {
     }
 
     // If registration is success navigate to dashboard
-    if (isSuccess && adminUser) {
+    if (adminUser) {
       navigate("/admin");
     }
 
