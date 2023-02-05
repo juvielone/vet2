@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { reset, register } from "../features/auth/authSlice";
 import { createSchedule } from "../features/schedule/schedSlice";
 import { getTimeSlot } from "../features/time/timeSlice";
+import { getAllSrv } from "../features/service/srvSlice";
 import moment from "moment";
 import { toast } from "react-toastify";
 
@@ -16,10 +17,6 @@ import ConfirmDetails from "../components/register/ConfirmDetails";
 import "./css/registerX.css";
 
 function RegisterX() {
-  // Date and Time State ==============================
-  const [date, setDate] = useState(new Date());
-  // const [time, setTime] = useState("");
-
   // Onchange appointment
   const onChangeApm = (e) => {
     setUserApm((prevState) => ({
@@ -36,13 +33,12 @@ function RegisterX() {
     }));
   };
 
-  // Services Options
-  const serviceOptions = [
-    { value: "", label: "Select Service" },
-    { value: "Vaccine", label: "Vaccine" },
-    { value: "Check-up", label: "Check-up" },
-    { value: "Grooming", label: "Grooming" },
-  ];
+  // const serviceOptions = [
+  //   { value: "", label: "Select Service" },
+  //   { value: "Vaccine", label: "Vaccine" },
+  //   { value: "Check-up", label: "Check-up" },
+  //   { value: "Grooming", label: "Grooming" },
+  // ];
 
   // Pet Options
   const petOptions = [
@@ -64,6 +60,30 @@ function RegisterX() {
     password2: "",
   });
 
+  // Initialize Navigate  & Dispatch
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  // Calling auth selector
+  const { user, isLoading, isError, isSuccess, message } = useSelector(
+    (state) => state.auth
+  );
+
+  // Call time selector
+  const { time } = useSelector((state) => state.timeslot);
+
+  // Call service selector
+  const { service } = useSelector((state) => state.service);
+  // Services Options
+  const db = service.map((srv) => ({
+    value: srv.srvName,
+    label: srv.srvName,
+  }));
+
+  // Service Map
+  const serviceOP = [{ value: "", label: "Select Service" }, ...db];
+  console.log(serviceOP);
+
   // Appointment State ==============================
   const [userApm, setUserApm] = useState({
     apmDate: new Date(),
@@ -72,20 +92,8 @@ function RegisterX() {
     petType: petOptions[0].value,
     petAge: "",
     breed: "",
-    service: serviceOptions[0].value,
+    service: serviceOP[0].value,
   });
-
-  // Initialize Navigate  & Dispatch
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-
-  // Calling states using useSelector
-  const { user, isLoading, isError, isSuccess, message } = useSelector(
-    (state) => state.auth
-  );
-
-  // Call user admin
-  const { time } = useSelector((state) => state.timeslot);
 
   useEffect(() => {
     if (isError) {
@@ -100,6 +108,9 @@ function RegisterX() {
     //Fetch timeslot only
     dispatch(getTimeSlot());
 
+    // Fetch all service
+    dispatch(getAllSrv());
+
     // calls reset reducer after either of two are called
     dispatch(reset());
   }, [user, isError, isSuccess, message, navigate, dispatch]);
@@ -110,7 +121,6 @@ function RegisterX() {
       moment(timeSlotDB.date_ref).format("MM-DD-YYYY") ==
       moment(userApm.apmDate).format("MM-DD-YYYY")
   );
-  console.log(regTime);
 
   const handleSubmit = () => {
     console.log("Submit Reached!");
@@ -142,9 +152,6 @@ function RegisterX() {
 
     dispatch(register(userData));
   };
-  console.log(newUser);
-  console.log("=============");
-  console.log(userApm);
 
   if (isLoading) {
     return <Spinner />;
@@ -228,7 +235,7 @@ function RegisterX() {
                     setUserApm={setUserApm}
                     onChangeOwner={onChangeOwner}
                     onChangeApm={onChangeApm}
-                    serviceOptions={serviceOptions}
+                    serviceOptions={serviceOP}
                     petOptions={petOptions}
                     // submitAppointment={submitAppointment}
                   />
