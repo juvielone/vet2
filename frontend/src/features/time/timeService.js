@@ -34,8 +34,8 @@ const deleteTimeSlot = async (timeData) => {
 // Update Appointment
 // Delete TimeSlot
 const updateTimeSlot = async (timeData) => {
-  const timeId = timeData._id.toString();
-  const response = await axios.put(API_URL + timeId);
+  const timeID = timeData._id.toString();
+  const response = await axios.put(API_URL + "/" + timeID, timeData);
 
   return response.data;
 };

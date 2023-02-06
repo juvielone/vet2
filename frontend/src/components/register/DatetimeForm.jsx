@@ -9,8 +9,21 @@ import {
 import Flatpickr from "react-flatpickr";
 import "flatpickr/dist/themes/material_blue.css";
 import "pure-react-carousel/dist/react-carousel.es.css";
-const DatetimeForm = ({ setUserApm, userApm, filterTime }) => {
-  const [dayTime, setDayTime] = useState("AM");
+const DatetimeForm = ({
+  setUserApm,
+  userApm,
+  filterTime,
+  slotID,
+  setSlotID,
+}) => {
+  const handleBtnClick = (dateTime) => {
+    setSlotID({ ...slotID, _id: dateTime._id });
+    setUserApm({
+      ...userApm,
+      apmTime: dateTime.time,
+    });
+    console.log("clicked");
+  };
 
   return (
     <>
@@ -67,13 +80,9 @@ const DatetimeForm = ({ setUserApm, userApm, filterTime }) => {
                 <div className="col-lg-6">
                   <button
                     style={{ width: "6.5rem" }}
-                    onClick={() =>
-                      setUserApm({
-                        ...userApm,
-                        apmTime: dateTime.time,
-                      })
-                    }
+                    onClick={() => handleBtnClick(dateTime)}
                     className="btn btn-time"
+                    disabled={dateTime.status == "Taken" && true}
                   >
                     {dateTime.time}
                   </button>

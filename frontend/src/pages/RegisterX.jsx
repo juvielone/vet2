@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { reset, register } from "../features/auth/authSlice";
 import { createSchedule } from "../features/schedule/schedSlice";
-import { getTimeSlot } from "../features/time/timeSlice";
+import { getTimeSlot, updateTimeSlot } from "../features/time/timeSlice";
 import { getAllSrv } from "../features/service/srvSlice";
 import moment from "moment";
 import { toast } from "react-toastify";
@@ -32,13 +32,6 @@ function RegisterX() {
       [e.target.name]: e.target.value,
     }));
   };
-
-  // const serviceOptions = [
-  //   { value: "", label: "Select Service" },
-  //   { value: "Vaccine", label: "Vaccine" },
-  //   { value: "Check-up", label: "Check-up" },
-  //   { value: "Grooming", label: "Grooming" },
-  // ];
 
   // Pet Options
   const petOptions = [
@@ -80,6 +73,8 @@ function RegisterX() {
     label: srv.srvName,
   }));
 
+  // Get Time Slot ID and update its status
+
   // Service Map
   const serviceOP = [{ value: "", label: "Select Service" }, ...db];
   console.log(serviceOP);
@@ -113,7 +108,7 @@ function RegisterX() {
 
     // calls reset reducer after either of two are called
     dispatch(reset());
-  }, [user, isError, isSuccess, message, navigate, dispatch]);
+  }, [user, updateTimeSlot, isError, isSuccess, message, navigate, dispatch]);
 
   // Return array of timeslot if date from DB matches dateRef
   const regTime = time.filter(
@@ -122,9 +117,14 @@ function RegisterX() {
       moment(userApm.apmDate).format("MM-DD-YYYY")
   );
 
-  const handleSubmit = () => {
-    console.log("Submit Reached!");
+  // Initialize slotime status
+  const [slotID, setSlotID] = useState({
+    _id: "",
+    status: "Taken",
+  });
 
+  const handleSubmit = () => {
+    console.log(slotID);
     const userData = {
       fname: newUser.fname,
       lname: newUser.lname,
@@ -148,9 +148,12 @@ function RegisterX() {
 
     // Calls and pass schedData to schedSlice
     dispatch(createSchedule(schedData));
-    // Calls and pass userData to authSlice
 
+    // Calls and pass userData to authSlice
     dispatch(register(userData));
+
+    // Update Timslot status to taken
+    dispatch(updateTimeSlot(slotID));
   };
 
   if (isLoading) {
@@ -224,6 +227,8 @@ function RegisterX() {
                     userApm={userApm}
                     setUserApm={setUserApm}
                     filterTime={regTime}
+                    slotID={slotID}
+                    setSlotID={setSlotID}
                   />
                 </div>
 

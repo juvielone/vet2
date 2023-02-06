@@ -127,7 +127,7 @@ const PatientForm = ({
                 Mobile Number <span class="text-muted">(Required)</span>
               </label>
               <input
-                type="text"
+                type="number"
                 class="form-control"
                 id="mobileNumber"
                 onChange={onChangeOwner}

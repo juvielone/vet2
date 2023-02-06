@@ -38,7 +38,7 @@ router.route("/timeslot").get(getAllTime).post(sendTime);
 // Create default Slot
 router.route("/timeslot/default").post(sendDefaultTime);
 
-// Delete timeslot
+// Delete and Update timeslot
 router.route("/timeslot/:id").delete(deleteTime).put(updateTime);
 
 // Create and read Services
