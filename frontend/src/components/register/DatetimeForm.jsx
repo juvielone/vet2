@@ -1,11 +1,3 @@
-import { useState } from "react";
-import {
-  CarouselProvider,
-  Slider,
-  Slide,
-  ButtonBack,
-  ButtonNext,
-} from "pure-react-carousel";
 import Flatpickr from "react-flatpickr";
 import "flatpickr/dist/themes/material_blue.css";
 import "pure-react-carousel/dist/react-carousel.es.css";

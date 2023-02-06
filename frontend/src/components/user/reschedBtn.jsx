@@ -1,6 +1,8 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { updateSchedules } from "../../features/schedule/schedSlice";
+import { getTimeSlot } from "../../features/time/timeSlice";
+import moment from "moment";
 
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
@@ -9,7 +11,13 @@ import Flatpickr from "react-flatpickr";
 import "flatpickr/dist/themes/material_blue.css";
 
 const ReschedBtn = ({ currentApm }) => {
+  // Initialize Navigate  & Dispatch
   const dispatch = useDispatch();
+
+  // Calling auth selector
+  // Call time selector
+  const { time } = useSelector((state) => state.timeslot);
+
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -26,17 +34,27 @@ const ReschedBtn = ({ currentApm }) => {
     date: newSched.newDate,
     time: newSched.newTime,
   };
+
+  useEffect(() => {
+    //Fetch timeslot only
+    dispatch(getTimeSlot());
+  }, [dispatch]);
+
+  // Return array of timeslot if date from DB matches dateRef
+  const regTime = time.filter(
+    (timeSlotDB) =>
+      moment(timeSlotDB.date_ref).format("MM-DD-YYYY") ==
+      moment(newSched.newDate).format("MM-DD-YYYY")
+  );
+
   const handleReschedule = () => {
     // Update Pending Schdule
-
     dispatch(updateSchedules(rescheduleData));
-
     // Refresh component
     window.location.reload(false);
+    console.log(rescheduleData);
   };
-
-  console.log(newSched.newDate);
-  console.log(newSched.newTime);
+  console.log(rescheduleData);
 
   return (
     <>
@@ -76,7 +94,37 @@ const ReschedBtn = ({ currentApm }) => {
               }}
             />
             <h5 className="pt-5 fs-5">Pick Time</h5>
-            <button
+            <div className="row">
+              {regTime.length <= 0 ? (
+                <div className="text-center pt-5">
+                  <i class="bi bi-calendar-x-fill fs-1 text-center"></i>
+                  <h3 class="fw-bold mb-0 fs-4 pb-2 ">
+                    Sorry no slot available
+                  </h3>
+                  <p>Please select another date.</p>
+                </div>
+              ) : (
+                regTime.map((dateTime) => (
+                  <div className="col-lg-">
+                    <button
+                      // style={{}}
+                      // onClick={}
+                      onClick={() =>
+                        setNewSched({
+                          ...newSched,
+                          newTime: dateTime.time,
+                        })
+                      }
+                      className="btn btn-time"
+                      disabled={dateTime.status == "Taken" && true}
+                    >
+                      {dateTime.time}
+                    </button>
+                  </div>
+                ))
+              )}
+            </div>
+            {/* <button
               className="btn btn-time"
               onClick={() =>
                 setNewSched({
@@ -86,14 +134,14 @@ const ReschedBtn = ({ currentApm }) => {
               }
             >
               {newSched.newTime}
-            </button>
+            </button> */}
           </Form.Group>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="danger" onClick={handleClose}>
             Cancel Appointment
           </Button>
-          <Button variant="primary" onClick={handleReschedule}>
+          <Button variant="primary" onClick={() => handleReschedule()}>
             Reschedule
           </Button>
         </Modal.Footer>
