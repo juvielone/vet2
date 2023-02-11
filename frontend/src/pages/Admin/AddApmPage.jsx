@@ -1,36 +1,15 @@
 import { Fragment, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { addAppointments } from "../../features/admin/adminSlice";
+import { getAllSrv, reset } from "../../features/service/srvSlice";
 import Datetime from "react-datetime";
 import AdminNav from "./AdminNav";
 import apmFormPic from "../../img/apmForm.svg";
 import "react-datetime/css/react-datetime.css";
+import { useEffect } from "react";
 
 function ApmFormAdmin() {
-  const [userApm, setUserApm] = useState({
-    ownerName: "",
-    ownerAddr: "",
-    petName: "",
-    petType: "",
-    petAge: "",
-    breed: "",
-  });
-
-  const { petName, petType, petAge, breed, ownerName, ownerAddr } = userApm;
-
-  // Options Services
-  const options = [
-    { value: "", text: "--Choose Service--" },
-    { value: "Check Up", text: "Check-Up 🩺" },
-    { value: "Vaccine", text: "Vaccine 💉" },
-    { value: "Grooming", text: "Grooming ✂" },
-  ];
-
-  const [service, setService] = useState(options[0].value);
-  const [date, setDate] = useState(new Date());
-  const dispatch = useDispatch();
-
   const onChange = (e) => {
     setUserApm((prevState) => ({
       ...prevState,
@@ -38,34 +17,75 @@ function ApmFormAdmin() {
     }));
   };
 
+  const dispatch = useDispatch();
+
+  // Call service selector
+  const { service, isLoading, isError, isSuccess, message } = useSelector(
+    (state) => state.service
+  );
+  // Services Options
+  const db = service.map((srv) => ({
+    value: srv.srvName,
+    label: srv.srvName,
+  }));
+
+  const serviceOP = [{ value: "", label: "Select Service" }, ...db];
+
+  const [userApm, setUserApm] = useState({
+    apmEmail: "",
+    apmDate: new Date(),
+    apmTime: "",
+    petName: "",
+    petType: "",
+    petAge: "",
+    breed: "",
+    services: serviceOP[0].value,
+  });
+
+  const {
+    apmEmail,
+    apmDate,
+    apmTime,
+    petName,
+    petType,
+    petAge,
+    breed,
+    services,
+  } = userApm;
+
+  useEffect(() => {
+    if (isError) {
+      toast.error(message);
+    }
+
+    //Fetch timeslot only
+    // dispatch(getTimeSlot());
+
+    // Fetch all service
+    dispatch(getAllSrv());
+
+    // calls reset reducer after either of two are called
+    dispatch(reset());
+  }, []);
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    const apmData = {
-      ownerName,
-      ownerAddr,
-      petName,
-      petType,
-      petAge,
-      breed,
-      service,
-      date,
-    };
-    // Send data to controllers
-    dispatch(addAppointments(apmData));
+    const apmData = {};
+    // dispatch(addAppointments(apmData));
     toast.success("Appointment created successfully");
 
-    console.log(apmData);
+    console.log(userApm);
     //   refresh inputs
     setUserApm({
-      ownerName: "",
-      ownerAddr: "",
+      apmEmail: "",
+      apmDate: new Date(),
+      apmTime: "",
       petName: "",
       petType: "",
       petAge: "",
       breed: "",
+      services: serviceOP[0].value,
     });
-    setService(options[0].value);
-    setDate(new Date());
   };
   return (
     <Fragment>
@@ -93,31 +113,14 @@ function ApmFormAdmin() {
 
                 <div className="col-lg-10">
                   <label for="exampleFormControlInput1" class="form-label">
-                    Owner Name
+                    Patient Email
                   </label>
                   <input
                     className="form-control "
-                    type="text"
-                    name="ownerName"
-                    value={ownerName}
+                    type="email"
+                    name="apmEmail"
+                    value={apmEmail}
                     onChange={onChange}
-                    required
-                  />
-                </div>
-
-                {/* Pet Age */}
-
-                <div className="col-lg-10">
-                  <label for="exampleFormControlInput1" class="form-label">
-                    Complete Address
-                  </label>
-                  <input
-                    className="form-control "
-                    type="text"
-                    name="ownerAddr"
-                    value={ownerAddr}
-                    onChange={onChange}
-                    placeholder="123 Main Street"
                     required
                   />
                 </div>
@@ -162,7 +165,7 @@ function ApmFormAdmin() {
                   </label>
                   <input
                     className="form-control "
-                    type="petAge"
+                    type="number"
                     name="petAge"
                     value={petAge}
                     onChange={onChange}
@@ -196,12 +199,16 @@ function ApmFormAdmin() {
                   <select
                     class="form-select"
                     aria-label="Default select example"
-                    value={service}
-                    onChange={(e) => setService(e.target.value)}
+                    onChange={(e) =>
+                      setUserApm({
+                        ...userApm,
+                        services: e.target.value,
+                      })
+                    }
                   >
-                    {options.map((option) => (
+                    {serviceOP.map((option) => (
                       <option key={option.value} value={option.value}>
-                        {option.text}
+                        {option.label}
                       </option>
                     ))}
                   </select>
@@ -213,10 +220,6 @@ function ApmFormAdmin() {
                   <label for="exampleFormControlInput1" class="form-label">
                     Date and Time
                   </label>
-                  <Datetime
-                    value={date}
-                    onChange={(date) => setDate(date._d)}
-                  />
                 </div>
 
                 <div>
