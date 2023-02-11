@@ -76,14 +76,14 @@ const createAppoint = asyncHandler(async (req, res) => {
 const updateAppoint = asyncHandler(async (req, res) => {
   const id = req.params.id;
 
-  const exist = await Appointment.findById(id);
+  const exist = await Schedule.findById(id);
 
   if (!exist) {
     res.status(400);
     throw new Error("No Appointment exists");
   }
 
-  const updatedApm = await Appointment.findByIdAndUpdate(id, req.body, {
+  const updatedApm = await Schedule.findByIdAndUpdate(id, req.body, {
     new: true,
   });
   res.json(updatedApm);
@@ -93,7 +93,7 @@ const updateAppoint = asyncHandler(async (req, res) => {
 const deleteAppoint = asyncHandler(async (req, res) => {
   const id = req.params.id;
 
-  const exist = await Appointment.findById(id);
+  const exist = await Schedule.findById(id);
 
   if (!exist) {
     res.status(400);

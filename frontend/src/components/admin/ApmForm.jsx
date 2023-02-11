@@ -1,15 +1,24 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import moment from "moment";
+import Flatpickr from "react-flatpickr";
+import "flatpickr/dist/themes/material_blue.css";
 import { useSelector, useDispatch } from "react-redux";
+import { reset, updateAppointment } from "../../features/admin/adminSlice";
 import Spinner from "../../components/Spinner";
-import {
-  getOne,
-  reset,
-  updateAppointment,
-} from "../../features/admin/adminSlice";
 
 const ApmForm = ({ apm }) => {
+  const dateStyle = {
+    borderRadius: "2px",
+    border: "none",
+    borderBottom: "1px solid #E0E0E0",
+    boxShadow: "0 1px 5px -2px rgba(0,0,0,.2)",
+  };
+  // Call user admin
+  const { isLoading } = useSelector((state) => state.admin);
+
   // Initialize  Dispatch
   const dispatch = useDispatch();
+  // console.log(juvie);
 
   const { petName, petType, petAge, breed, service, date, time, _id } = apm;
   //   Update State
@@ -46,17 +55,18 @@ const ApmForm = ({ apm }) => {
 
   const handleUpdate = () => {
     const apmData = {
-      _id,
-      petName: pName,
-      petType: pType,
-      petAge: pAge,
-      breed: breedType,
-      service: services,
+      _id: _id,
+      // petName: pName,
+      // petType: pType,
+      // petAge: pAge,
+      // breed: breedType,
+      // service: services,
       date: pDate,
-      time: time,
+      time: pTime,
       apmStatus: "Approved",
     };
 
+    console.log(apmData);
     dispatch(updateAppointment(apmData));
     // Refresh component upon submission
     window.location.reload(false);
@@ -65,7 +75,7 @@ const ApmForm = ({ apm }) => {
   // Reject Butoon =====================================================================
   const handleReject = () => {
     const apmData = {
-      _id,
+      _id: _id,
       apmStatus: "Cancelled",
     };
 
@@ -74,16 +84,8 @@ const ApmForm = ({ apm }) => {
     window.location.reload(false);
   };
 
-  // Call user admin
-  const { oneUser, isError, message, isLoading } = useSelector(
-    (state) => state.admin
-  );
-
-  const handleClick = () => {
-    const apmEmail = "asdas";
-    dispatch(getOne(apm.email));
-    console.log(apm.email);
-  };
+  // Time Conversion
+  const timeInput = moment(pTime, ["h:mm A"]).format("HH:mm");
 
   //   Btn Modal ID's
   const apmId = apm._id.toString().slice(0, 5);
@@ -100,7 +102,6 @@ const ApmForm = ({ apm }) => {
         className="btn btn-dark"
         data-bs-toggle="modal"
         data-bs-target={"#" + modalId}
-        onClick={handleClick}
       >
         <i class="bi bi-pencil-square pe-3"></i>
         View
@@ -126,9 +127,7 @@ const ApmForm = ({ apm }) => {
                     </li>
                     <li class="page-item">
                       <a class="page-link" href="#">
-                        {oneUser
-                          ? oneUser.fname + " " + oneUser.lname
-                          : "Owner"}
+                        {apm.email}
                       </a>
                     </li>
                   </ul>
@@ -155,8 +154,7 @@ const ApmForm = ({ apm }) => {
                     type="text"
                     name="pName"
                     value={pName}
-                    onChange={onChange}
-                    placeholder="Pet Name"
+                    disabled
                   />
                 </div>
 
@@ -171,8 +169,7 @@ const ApmForm = ({ apm }) => {
                     type="text"
                     name="pType"
                     value={pType}
-                    onChange={onChange}
-                    placeholder="Dog, Cat, Snake"
+                    disabled
                   />
                 </div>
                 {/* Pet Age */}
@@ -186,8 +183,7 @@ const ApmForm = ({ apm }) => {
                     type="petAge"
                     name="pAge"
                     value={pAge}
-                    onChange={onChange}
-                    placeholder="2 Months"
+                    disabled
                   />
                 </div>
 
@@ -201,8 +197,7 @@ const ApmForm = ({ apm }) => {
                     type="text"
                     name="breedType"
                     value={breedType}
-                    onChange={onChange}
-                    placeholder="Golden Retriever, Poodle, Bulldog"
+                    disabled
                   />
                 </div>
 
@@ -212,31 +207,49 @@ const ApmForm = ({ apm }) => {
                     Services
                   </label>
 
-                  <select
+                  <input
                     class="form-select"
                     aria-label="Default select example"
                     value={services}
-                    onChange={(e) => setServices(e.target.value)}
-                  >
-                    {options.map((option) => (
-                      <option key={option.value} value={option.value}>
-                        {option.text}
-                      </option>
-                    ))}
-                  </select>
+                    disabled
+                  ></input>
                 </div>
 
                 {/* Date */}
-                <div className="col-lg-5">
+                {/* <div className="col-lg-5">
                   <label for="exampleFormControlInput1" class="form-label">
-                    Date
+                    Date s
                   </label>
                   <input
                     className="form-control"
                     onChange={onChange}
                     type="date"
                     name="pDate"
-                    value={pDate}
+                    value={new Date(pDate)}
+                  />
+                </div> */}
+                {/* Date ======== */}
+                <div className="col-lg-5">
+                  <label for="exampleFormControlInput1" class="form-label">
+                    Appointment Date
+                  </label>
+                  <Flatpickr
+                    className="form-control"
+                    style={dateStyle}
+                    options={{
+                      defaultDate: pDate,
+                      dateFormat: "Y-m-d ",
+                      inline: false,
+                    }}
+                    name="dateRef"
+                    onChange={(selectedDates, dateStr, instance) => {
+                      const firstDate = selectedDates[0];
+
+                      setUserApm({
+                        ...userApm,
+                        pDate: firstDate,
+                      });
+                    }}
                   />
                 </div>
 
@@ -245,16 +258,31 @@ const ApmForm = ({ apm }) => {
                   <label for="exampleFormControlInput1" class="form-label">
                     Time
                   </label>
-                  <input
-                    className="form-control "
-                    type="time"
+                  <Flatpickr
+                    className="form-control"
+                    style={dateStyle}
+                    options={{
+                      enableTime: true,
+                      noCalendar: true,
+                      dateFormat: "G:i:K",
+                      defaultDate: timeInput,
+                      time_24hr: false,
+                    }}
                     name="pTime"
-                    value={pTime}
-                    onChange={onChange}
+                    onChange={(selectedDates, dateStr, instance) => {
+                      setUserApm({
+                        ...userApm,
+                        pTime: dateStr,
+                      });
+                    }}
                   />
                 </div>
                 <div class="modal-footer">
-                  <button onClick={handleUpdate} class="btn btn-success">
+                  <button
+                    type="button"
+                    onClick={handleUpdate}
+                    class="btn btn-success"
+                  >
                     Approve
                   </button>
                   <button

@@ -135,7 +135,7 @@ const TimeSlotPage = () => {
               >
                 Add Time
               </button>
-              <h1> {moment(slot.dateRef).format("MM-DD-YYYY")}</h1>
+              {/* <h1> {moment(slot.dateRef).format("MM-DD-YYYY")}</h1> */}
             </div>
           </div>
 

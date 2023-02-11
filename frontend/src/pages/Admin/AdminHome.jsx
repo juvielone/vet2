@@ -60,7 +60,7 @@ const AdminPanel = ({ handleFilter, viewApm }) => {
 
   // Reject Filter
   const rejectFilter = appointments.filter((apm) =>
-    apm.apmStatus.includes("Reject")
+    apm.apmStatus.includes("Cancelled")
   );
 
   if (isLoading) {

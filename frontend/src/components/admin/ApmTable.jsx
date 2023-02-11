@@ -20,6 +20,7 @@ const ApmTable = ({ appointments }) => {
       return { color: "black" };
     }
   };
+
   return (
     <>
       <div className="table-responsive">
@@ -31,7 +32,7 @@ const ApmTable = ({ appointments }) => {
               <th scope="col">Time</th>
               <th scope="col">Status</th>
               <th scope="col">Service</th>
-              <th scope="col">User Email</th>
+              <th scope="col">Pet Name</th>
               <th scope="col">Action</th>
             </tr>
           </thead>
@@ -49,9 +50,8 @@ const ApmTable = ({ appointments }) => {
                 {/* APM Service */}
                 <td>{apm.service}</td>
                 {/* User Email */}
-                <td>{apm.email}</td>
+                <td>{apm.petName}</td>
                 <td>
-                  {/* View Button ========================================*/}
                   <ApmForm key={apm._id} apm={apm} />
                 </td>
               </tr>
