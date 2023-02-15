@@ -1,13 +1,17 @@
-import { Fragment, useState } from "react";
+import { Fragment, useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { addAppointments } from "../../features/admin/adminSlice";
+import { createSchedule } from "../../features/schedule/schedSlice";
 import { getAllSrv, reset } from "../../features/service/srvSlice";
-import Datetime from "react-datetime";
+import { getTimeSlot, updateTimeSlot } from "../../features/time/timeSlice";
 import AdminNav from "./AdminNav";
 import apmFormPic from "../../img/apmForm.svg";
-import "react-datetime/css/react-datetime.css";
-import { useEffect } from "react";
+import moment from "moment";
+import Flatpickr from "react-flatpickr";
+import "flatpickr/dist/themes/material_blue.css";
+import "pure-react-carousel/dist/react-carousel.es.css";
+import Spinner from "../../components/Spinner";
 
 function ApmFormAdmin() {
   const onChange = (e) => {
@@ -20,9 +24,17 @@ function ApmFormAdmin() {
   const dispatch = useDispatch();
 
   // Call service selector
-  const { service, isLoading, isError, isSuccess, message } = useSelector(
+  const { service, isError, isSuccess, message } = useSelector(
     (state) => state.service
   );
+
+  // Call time selector
+  const { time } = useSelector((state) => state.timeslot);
+
+  // Call time selector
+  const { schedule, isLoading } = useSelector((state) => state.schedule);
+  console.log(schedule);
+
   // Services Options
   const db = service.map((srv) => ({
     value: srv.srvName,
@@ -58,8 +70,8 @@ function ApmFormAdmin() {
       toast.error(message);
     }
 
-    //Fetch timeslot only
-    // dispatch(getTimeSlot());
+    // Fetch timeslot only
+    dispatch(getTimeSlot());
 
     // Fetch all service
     dispatch(getAllSrv());
@@ -68,25 +80,69 @@ function ApmFormAdmin() {
     dispatch(reset());
   }, []);
 
+  // Return array of timeslot if date from DB matches dateRef
+  const regTime = time.filter(
+    (timeSlotDB) =>
+      moment(timeSlotDB.date_ref).format("MM-DD-YYYY") ==
+      moment(userApm.apmDate).format("MM-DD-YYYY")
+  );
+
+  // Initialize slotime status
+  const [slotID, setSlotID] = useState({
+    _id: "",
+    status: "Taken",
+  });
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    const apmData = {};
     // dispatch(addAppointments(apmData));
     toast.success("Appointment created successfully");
+    const schedData = {
+      email: userApm.apmEmail,
+      date: userApm.apmDate,
+      time: userApm.apmTime,
+      petName: userApm.petName,
+      petType: userApm.petType,
+      petAge: userApm.petAge,
+      breed: userApm.breed,
+      service: userApm.services,
+    };
+    console.log(schedData);
+    console.log(slotID._id);
 
-    console.log(userApm);
+    // Calls and pass schedData to schedSlice
+    dispatch(createSchedule(schedData));
+
+    // Update Timslot status to taken
+    dispatch(updateTimeSlot(slotID));
+
+    // Refresh component upon submission
+    window.location.reload(false);
     //   refresh inputs
-    setUserApm({
-      apmEmail: "",
-      apmDate: new Date(),
-      apmTime: "",
-      petName: "",
-      petType: "",
-      petAge: "",
-      breed: "",
-      services: serviceOP[0].value,
-    });
+    // setUserApm({
+    //   apmEmail: "",
+    //   apmDate: new Date(),
+    //   apmTime: "",
+    //   petName: "",
+    //   petType: "",
+    //   petAge: "",
+    //   breed: "",
+    //   services: serviceOP[0].value,
+    // });
   };
+
+  const handleBtnClick = (dateTime) => {
+    setSlotID({ ...slotID, _id: dateTime._id });
+    setUserApm({
+      ...userApm,
+      apmTime: dateTime.time,
+    });
+    console.log(userApm);
+  };
+
+  if (isLoading) {
+    return <Spinner />;
+  }
   return (
     <Fragment>
       <AdminNav />
@@ -108,7 +164,7 @@ function ApmFormAdmin() {
                 <i class="bi bi-pencil pe-3"></i>
                 Create Appointment
               </h5>
-              <form className="row" onSubmit={handleSubmit}>
+              <form className="row">
                 {/* Pet Type */}
 
                 <div className="col-lg-10">
@@ -191,7 +247,7 @@ function ApmFormAdmin() {
                 </div>
 
                 {/* Services =======================*/}
-                <div className="col-lg-10">
+                <div className="col-lg-10 pb-5">
                   <label for="exampleFormControlInput1" class="form-label">
                     Services
                   </label>
@@ -216,28 +272,81 @@ function ApmFormAdmin() {
 
                 {/* Date */}
 
-                <div className="col-lg-10">
-                  <label for="exampleFormControlInput1" class="form-label">
-                    Date and Time
-                  </label>
-                </div>
-
-                <div>
-                  <button type="submit" className="btn btn-primary col-lg-10">
-                    Set Appointment
-                  </button>
-                </div>
+                <div></div>
               </form>
             </div>
           </div>
         </div>
         <div className="col-lg-5">
-          <img
-            src={apmFormPic}
-            className="pt-5 mt-5"
-            style={{ position: "relative", top: "10rem" }}
-          />
+          <div class="card pb-4">
+            <div className="card-body">
+              <h5 className="card-title pb-3">
+                <i class="bi bi-calendar3-week pe-3"></i>
+                Date And Time
+              </h5>
+              {/* Date time components */}
+              <h5 className="me-5 pb-3 pt-5">Select Date</h5>
+              <Flatpickr
+                options={{
+                  dateFormat: "Y-m-d H:i",
+                  inline: false,
+                  minDate: "today",
+                }}
+                value={apmDate}
+                name="date"
+                // onChange={(selectedDates, dateStr) => setDate(dateStr)}
+                onChange={(selectedDates, dateStr, instance) => {
+                  const firstDate = selectedDates[0];
+                  console.log({ firstDate, dateStr });
+                  setUserApm({
+                    ...userApm,
+                    apmDate: firstDate,
+                  });
+                }}
+                placeholder="Select Date"
+              />
+
+              <h5 className="pt-4">Pick A Time</h5>
+              <div className="row pb-4">
+                {regTime.length <= 0 ? (
+                  <div className="text-center pt-5">
+                    <i class="bi bi-calendar-x-fill fs-1 text-center"></i>
+                    <h3 class="fw-bold mb-0 fs-4 pb-2 ">
+                      Sorry no slot available
+                    </h3>
+                    <p>Please select another date.</p>
+                  </div>
+                ) : (
+                  regTime.map((dateTime) => (
+                    <div className="col-lg-6">
+                      <button
+                        style={{ width: "6.5rem" }}
+                        onClick={() => handleBtnClick(dateTime)}
+                        className="btn btn-time "
+                        disabled={dateTime.status == "Taken" && true}
+                      >
+                        {dateTime.time}
+                      </button>
+                    </div>
+                  ))
+                )}
+              </div>
+            </div>
+          </div>
         </div>
+        <button
+          type="submit"
+          style={{
+            width: "20rem",
+            marginLeft: "40rem",
+            position: "relative",
+            bottom: "3rem",
+          }}
+          onClick={handleSubmit}
+          className="btn btn-primary col-lg-10"
+        >
+          Set Appointment
+        </button>
       </div>
     </Fragment>
   );
