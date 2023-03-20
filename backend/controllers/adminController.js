@@ -4,6 +4,7 @@ const asyncHandler = require("express-async-handler");
 const Owner = require("../models/ownerModel");
 const Appointment = require("../models/appointmentModel");
 const Schedule = require("../models/schedModel");
+const sendEmail = require("../email/transporter");
 
 // @desc See all Users
 const getOwners = asyncHandler(async (req, res) => {
@@ -86,7 +87,10 @@ const updateAppoint = asyncHandler(async (req, res) => {
   const updatedApm = await Schedule.findByIdAndUpdate(id, req.body, {
     new: true,
   });
+  // const userEmail = updatedApm.email;
+  // const userStatus = updatedApm.apmStatus;
   res.json(updatedApm);
+  sendEmail(updatedApm);
 });
 
 //  @desc Delete Appointment
