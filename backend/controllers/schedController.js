@@ -2,6 +2,7 @@
 // express routes and passing them to our express error handlers
 const asyncHandler = require("express-async-handler");
 const Schedule = require("../models/schedModel");
+const sendEmail = require("../email/transporter");
 
 // @desc    Get Schedmnt
 // @route   GET api/appointment
@@ -47,6 +48,7 @@ const sendSched = asyncHandler(async (req, res) => {
   });
 
   res.status(200).json(appointment);
+  sendEmail(appointment);
 });
 
 // @desc    Update Schedmnt
