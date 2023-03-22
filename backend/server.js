@@ -15,6 +15,13 @@ connectDB();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+// Homepage API
+app.get("/", async (req, res) => {
+  res.status(200).json({
+    message: "Hello from Group 9",
+  });
+});
+
 // Main (http://localhost:Port/)
 // Appointment
 app.use("/api/appointment", require("./routes/appointRoute"));
