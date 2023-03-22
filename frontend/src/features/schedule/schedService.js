@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "/api/schedule/";
+const API_URL = "https://pet-api-kct9.onrender.com/api/schedule/";
 
 // Create Schedule
 const createSched = async (apmData) => {

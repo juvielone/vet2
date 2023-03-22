@@ -1,7 +1,7 @@
 import axios from "axios";
 
 // admin/owners
-const API_URL = "/admin/service";
+const API_URL = "https://pet-api-kct9.onrender.com/admin/service";
 
 const getAllService = async () => {
   const response = await axios.get(API_URL);

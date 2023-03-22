@@ -1,7 +1,7 @@
 import axios from "axios";
 
 // admin/owners
-const API_URL = "/admin/timeslot";
+const API_URL = "https://pet-api-kct9.onrender.com/admin/timeslot";
 
 const getAllTimeSlots = async () => {
   const response = await axios.get(API_URL);
