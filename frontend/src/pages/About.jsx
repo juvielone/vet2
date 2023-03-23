@@ -15,15 +15,10 @@ function About() {
         style={{ backgroundColor: "#EFEEF7", margin: "0", padding: "0" }}
       >
         <div className="container">
-          <h1 className="text-center" style={{ paddingBottom: "1rem" }}>
+          <h1 className="text-center" style={{ paddingBottom: "1.5rem" }}>
             About Us
           </h1>
-          <h4 className="text-center" style={{ paddingBottom: "5rem" }}>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolores,
-            natus tempore. Quisquam, consectetur iusto beatae ipsa eligendi iure
-            modi excepturi, voluptate voluptatem esse laborum alias ea
-            praesentium, eum suscipit optio!
-          </h4>
+
           <div className="row">
             <div className="col-lg-3">
               <img
@@ -50,6 +45,29 @@ function About() {
               />
             </div>
           </div>
+          <p className="" style={{ fontSize: "1.5rem" }}>
+            We are a team of dedicated veterinarians who are passionate about
+            providing high-quality care to animals in need. Our clinic is
+            located at{" "}
+            <i>
+              #75 Tandang Sora Ave. Brgy. Culiat, Quezon City, Philippines,
+              1128,{" "}
+            </i>
+            and we are proud to serve the local community and beyond.
+          </p>
+
+          <p style={{ fontSize: "1.5rem" }}>
+            Our mission is to provide compassionate and personalized veterinary
+            care to our clients and their pets. We understand that pets are an
+            important part of your family, and we strive to treat each patient
+            with the same level of care and attention that we would give to our
+            own pets.
+          </p>
+          <p style={{ paddingBottom: "2rem", fontSize: "1.5rem" }}>
+            If you have any questions or concerns about your pet's health,
+            please do not hesitate to contact us at <i>289526787.</i> We look
+            forward to meeting you and your furry friends!
+          </p>
         </div>
       </div>
       <Footer />

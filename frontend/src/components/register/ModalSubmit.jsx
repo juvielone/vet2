@@ -1,4 +1,5 @@
 import pawSvg from "../../img/paw.svg";
+import { Link } from "react-router-dom";
 
 const ModalSubmit = () => {
   return (
@@ -50,8 +51,8 @@ const ModalSubmit = () => {
               </div>
             </div>
             <div class="modal-footer mx-auto mt-4">
-              <a
-                href="/login"
+              <Link
+                to="/login"
                 class="btn"
                 style={{
                   backgroundColor: "#8BC541",
@@ -60,7 +61,7 @@ const ModalSubmit = () => {
                 }}
               >
                 Login
-              </a>
+              </Link>
               <button
                 type="button"
                 class="btn btn-secondary"

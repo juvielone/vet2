@@ -1,4 +1,5 @@
 import React, { Fragment } from "react";
+import { Link } from "react-router-dom";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import paw from "../img/paw.svg";
@@ -27,19 +28,19 @@ const Homepage = () => {
                 </p>
 
                 <div style={{ width: "fit-content" }}>
-                  <a
-                    href="/register"
+                  <Link
+                    to="/register"
                     className="btn btn-register-cta btn-primary btn-lg mt-4 btn-link "
                     style={{ color: "white", width: "18rem" }}
                   >
                     <img src={paw} width="45" height="41" className="paw" />
                     Set Appointment
-                  </a>
+                  </Link>
 
-                  <a href="/login" className="btn btn-link btn-login-cta mt-4">
+                  <Link to="/login" className="btn btn-link btn-login-cta mt-4">
                     <i class="bi bi-person-fill me-1"></i>
                     Login
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>

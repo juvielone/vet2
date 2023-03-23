@@ -120,20 +120,6 @@ function AdminNav({ handleFilter }) {
                         >
                           Add Appointment
                         </a>
-                        <a
-                          href="#"
-                          class="link-dark d-inline-flex text-decoration-none rounded"
-                        >
-                          Updates
-                        </a>
-                      </li>
-                      <li>
-                        <a
-                          href="#"
-                          class="link-dark d-inline-flex text-decoration-none rounded"
-                        >
-                          Reports
-                        </a>
                       </li>
                     </ul>
                   </div>
