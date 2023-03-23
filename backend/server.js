@@ -4,6 +4,7 @@ const colors = require("colors");
 const dotenv = require("dotenv").config();
 const { errorHandler } = require("./middleware/errorMid");
 const connectDB = require("./config/db");
+const cors = require("cors");
 const app = express();
 
 const port = process.env.PORT || 5000;
@@ -14,6 +15,8 @@ connectDB();
 // @desc Accepts body post
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
+app.use(cors());
 
 // Homepage API
 app.get("/", async (req, res) => {
