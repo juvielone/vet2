@@ -13,7 +13,7 @@ const ConfirmDetails = ({ newUser, userApm, handleSubmit }) => {
             Owner Details
           </h4>
           {/* Form */}
-          <form class="needs-validation" novalidate>
+          <span class="needs-validation" novalidate>
             <div class="row g-3">
               {/* First Name */}
               <div class="col-sm-6">
@@ -27,7 +27,6 @@ const ConfirmDetails = ({ newUser, userApm, handleSubmit }) => {
                   placeholder={fname}
                   value=""
                   readonly
-                  required
                 />
               </div>
 
@@ -42,7 +41,6 @@ const ConfirmDetails = ({ newUser, userApm, handleSubmit }) => {
                   id="lastName"
                   placeholder={lname}
                   readonly
-                  required
                 />
               </div>
 
@@ -102,7 +100,7 @@ const ConfirmDetails = ({ newUser, userApm, handleSubmit }) => {
                 />
               </div>
             </div>
-          </form>
+          </span>
         </div>
         <div className="col-lg-6">
           {/* Pet Details  =========================================*/}
@@ -112,7 +110,7 @@ const ConfirmDetails = ({ newUser, userApm, handleSubmit }) => {
             Pet Details
           </h4>
           {/* Form */}
-          <form class="needs-validation" novalidate>
+          <span class="needs-validation" novalidate>
             <div class="row g-3">
               {/* First Name */}
               <div class="col-sm-12">
@@ -154,7 +152,6 @@ const ConfirmDetails = ({ newUser, userApm, handleSubmit }) => {
                   id="petBreed"
                   placeholder={breed}
                   readonly
-                  required
                 />
               </div>
 
@@ -192,21 +189,23 @@ const ConfirmDetails = ({ newUser, userApm, handleSubmit }) => {
                 <div class="invalid-feedback">Please select pet type.</div>
               </div>
             </div>
+          </span>
+          <form onSubmit={handleSubmit}>
+            <button
+              type="submit"
+              class="btn btn-primary"
+              // onClick={() => handleSubmit()}
+              style={{
+                marginTop: "2rem",
+                backgroundColor: "#867DD9",
+                color: "white",
+                borderColor: "#867DD9",
+              }}
+            >
+              <img src={pawSvg} style={{ width: "2rem" }} />
+              Confirm Your Appointment
+            </button>
           </form>
-
-          <button
-            type="button"
-            class="btn btn-primary"
-            onClick={() => handleSubmit()}
-            style={{
-              backgroundColor: "#867DD9",
-              color: "white",
-              borderColor: "#867DD9",
-            }}
-          >
-            <img src={pawSvg} style={{ width: "2rem" }} />
-            Confirm Your Appointment
-          </button>
 
           {/* <ModalSubmit /> */}
         </div>

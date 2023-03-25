@@ -45,7 +45,7 @@ const PatientForm = ({
           Owner Details
         </h4>
         {/* Form */}
-        <form class="needs-validation" novalidate>
+        <span class="needs-validation" novalidate>
           <div class="row g-3">
             {/* First Name */}
             <div class="col-sm-6">
@@ -191,7 +191,7 @@ const PatientForm = ({
               />
             </div>
           </div>
-        </form>
+        </span>
       </div>
       <div className="col-lg-6">
         {/* Pet Details  =========================================*/}
@@ -201,7 +201,7 @@ const PatientForm = ({
           Pet Details
         </h4>
         {/* Form */}
-        <form class="needs-validation" novalidate>
+        <span class="needs-validation" novalidate>
           <div class="row g-3">
             {/* First Name */}
             <div class="col-sm-12">
@@ -307,7 +307,7 @@ const PatientForm = ({
               <div class="invalid-feedback">Please select a service.</div>
             </div>
           </div>
-        </form>
+        </span>
       </div>
       {isComplete && (
         <button
@@ -315,7 +315,7 @@ const PatientForm = ({
           type="button"
           data-bs-target="#carouselExampleCaptions"
           data-bs-slide="next"
-          style={{ marginLeft: "55rem", width: "10rem" }}
+          style={{ marginTop: "2rem", marginLeft: "55rem", width: "10rem" }}
         >
           Next <i class="bi bi-arrow-right-short"></i>
         </button>

@@ -90,6 +90,40 @@ function RegisterX() {
     service: serviceOP[0].value,
   });
 
+  // Initialize slotime status
+  const [slotID, setSlotID] = useState({
+    _id: "",
+    status: "Taken",
+  });
+
+  // Return array of timeslot if date from DB matches dateRef
+  const regTime = time.filter(
+    (timeSlotDB) =>
+      moment(timeSlotDB.date_ref).format("MM-DD-YYYY") ==
+      moment(userApm.apmDate).format("MM-DD-YYYY")
+  );
+
+  const userData = {
+    fname: newUser.fname,
+    lname: newUser.lname,
+    email: newUser.email,
+    password: newUser.password,
+    phone: newUser.mobileNo,
+    streetNo: newUser.addr,
+    city: newUser.city,
+  };
+
+  const schedData = {
+    email: newUser.email,
+    date: userApm.apmDate,
+    time: userApm.apmTime,
+    petName: userApm.petName,
+    petType: userApm.petType,
+    petAge: userApm.petAge,
+    breed: userApm.breed,
+    service: userApm.service,
+  };
+
   useEffect(() => {
     if (isError) {
       toast.error(message);
@@ -98,6 +132,13 @@ function RegisterX() {
     // If registration is success navigate to dashboard
     if (isSuccess || user) {
       navigate("/mydashboard");
+      dispatch(updateTimeSlot(slotID));
+
+      // Calls and pass schedData to schedSlice
+      dispatch(createSchedule(schedData));
+
+      // Refresh component
+      window.location.reload(false);
     }
 
     //Fetch timeslot only
@@ -110,50 +151,15 @@ function RegisterX() {
     dispatch(reset());
   }, [user, updateTimeSlot, isError, isSuccess, message, navigate, dispatch]);
 
-  // Return array of timeslot if date from DB matches dateRef
-  const regTime = time.filter(
-    (timeSlotDB) =>
-      moment(timeSlotDB.date_ref).format("MM-DD-YYYY") ==
-      moment(userApm.apmDate).format("MM-DD-YYYY")
-  );
-
-  // Initialize slotime status
-  const [slotID, setSlotID] = useState({
-    _id: "",
-    status: "Taken",
-  });
-
-  const handleSubmit = () => {
-    console.log(slotID);
-    const userData = {
-      fname: newUser.fname,
-      lname: newUser.lname,
-      email: newUser.email,
-      password: newUser.password,
-      phone: newUser.mobileNo,
-      streetNo: newUser.addr,
-      city: newUser.city,
-    };
-
-    const schedData = {
-      email: newUser.email,
-      date: userApm.apmDate,
-      time: userApm.apmTime,
-      petName: userApm.petName,
-      petType: userApm.petType,
-      petAge: userApm.petAge,
-      breed: userApm.breed,
-      service: userApm.service,
-    };
-
-    // Calls and pass schedData to schedSlice
-    dispatch(createSchedule(schedData));
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // console.log(slotID);
 
     // Calls and pass userData to authSlice
     dispatch(register(userData));
 
-    // Update Timslot status to taken
-    dispatch(updateTimeSlot(slotID));
+    // Calls and pass schedData to schedSlice
+    // dispatch(createSchedule(schedData));
   };
 
   if (isLoading) {
