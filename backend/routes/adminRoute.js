@@ -3,6 +3,7 @@ const router = express.Router();
 const {
   getOwners,
   getOne,
+  deleteUser,
   getApm,
   createAppoint,
   updateAppoint,
@@ -49,6 +50,9 @@ router.route("/service/:id").put(updateService).delete(deleteService);
 
 // Get Certain User
 router.route("/:email").get(getOne);
+
+// Delete Certain User
+router.route("/user/:id").delete(deleteUser);
 
 // Create Appointment without user
 router.route("/create/apm").post(createAppoint);

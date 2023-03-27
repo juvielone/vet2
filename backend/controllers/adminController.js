@@ -12,7 +12,7 @@ const getOwners = asyncHandler(async (req, res) => {
   res.send(owners);
 });
 
-// @desc See One Users
+// @desc See One User
 const getOne = asyncHandler(async (req, res) => {
   const apmEmail = req.params.email;
 
@@ -23,6 +23,24 @@ const getOne = asyncHandler(async (req, res) => {
     throw new Error("No User exists");
   }
   res.send(owner);
+});
+
+// @desc Delete One User and it's Schedules
+const deleteUser = asyncHandler(async (req, res) => {
+  const id = req.params.id;
+
+  const exist = await Owner.findById(id);
+
+  if (!exist) {
+    res.status(400);
+    throw new Error("No User exists");
+  }
+
+  await exist.remove();
+  await Schedule.deleteMany({ email: exist.email });
+  res.json(exist);
+
+  // res.json({ id: req.params.id });
 });
 
 // @desc See all Appointments
@@ -112,6 +130,7 @@ const deleteAppoint = asyncHandler(async (req, res) => {
 module.exports = {
   getOwners,
   getOne,
+  deleteUser,
   getApm,
   createAppoint,
   updateAppoint,

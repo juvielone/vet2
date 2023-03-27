@@ -1,4 +1,5 @@
 import React from "react";
+import UserRemove from "./UserRemove";
 
 const UserTable = ({ users }) => {
   return (
@@ -11,6 +12,7 @@ const UserTable = ({ users }) => {
               <th scope="col">Last Name</th>
               <th scope="col">Email</th>
               <th scope="col">City</th>
+              <th scope="col">Action</th>
             </tr>
           </thead>
           <tbody>
@@ -20,6 +22,7 @@ const UserTable = ({ users }) => {
                 <td>{eachUser.lname}</td>
                 <td>{eachUser.email}</td>
                 <td>{eachUser.city}</td>
+                <td>{<UserRemove eachUsers={eachUser} />}</td>
               </tr>
             ))}
           </tbody>

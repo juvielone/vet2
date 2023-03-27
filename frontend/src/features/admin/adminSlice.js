@@ -52,6 +52,24 @@ export const getOne = createAsyncThunk(
   }
 );
 
+// Delete user and it's appointment
+export const deleteUser = createAsyncThunk(
+  "userOne/delete",
+  async (id, thunkAPI) => {
+    try {
+      return await adminService.deleteUser(id);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
 // Fetch Appointment
 export const getAppointments = createAsyncThunk(
   "appointment/getAll",
@@ -183,6 +201,23 @@ export const adminSlice = createSlice({
       })
 
       .addCase(getOne.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+
+      // Delete User =====================================
+      .addCase(deleteUser.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(deleteUser.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.users = state.users.filter(
+          (user) => user._id !== action.payload.id
+        );
+      })
+      .addCase(deleteUser.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;

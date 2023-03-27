@@ -23,6 +23,12 @@ const getOne = async (email) => {
   return response.data;
 };
 
+const deleteUser = async (id) => {
+  const response = await axios.delete(API_URL + "user" + id);
+
+  return response.data;
+};
+
 //  Fetch all appointments
 const getAppointments = async () => {
   const response = await axios.get(API_URL + "sched");
@@ -67,6 +73,7 @@ const adminService = {
   createApm,
   updateAppointment,
   getOne,
+  deleteUser,
   loginAdmin,
   logoutAdmin,
 };
