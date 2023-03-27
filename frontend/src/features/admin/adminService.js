@@ -24,7 +24,7 @@ const getOne = async (email) => {
 };
 
 const deleteUser = async (id) => {
-  const response = await axios.delete(API_URL + "user" + id);
+  const response = await axios.delete(API_URL + "user/" + id);
 
   return response.data;
 };

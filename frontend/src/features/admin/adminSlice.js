@@ -214,7 +214,7 @@ export const adminSlice = createSlice({
         state.isLoading = false;
         state.isSuccess = true;
         state.users = state.users.filter(
-          (user) => user._id !== action.payload.id
+          (user) => user._id !== action.payload._id
         );
       })
       .addCase(deleteUser.rejected, (state, action) => {
