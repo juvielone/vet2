@@ -32,7 +32,15 @@ const TimeSlotPage = () => {
   };
 
   const handleSubmit = () => {
-    dispatch(createTimeSlot(slot));
+    // const time12 = moment(time24, 'HH:mm').format('hh:mm A');
+
+    dispatch(
+      createTimeSlot({
+        dateRef: slot.dateRef,
+        time: moment(slot.time, "HH:mm").format("hh:mm A"),
+        status: slot.status,
+      })
+    );
     console.log(slot);
   };
 
@@ -119,6 +127,7 @@ const TimeSlotPage = () => {
                 value={slot.time}
                 name="time"
                 onChange={(e) => {
+                  // const time12 = moment(time24, 'HH:mm').format('hh:mm A');
                   setSlot((prevInput) => ({
                     ...prevInput,
                     time: e.target.value,

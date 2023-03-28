@@ -37,9 +37,7 @@ function AdminNav({ handleFilter }) {
         </nav>
         <div className="navbar-nav">
           <div className="nav-item text-nowrap">
-            <a className="nav-link px-3" onClick={onLogout}>
-              Sign out
-            </a>
+            {/* <h3 className="light-text-emphasis">Admin Dashboard</h3> */}
           </div>
         </div>
       </header>
@@ -83,7 +81,7 @@ function AdminNav({ handleFilter }) {
                 </li>
 
                 {/*Our Services */}
-                <li className="nav-item mt-3">
+                {/* <li className="nav-item mt-3">
                   <Link
                     to="/admin/cal"
                     className="btn btn-light"
@@ -94,7 +92,7 @@ function AdminNav({ handleFilter }) {
                       Our Services
                     </span>
                   </Link>
-                </li>
+                </li> */}
 
                 <li class="border-top my-3 mt-3"></li>
 
@@ -166,16 +164,17 @@ function AdminNav({ handleFilter }) {
 
                 {/* Account Setting */}
                 <li className="nav-item mt-5">
-                  <Link
-                    to="/admin"
+                  <a
+                    // to="/admin"
+                    onClick={onLogout}
                     className="btn btn-light"
                     style={{ width: "100%" }}
                   >
                     <span className="me-5 fs-5">
-                      <i class="bi bi-gear-fill pe-2"></i>
-                      Account
+                      <i class="bi bi-box-arrow-in-right pe-2"></i>
+                      Sign Out
                     </span>
-                  </Link>
+                  </a>
                 </li>
 
                 {/* <li className="nav-item">
