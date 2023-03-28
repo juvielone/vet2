@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch, batch } from "react-redux";
 import { updateSchedules } from "../../features/schedule/schedSlice";
-import { getTimeSlot } from "../../features/time/timeSlice";
+import { getTimeSlot, updateTimeSlot } from "../../features/time/timeSlice";
 import moment from "moment";
 
 import Button from "react-bootstrap/Button";
@@ -35,6 +35,23 @@ const ReschedBtn = ({ currentApm }) => {
     time: newSched.newTime,
   };
 
+  // Initialize slotime status
+  const [slotID, setSlotID] = useState({
+    _id: "",
+    status: "Taken",
+  });
+
+  const handleBtnClick = (dateTime) => {
+    setSlotID({ ...slotID, _id: dateTime._id });
+
+    setNewSched({
+      ...newSched,
+      newTime: dateTime.time,
+    });
+    console.log(slotID);
+    console.log(newSched);
+  };
+
   useEffect(() => {
     //Fetch timeslot only
     dispatch(getTimeSlot());
@@ -47,14 +64,18 @@ const ReschedBtn = ({ currentApm }) => {
       moment(newSched.newDate).format("MM-DD-YYYY")
   );
 
-  const handleReschedule = () => {
-    // Update Pending Schdule
-    dispatch(updateSchedules(rescheduleData));
+  const handleReschedule = (e) => {
+    e.preventDefault();
+
+    batch(() => {
+      dispatch(updateSchedules(rescheduleData));
+      dispatch(updateTimeSlot(slotID));
+    });
+
     // Refresh component
     window.location.reload(false);
-    console.log(rescheduleData);
+    // console.log(rescheduleData);
   };
-  console.log(rescheduleData);
 
   return (
     <>
@@ -109,12 +130,7 @@ const ReschedBtn = ({ currentApm }) => {
                     <button
                       // style={{}}
                       // onClick={}
-                      onClick={() =>
-                        setNewSched({
-                          ...newSched,
-                          newTime: dateTime.time,
-                        })
-                      }
+                      onClick={() => handleBtnClick(dateTime)}
                       className="btn btn-time"
                       disabled={dateTime.status == "Taken" && true}
                     >
@@ -141,9 +157,11 @@ const ReschedBtn = ({ currentApm }) => {
           <Button variant="danger" onClick={handleClose}>
             Cancel Appointment
           </Button>
-          <Button variant="primary" onClick={() => handleReschedule()}>
-            Reschedule
-          </Button>
+          <form onSubmit={handleReschedule}>
+            <Button variant="primary" type="submit">
+              Reschedule
+            </Button>
+          </form>
         </Modal.Footer>
       </Modal>
     </>

@@ -24,10 +24,10 @@ const getSched = async (userEmail) => {
   return response.data;
 };
 
-const apmService = {
+const schedService = {
   createSched,
   getSched,
   updateSchedule,
 };
 
-export default apmService;
+export default schedService;
