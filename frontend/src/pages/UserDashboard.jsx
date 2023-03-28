@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -7,6 +7,7 @@ import Samp from "../components/Samp";
 import Spinner from "../components/Spinner";
 import Header from "../components/Header";
 import { getAppointments, reset } from "../features/appointment/apmSlice";
+import { getAllSrv } from "../features/service/srvSlice";
 import { getSchedules } from "../features/schedule/schedSlice";
 import ScheduleCard from "../components/user/scheduleCard";
 import "./css/user.css";
@@ -23,12 +24,18 @@ const UserDashboard = () => {
     (state) => state.appointment
   );
 
+  // Call service
+  const { service } = useSelector((state) => state.service);
+
   const { schedule } = useSelector((state) => state.schedule);
   useEffect(() => {
     if (isError) {
       toast.error(message);
       // console.log(message);
     }
+
+    // Fetch all service
+    dispatch(getAllSrv());
 
     // Check if user is logged in
     if (!user) {
@@ -52,7 +59,15 @@ const UserDashboard = () => {
 
   const latestSched = schedule.length - 1;
   const latestResult = schedule.slice(latestSched, latestSched + 1);
-  console.log(latestResult);
+  // const currentService = latestResult[0].service;
+  // console.log(currentService);
+
+  const filteredService = service.filter((perServ) =>
+    perServ.srvName
+      .toLowerCase()
+      .includes(latestResult[0].service.toLowerCase())
+  );
+  console.log(filteredService);
   return (
     <>
       <Header bgColor={"#867DD9"} />
@@ -110,7 +125,7 @@ const UserDashboard = () => {
 
             {/* Render Latest Schedule */}
             {latestResult.map((sched) => (
-              <ScheduleCard current={sched} />
+              <ScheduleCard current={sched} fillServ={filteredService} />
             ))}
             {/* <div className="col-lg-6 row mt-5 pb-5 app-form app-content">
               <div className="col-lg-10 col-sm-6 col-xs-6">

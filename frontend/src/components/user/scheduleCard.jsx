@@ -3,7 +3,7 @@ import instructionsIcon from "../../img/instructions-icon.svg";
 import faqIcon from "../../img/faqIcon.svg";
 import ReschedBtn from "../user/reschedBtn";
 
-const ScheduleCard = ({ current }) => {
+const ScheduleCard = ({ current, fillServ }) => {
   const isDone = current.apmStatus == "Done" ? true : false;
 
   return (
@@ -59,7 +59,10 @@ const ScheduleCard = ({ current }) => {
                     {/* Pet Fee */}
                     <p>
                       <span style={{ color: "#585252" }}>Pet Fee: </span>
-                      <span className="fw-bold">500.00 </span>
+                      <span className="fw-bold">
+                        {/* {filteredService && filteredService.srvFee} */}
+                        {fillServ[0].srvFee + " PHP"}
+                      </span>
                     </p>
                   </div>
                 </div>

@@ -11,6 +11,7 @@ import {
 import AdminNav from "./AdminNav";
 import ServiceForm from "../../components/admin/ServiceForm";
 import EditService from "../../components/admin/EditService";
+import Spinner from "../../components/Spinner";
 
 const ServicePage = () => {
   // Initialize Navigate  & Dispatch
@@ -61,6 +62,10 @@ const ServicePage = () => {
     };
   }, [isError, message, dispatch]);
   console.log(srvData);
+
+  if (isLoading) {
+    return <Spinner />;
+  }
 
   return (
     <>
