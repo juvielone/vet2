@@ -7,7 +7,6 @@ import {
   reset,
 } from "../../features/admin/adminSlice";
 import logo from "../../img/vetlogo.png";
-import CalModal from "./calendar/CalModal";
 
 function AdminNav({ handleFilter }) {
   const navigate = useNavigate();

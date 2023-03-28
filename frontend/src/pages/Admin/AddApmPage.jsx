@@ -1,12 +1,11 @@
 import { Fragment, useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector, batch } from "react-redux";
 import { toast } from "react-toastify";
 import { addAppointments } from "../../features/admin/adminSlice";
 import { createSchedule } from "../../features/schedule/schedSlice";
 import { getAllSrv, reset } from "../../features/service/srvSlice";
 import { getTimeSlot, updateTimeSlot } from "../../features/time/timeSlice";
 import AdminNav from "./AdminNav";
-import apmFormPic from "../../img/apmForm.svg";
 import moment from "moment";
 import Flatpickr from "react-flatpickr";
 import "flatpickr/dist/themes/material_blue.css";
@@ -35,6 +34,8 @@ function ApmFormAdmin() {
   const { schedule, isLoading } = useSelector((state) => state.schedule);
   console.log(schedule);
 
+  // Bootstrap Btn
+  const [checked, setChecked] = useState(false);
   // Services Options
   const db = service.map((srv) => ({
     value: srv.srvName,
@@ -78,7 +79,7 @@ function ApmFormAdmin() {
 
     // calls reset reducer after either of two are called
     dispatch(reset());
-  }, []);
+  }, [dispatch, schedule]);
 
   // Return array of timeslot if date from DB matches dateRef
   const regTime = time.filter(
@@ -92,43 +93,26 @@ function ApmFormAdmin() {
     _id: "",
     status: "Taken",
   });
+  const schedData = {
+    email: userApm.apmEmail,
+    date: userApm.apmDate,
+    time: userApm.apmTime,
+    petName: userApm.petName,
+    petType: userApm.petType,
+    petAge: userApm.petAge,
+    breed: userApm.breed,
+    service: userApm.services,
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     // dispatch(addAppointments(apmData));
-    toast.success("Appointment created successfully");
-    const schedData = {
-      email: userApm.apmEmail,
-      date: userApm.apmDate,
-      time: userApm.apmTime,
-      petName: userApm.petName,
-      petType: userApm.petType,
-      petAge: userApm.petAge,
-      breed: userApm.breed,
-      service: userApm.services,
-    };
-    console.log(schedData);
-    console.log(slotID._id);
+    batch(() => {
+      dispatch(createSchedule(schedData));
+      dispatch(updateTimeSlot(slotID));
+    });
 
-    // Calls and pass schedData to schedSlice
-    dispatch(createSchedule(schedData));
-
-    // Update Timslot status to taken
-    dispatch(updateTimeSlot(slotID));
-
-    // Refresh component upon submission
     window.location.reload(false);
-    //   refresh inputs
-    // setUserApm({
-    //   apmEmail: "",
-    //   apmDate: new Date(),
-    //   apmTime: "",
-    //   petName: "",
-    //   petType: "",
-    //   petAge: "",
-    //   breed: "",
-    //   services: serviceOP[0].value,
-    // });
   };
 
   const handleBtnClick = (dateTime) => {
@@ -334,19 +318,21 @@ function ApmFormAdmin() {
             </div>
           </div>
         </div>
-        <button
-          type="submit"
-          style={{
-            width: "20rem",
-            marginLeft: "40rem",
-            position: "relative",
-            bottom: "3rem",
-          }}
-          onClick={handleSubmit}
-          className="btn btn-primary col-lg-10"
-        >
-          Set Appointment
-        </button>
+        <form onSubmit={handleSubmit}>
+          <button
+            type="submit"
+            style={{
+              width: "20rem",
+              marginLeft: "40rem",
+              position: "relative",
+              bottom: "3rem",
+            }}
+            // onClick={handleSubmit}
+            className="btn btn-primary col-lg-10"
+          >
+            Set Appointment
+          </button>
+        </form>
       </div>
     </Fragment>
   );

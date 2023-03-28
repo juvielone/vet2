@@ -18,7 +18,6 @@ import "react-big-calendar/lib/css/react-big-calendar.css";
 import { toast } from "react-toastify";
 
 import AdminNav from "../AdminNav";
-import CalModal from "./CalModal";
 import Spinner from "../../../components/Spinner";
 
 const locales = {
@@ -95,8 +94,6 @@ function Calendar() {
         className="container mt-2 pb-5"
         style={{ position: "relative", left: "8rem", height: "100%" }}
       >
-        <CalModal handleForm={handleForm} />
-
         <CalDate
           localizer={localizer}
           events={events}
