@@ -1,18 +1,27 @@
+import { Link } from "react-router-dom";
 import moment from "moment";
+
 import instructionsIcon from "../../img/instructions-icon.svg";
 import faqIcon from "../../img/faqIcon.svg";
 import ReschedBtn from "../user/reschedBtn";
-
-const ScheduleCard = ({ current, fillServ }) => {
-  const isDone = current.apmStatus == "Done" ? true : false;
+import UserApmForm from "./userApmForm";
+const ScheduleCard = ({ current, fillServ, service, user }) => {
+  const isDone = current.apmStatus == "Archived" ? true : false;
 
   return (
     <>
       <div className="col-lg-6 row mt-5">
-        <div class="card card-appointment">
-          <div class="card-body">
+        <div class="card card-appointment mb-4">
+          <div class="card-body pb-5">
             {isDone ? (
-              <h1>Done Appointment</h1>
+              <>
+                <div className="text-center pt-3">
+                  <i class="bi bi-calendar-x-fill fs-1 text-center"></i>
+                  <h3 class="fw-bold mb-0 fs-4 pb-2 ">No Appointment set.</h3>
+                  <p>Please set an appointment here.</p>
+                </div>
+                <UserApmForm service={service} user={user} />
+              </>
             ) : (
               <>
                 {/* // Schedule process not done */}
@@ -103,13 +112,19 @@ const ScheduleCard = ({ current, fillServ }) => {
           />
         </button>
         {/* FAQ CTA Button */}
-        <button className="btn col-lg-6 mb-5 profile-cta ">
-          <img
-            className="me-5"
-            src={faqIcon}
-            style={{ width: "9rem", marginLeft: "2rem" }}
-          />
-        </button>
+        {/* Appointment */}
+        <Link
+          to="/myappointment"
+          className="nav-item btn col-lg-6 mb-5 profile-cta"
+          style={{ textDecoration: "none" }}
+        >
+          <i
+            class="bi bi-calendar-heart-fill me-2"
+            style={{ fontSize: "4rem", color: "#867DD9" }}
+          ></i>{" "}
+          <br />
+          My Appointment
+        </Link>
       </div>
     </>
   );

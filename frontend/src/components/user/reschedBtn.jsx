@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch, batch } from "react-redux";
 import { updateSchedules } from "../../features/schedule/schedSlice";
 import { getTimeSlot, updateTimeSlot } from "../../features/time/timeSlice";
+import { toast } from "react-toastify";
 import moment from "moment";
 
 import Button from "react-bootstrap/Button";
@@ -64,6 +65,9 @@ const ReschedBtn = ({ currentApm }) => {
       moment(newSched.newDate).format("MM-DD-YYYY")
   );
 
+  const handleReload = () => {
+    window.location.reload(false);
+  };
   const handleReschedule = (e) => {
     e.preventDefault();
 
@@ -73,8 +77,8 @@ const ReschedBtn = ({ currentApm }) => {
     });
 
     // Refresh component
-    window.location.reload(false);
-    // console.log(rescheduleData);
+    toast.success("Rescheduling Appointment...", { autoClose: 2000 });
+    setTimeout(handleReload, 2000);
   };
 
   return (

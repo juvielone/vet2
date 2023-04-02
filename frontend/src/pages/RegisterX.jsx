@@ -134,9 +134,6 @@ function RegisterX() {
       navigate("/mydashboard");
       dispatch(updateTimeSlot(slotID));
 
-      // Calls and pass schedData to schedSlice
-      dispatch(createSchedule(schedData));
-
       // Refresh component
       window.location.reload(false);
     }
@@ -157,6 +154,9 @@ function RegisterX() {
 
     // Calls and pass userData to authSlice
     dispatch(register(userData));
+
+    // Calls and pass schedData to schedSlice
+    dispatch(createSchedule(schedData));
 
     // Calls and pass schedData to schedSlice
     // dispatch(createSchedule(schedData));

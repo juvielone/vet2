@@ -11,6 +11,7 @@ import Login from "./pages/Login";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import UserDashboard from "./pages/UserDashboard";
+import UserApm from "./pages/UserApm";
 import AdminPanel from "./pages/Admin/AdminHome";
 import Calendar from "./pages/Admin/calendar/Calendar";
 import ApmFormAdmin from "./pages/Admin/AddApmPage";
@@ -33,6 +34,7 @@ function App() {
             <Route path="/register" element={<RegisterX />} />
             <Route path="/login" element={<Login />} />
             <Route path="/mydashboard" element={<UserDashboard />} />
+            <Route path="/myappointment" element={<UserApm />} />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
             {/* ============================================ */}

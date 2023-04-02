@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logout, reset } from "../features/auth/authSlice";
@@ -59,39 +59,14 @@ const Header = ({ bgColor }) => {
             {user ? (
               <>
                 {/* Dashboard */}
-                <li className="nav-item">
-                  <button className="nav-link btn-lg btn btn-light">
-                    <i class="bi bi-house me-2"></i>
-                    Dashboard
-                  </button>
-                </li>
-
-                {/* Appointment */}
-                <li class="nav-item dropdown ">
-                  <a
-                    class="nav-link dropdown-toggle"
-                    href="#"
-                    role="button"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                    style={{ color: "white" }}
-                  >
-                    <i class="bi bi-calendar-event me-2"></i>
-                    Appointment
-                  </a>
-                  <ul class="dropdown-menu">
-                    <li>
-                      <a class="dropdown-item" href="#">
-                        Action
-                      </a>
-                    </li>
-                    <li>
-                      <a class="dropdown-item" href="#">
-                        Another action
-                      </a>
-                    </li>
-                  </ul>
-                </li>
+                <Link to="/mydashboard" style={{ textDecoration: "none" }}>
+                  <li className="nav-item me-5">
+                    <button className="nav-link btn-lg btn btn-light">
+                      <i class="bi bi-house me-2"></i>
+                      Dashboard
+                    </button>
+                  </li>
+                </Link>
 
                 {/* Log out */}
                 <li className="nav-item">

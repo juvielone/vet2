@@ -125,7 +125,12 @@ const UserDashboard = () => {
 
             {/* Render Latest Schedule */}
             {latestResult.map((sched) => (
-              <ScheduleCard current={sched} fillServ={filteredService} />
+              <ScheduleCard
+                current={sched}
+                fillServ={filteredService}
+                service={service}
+                user={user}
+              />
             ))}
             {/* <div className="col-lg-6 row mt-5 pb-5 app-form app-content">
               <div className="col-lg-10 col-sm-6 col-xs-6">
