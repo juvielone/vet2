@@ -127,6 +127,25 @@ export const updateAppointment = createAsyncThunk(
   }
 );
 
+// DeleteAppointment
+export const deleteAppointment = createAsyncThunk(
+  "appointment/delete",
+  async (id, thunkAPI) => {
+    try {
+      return await adminService.deleteAppointment(id);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
 // Login Admin
 // Login
 export const loginAdmin = createAsyncThunk(
@@ -264,10 +283,29 @@ export const adminSlice = createSlice({
       .addCase(updateAppointment.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
-        state.appointments = action.payload;
+        state.appointments = state.appointments.map((apm) =>
+          apm._id === action.payload._id ? action.payload : apm
+        );
       })
 
       .addCase(updateAppointment.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+
+      // Delete Appointment ======================
+      .addCase(deleteAppointment.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(deleteAppointment.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.appointments = state.appointments.filter(
+          (apm) => apm._id !== action.payload._id
+        );
+      })
+      .addCase(deleteAppointment.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;

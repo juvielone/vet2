@@ -49,7 +49,7 @@ function App() {
           </Routes>
         </div>
       </Router>
-      <ToastContainer />
+      <ToastContainer position="top-center" />
     </div>
   );
 }

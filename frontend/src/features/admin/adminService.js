@@ -23,6 +23,7 @@ const getOne = async (email) => {
   return response.data;
 };
 
+//  Delete User
 const deleteUser = async (id) => {
   const response = await axios.delete(API_URL + "user/" + id);
 
@@ -40,6 +41,13 @@ const getAppointments = async () => {
 const updateAppointment = async (apmData) => {
   const apmId = apmData._id.toString();
   const response = await axios.put(API_URL + apmId, apmData);
+
+  return response.data;
+};
+
+// Delete Appointment
+const deleteAppointment = async (id) => {
+  const response = await axios.delete(API_URL + id);
 
   return response.data;
 };
@@ -72,6 +80,7 @@ const adminService = {
   getAppointments,
   createApm,
   updateAppointment,
+  deleteAppointment,
   getOne,
   deleteUser,
   loginAdmin,

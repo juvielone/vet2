@@ -2,7 +2,7 @@ import React from "react";
 import moment from "moment";
 import ApmForm from "./ApmForm";
 
-const ApmTable = ({ appointments }) => {
+const ApmTable = ({ appointments, dispatch }) => {
   const getColor = (condition) => {
     if (condition == "Pending") {
       return {
@@ -52,7 +52,7 @@ const ApmTable = ({ appointments }) => {
                 {/* User Email */}
                 <td>{apm.petName}</td>
                 <td>
-                  <ApmForm key={apm._id} apm={apm} />
+                  <ApmForm key={apm._id} apm={apm} dispatch={dispatch} />
                 </td>
               </tr>
             ))}

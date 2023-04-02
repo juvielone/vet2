@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import UserTable from "../../components/admin/UserTable";
 import ApmTable from "../../components/admin/ApmTable";
+import ApmArchived from "../../components/admin/ApmArchived";
 import AdminNav from "./AdminNav";
 import Spinner from "../../components/Spinner";
 
@@ -45,7 +46,7 @@ const AdminPanel = ({ handleFilter, viewApm }) => {
     return () => {
       dispatch(reset());
     };
-  }, [adminUser, navigate, isError, message, dispatch]);
+  }, [adminUser, navigate, isError, message, dispatch, appointments.apmStatus]);
 
   console.log(filter);
   // Approve Filter
@@ -62,6 +63,31 @@ const AdminPanel = ({ handleFilter, viewApm }) => {
   const rejectFilter = appointments.filter((apm) =>
     apm.apmStatus.includes("Cancelled")
   );
+
+  // Archive Filter
+  const archiveFilter = appointments.filter((apm) =>
+    apm.apmStatus.includes("Archived")
+  );
+
+  // Current Filter
+  const currentAppointments = appointments.filter(
+    (apm) => !apm.apmStatus.includes("Archived")
+  );
+
+  const viewTable = (filter) => {
+    switch (filter) {
+      case "Appointment":
+        return (
+          <ApmTable appointments={currentAppointments} dispatch={dispatch} />
+        );
+      case "Users":
+        return <UserTable users={users} />;
+      case "Archive":
+        return <ApmArchived archives={archiveFilter} />;
+      default:
+        return <p>Please refresh</p>;
+    }
+  };
 
   if (isLoading) {
     return <Spinner />;
@@ -126,6 +152,9 @@ const AdminPanel = ({ handleFilter, viewApm }) => {
             <option onClick={() => setFilter("Users")} value="Users">
               Users
             </option>
+            <option onClick={() => setFilter("Archive")} value="Archive">
+              Archive
+            </option>
           </select>
           <div className="btn-toolbar mb-2 mb-md-0"></div>
         </div>
@@ -136,12 +165,12 @@ const AdminPanel = ({ handleFilter, viewApm }) => {
           <UserTable users={users} />
         )} */}
 
-        {filter == "Appointment" ? (
-          <ApmTable appointments={appointments} />
+        {/* {filter == "Appointment" ? (
+          <ApmTable appointments={appointments} dispatch={dispatch} />
         ) : (
           <UserTable users={users} />
-        )}
-
+        )} */}
+        {viewTable(filter)}
         {/* ====================================== */}
       </main>
     </>

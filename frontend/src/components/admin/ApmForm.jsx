@@ -1,12 +1,14 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import moment from "moment";
 import Flatpickr from "react-flatpickr";
 import "flatpickr/dist/themes/material_blue.css";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { reset, updateAppointment } from "../../features/admin/adminSlice";
+import { toast } from "react-toastify";
+
 import Spinner from "../../components/Spinner";
 
-const ApmForm = ({ apm }) => {
+const ApmForm = ({ apm, dispatch }) => {
   const dateStyle = {
     borderRadius: "2px",
     border: "none",
@@ -14,13 +16,21 @@ const ApmForm = ({ apm }) => {
     boxShadow: "0 1px 5px -2px rgba(0,0,0,.2)",
   };
   // Call user admin
-  const { isLoading } = useSelector((state) => state.admin);
+  const { isLoading, appointments } = useSelector((state) => state.admin);
 
-  // Initialize  Dispatch
-  const dispatch = useDispatch();
   // console.log(juvie);
 
-  const { petName, petType, petAge, breed, service, date, time, _id } = apm;
+  const {
+    petName,
+    petType,
+    petAge,
+    breed,
+    service,
+    date,
+    time,
+    _id,
+    apmStatus,
+  } = apm;
   //   Update State
   const [userApm, setUserApm] = useState({
     pName: petName,
@@ -51,38 +61,57 @@ const ApmForm = ({ apm }) => {
     }));
   };
 
+  const handleReload = () => {
+    window.location.reload(false);
+  };
+
   // Approve and Update Button =====================================================================
 
   const handleUpdate = () => {
     const apmData = {
       _id: _id,
-      // petName: pName,
-      // petType: pType,
-      // petAge: pAge,
-      // breed: breedType,
-      // service: services,
       date: pDate,
       time: pTime,
       apmStatus: "Approved",
     };
 
-    console.log(apmData);
     dispatch(updateAppointment(apmData));
     // Refresh component upon submission
-    window.location.reload(false);
+    toast.success("Aprroving Appointment...", { autoClose: 2000 });
+    setTimeout(handleReload, 2000);
   };
 
   // Reject Butoon =====================================================================
   const handleReject = () => {
-    const apmData = {
+    const apmRej = {
       _id: _id,
       apmStatus: "Cancelled",
     };
 
+    // dispatch(updateAppointment(apmData));
+    dispatch(updateAppointment(apmRej));
+    // Refresh component upon submission
+    toast.error("Cancelling Appointment...", { autoClose: 2000 });
+    setTimeout(handleReload, 2000);
+  };
+
+  // Archived Butoon =====================================================================
+
+  const handleArchive = () => {
+    const apmData = {
+      _id: _id,
+      apmStatus: "Archived",
+    };
+
+    console.log(apmData);
+
     dispatch(updateAppointment(apmData));
     // Refresh component upon submission
-    window.location.reload(false);
+    toast.success("Archiving Appointment...", { autoClose: 2000 });
+    setTimeout(handleReload, 2000);
   };
+
+  useEffect(() => {}, [appointments, dispatch]);
 
   // Time Conversion
   const timeInput = moment(pTime, ["h:mm A"]).format("HH:mm");
@@ -278,20 +307,32 @@ const ApmForm = ({ apm }) => {
                   />
                 </div>
                 <div class="modal-footer">
-                  <button
-                    type="button"
-                    onClick={handleUpdate}
-                    class="btn btn-success"
-                  >
-                    Approve
-                  </button>
-                  <button
-                    type="button"
-                    class="btn btn-danger"
-                    onClick={handleReject}
-                  >
-                    Reject
-                  </button>
+                  {apmStatus == "Approved" ? (
+                    <button
+                      type="button"
+                      onClick={handleArchive}
+                      class="btn btn-primary"
+                    >
+                      Archive
+                    </button>
+                  ) : (
+                    <>
+                      <button
+                        type="button"
+                        onClick={handleUpdate}
+                        class="btn btn-success"
+                      >
+                        Approve
+                      </button>
+                      <button
+                        type="button"
+                        class="btn btn-danger"
+                        onClick={handleReject}
+                      >
+                        Reject
+                      </button>{" "}
+                    </>
+                  )}
                 </div>
               </form>
             </div>
