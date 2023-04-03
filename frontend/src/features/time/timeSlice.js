@@ -170,7 +170,9 @@ export const timeSlice = createSlice({
       .addCase(updateTimeSlot.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
-        state.time = action.payload;
+        state.time = state.time.map((apmTime) =>
+          apmTime._id === action.payload._id ? action.payload : apmTime
+        );
       })
 
       .addCase(updateTimeSlot.rejected, (state, action) => {

@@ -103,6 +103,11 @@ function RegisterX() {
       moment(userApm.apmDate).format("MM-DD-YYYY")
   );
 
+  // Returns array and count the number of Open
+  const openTimeFilter = regTime.filter((myTime) =>
+    myTime.status.includes("Open")
+  );
+
   const userData = {
     fname: newUser.fname,
     lname: newUser.lname,
@@ -124,6 +129,9 @@ function RegisterX() {
     service: userApm.service,
   };
 
+  const handleReload = () => {
+    window.location.reload(false);
+  };
   useEffect(() => {
     if (isError) {
       toast.error(message);
@@ -131,10 +139,8 @@ function RegisterX() {
 
     // If registration is success navigate to dashboard
     if (isSuccess || user) {
+      // dispatch(updateTimeSlot(slotID));
       navigate("/mydashboard");
-      dispatch(updateTimeSlot(slotID));
-
-      // Refresh component
       window.location.reload(false);
     }
 
@@ -158,8 +164,14 @@ function RegisterX() {
     // Calls and pass schedData to schedSlice
     dispatch(createSchedule(schedData));
 
-    // Calls and pass schedData to schedSlice
-    // dispatch(createSchedule(schedData));
+    // Calls and Update Time Slots
+    dispatch(updateTimeSlot(slotID));
+
+    // Refresh component
+    // toast.success("Logging In...");
+    // setTimeout(() => {
+    //   window.location.reload(false);
+    // }, 2500);
   };
 
   if (isLoading) {
@@ -233,6 +245,7 @@ function RegisterX() {
                     userApm={userApm}
                     setUserApm={setUserApm}
                     filterTime={regTime}
+                    openTimeFilter={openTimeFilter}
                     slotID={slotID}
                     setSlotID={setSlotID}
                   />

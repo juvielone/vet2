@@ -5,6 +5,7 @@ const DatetimeForm = ({
   setUserApm,
   userApm,
   filterTime,
+  openTimeFilter,
   slotID,
   setSlotID,
 }) => {
@@ -61,7 +62,7 @@ const DatetimeForm = ({
 
           <div className="container row timeslot-container">
             {/* TimeSlots */}
-            {filterTime.length <= 0 ? (
+            {filterTime.length <= 0 || openTimeFilter.length <= 0 ? (
               <div className="text-center pt-5">
                 <i class="bi bi-calendar-x-fill fs-1 text-center"></i>
                 <h3 class="fw-bold mb-0 fs-4 pb-2 ">Sorry no slot available</h3>
