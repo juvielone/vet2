@@ -8,6 +8,7 @@ const DatetimeForm = ({
   openTimeFilter,
   slotID,
   setSlotID,
+  handleTimeUpdate,
 }) => {
   const handleBtnClick = (dateTime) => {
     setSlotID({ ...slotID, _id: dateTime._id });
@@ -92,6 +93,7 @@ const DatetimeForm = ({
           data-bs-target="#carouselExampleCaptions"
           data-bs-slide="next"
           style={{ marginLeft: "55rem", width: "10rem" }}
+          onClick={handleTimeUpdate}
         >
           Next <i class="bi bi-arrow-right-short"></i>
         </button>

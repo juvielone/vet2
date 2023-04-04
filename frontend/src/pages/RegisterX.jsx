@@ -129,9 +129,6 @@ function RegisterX() {
     service: userApm.service,
   };
 
-  const handleReload = () => {
-    window.location.reload(false);
-  };
   useEffect(() => {
     if (isError) {
       toast.error(message);
@@ -139,9 +136,7 @@ function RegisterX() {
 
     // If registration is success navigate to dashboard
     if (isSuccess || user) {
-      // dispatch(updateTimeSlot(slotID));
       navigate("/mydashboard");
-      window.location.reload(false);
     }
 
     //Fetch timeslot only
@@ -152,7 +147,17 @@ function RegisterX() {
 
     // calls reset reducer after either of two are called
     dispatch(reset());
-  }, [user, updateTimeSlot, isError, isSuccess, message, navigate, dispatch]);
+  }, [user, isError, isSuccess, message, navigate, dispatch]);
+
+  const handleTimeUpdate = () => {
+    // Calls and Update Time Slots
+    toast.success("Saving timeslot", {
+      autoClose: 1000,
+      position: "top-center",
+    });
+    // Calls and Update Time Slots
+    dispatch(updateTimeSlot(slotID));
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -163,9 +168,6 @@ function RegisterX() {
 
     // Calls and pass schedData to schedSlice
     dispatch(createSchedule(schedData));
-
-    // Calls and Update Time Slots
-    dispatch(updateTimeSlot(slotID));
 
     // Refresh component
     // toast.success("Logging In...");
@@ -242,6 +244,7 @@ function RegisterX() {
                   </div>
                   {/* Date time components */}
                   <DatetimeForm
+                    handleTimeUpdate={handleTimeUpdate}
                     userApm={userApm}
                     setUserApm={setUserApm}
                     filterTime={regTime}

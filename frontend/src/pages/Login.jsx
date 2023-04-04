@@ -130,7 +130,7 @@ const Login = () => {
               >
                 <div class="carousel-inner ms-5">
                   <div class="carousel-item active" data-bs-interval="2000">
-                    <img src={pic1} class="d-block w-100" alt="..." />
+                    <img src={pic4} class="d-block w-100" alt="..." />
                   </div>
                   <div class="carousel-item">
                     <img src={pic2} class="d-block w-100" alt="..." />
@@ -140,7 +140,7 @@ const Login = () => {
                   </div>
 
                   <div class="carousel-item">
-                    <img src={pic4} class="d-block w-100" alt="..." />
+                    <img src={pic1} class="d-block w-100" alt="..." />
                   </div>
                 </div>
               </div>
