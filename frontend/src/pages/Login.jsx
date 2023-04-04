@@ -39,6 +39,7 @@ const Login = () => {
     // If registration is success navigate to dashboard
     if (isSuccess || user) {
       navigate("/mydashboard");
+      window.location.reload(false);
     }
 
     // calls reset reducer after either of two are called
