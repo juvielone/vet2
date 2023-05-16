@@ -96,12 +96,9 @@ const UserDashboard = () => {
                       </span>
                     </h5>
 
-                    <h5 className="text-center me-5 mt-3">
-                      Member Since
-                      <span className="ms-5">
-                        {/* Timestamp to momentJs */}
-                        2021, Feb 22
-                      </span>
+                    <h5 className=" ms-5 mt-3">
+                      Phone Number:
+                      <span className="ms-5">{user && user.phone}</span>
                     </h5>
                   </p>
 
@@ -110,8 +107,8 @@ const UserDashboard = () => {
                       className="btn col-lg-6 mt-5 mx-auto fs-5"
                       style={{ backgroundColor: "#867DD9", color: "white" }}
                     >
-                      <i class="bi bi-tools me-3 "></i>
-                      Edit Profile
+                      <i class="bi bi-person-fill me-3 "></i>
+                      {user && user.email}
                     </button>
                   </div>
                 </div>

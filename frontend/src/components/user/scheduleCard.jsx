@@ -103,14 +103,6 @@ const ScheduleCard = ({ current, fillServ, service, user }) => {
           {/* === */}
         </div>
 
-        {/* Instruction CTA Button */}
-        <button className="btn col-lg-6 mb-5 profile-cta ">
-          <img
-            className="me-5"
-            src={instructionsIcon}
-            style={{ width: "10rem" }}
-          />
-        </button>
         {/* FAQ CTA Button */}
         {/* Appointment */}
         <Link
