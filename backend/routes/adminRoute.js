@@ -24,6 +24,12 @@ const {
   updateService,
 } = require("../controllers/serviceController");
 
+const {
+  sendPromo,
+  getAllPromo,
+  deletePromo,
+  updatePromo,
+} = require("../controllers/promoController");
 // http://localhost:Port/admin/
 
 // External API REQUESTS =======================
@@ -47,6 +53,13 @@ router.route("/service").get(getAllService).post(sendService);
 
 // Update and Delete Specific Service
 router.route("/service/:id").put(updateService).delete(deleteService);
+
+// Create and read Promo
+router.route("/promo").get(getAllPromo);
+router.route("/promo").post(sendPromo);
+
+// Update and Delete Specific Promo
+router.route("/promo/:id").put(updatePromo).delete(deletePromo);
 
 // Get Certain User
 router.route("/:email").get(getOne);
