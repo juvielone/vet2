@@ -1,12 +1,31 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { getAllSrv } from "../features/service/srvSlice";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import paw from "../img/paw.svg";
+import pic1 from "../img/pic3.png";
 import homePic from "../img/home-pic.png";
-
 import "./css/homepage.css";
+import HomeService from "../components/homepage/HomeService";
+import Spinner from "../components/Spinner";
+
 const Homepage = () => {
+  const dispatch = useDispatch();
+
+  // Call service selector
+  const { service, isError, isSuccess, isLoading } = useSelector(
+    (state) => state.service
+  );
+  useEffect(() => {
+    // Fetch all service
+    dispatch(getAllSrv());
+    console.log(service);
+  }, [isError, isSuccess, dispatch]);
+
+  const serviceClass =
+    service.length <= 2 ? "col-lg-6 col-md-6" : "col-lg-4 col-md-4";
   return (
     <Fragment>
       <Header />
@@ -48,6 +67,21 @@ const Homepage = () => {
             <div class="col-lg-6 dog-container" style={{ height: "35rem" }}>
               <img src={homePic} className="dog-pic" />
             </div>
+          </div>
+        </div>
+
+        <div class="container" id="hanging-icons">
+          <h1 class="pb-2 border-bottom text-center">Our Services</h1>
+          <div className="row pt-5 pb-5">
+            {isLoading ? (
+              <Spinner />
+            ) : (
+              service.map((perService) => (
+                <div class={serviceClass}>
+                  <HomeService service={perService} />
+                </div>
+              ))
+            )}
           </div>
         </div>
       </div>
