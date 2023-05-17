@@ -85,6 +85,44 @@
   }
 }
 
+.service-container {
+  background: rgb(255, 255, 255);
+  background: linear-gradient(
+    178deg,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(134, 125, 217, 1) 0%,
+    rgba(239, 238, 247, 1) 100%
+  );
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+  margin-top: 2rem;
+  margin-bottom: 5rem;
+}
+
+.service-card {
+  max-width: 300px;
+  min-height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  max-width: 500px;
+  height: 300px;
+  padding: 35px;
+
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 20px;
+  background-color: rgba(255, 255, 255, 0.45);
+  box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.25);
+
+  backdrop-filter: blur(15px);
+  transition: transform 0.5s;
+}
+
+.service-card:hover {
+  transform: scale(1.1);
+}
+
 @media only screen and (min-width: 700px) {
   .dog-pic {
     width: 35rem;

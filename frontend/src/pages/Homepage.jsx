@@ -2,10 +2,14 @@ import React, { Fragment, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { getAllSrv } from "../features/service/srvSlice";
+import { getAllPromo } from "../features/promotion/promoSlice";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import paw from "../img/paw.svg";
-import pic1 from "../img/pic3.png";
+import pic1 from "../img/pic1.png";
+import pic2 from "../img/pic2.png";
+import pic3 from "../img/pic3.png";
+import pic4 from "../img/pic4.png";
 import homePic from "../img/home-pic.png";
 import "./css/homepage.css";
 import HomeService from "../components/homepage/HomeService";
@@ -18,14 +22,25 @@ const Homepage = () => {
   const { service, isError, isSuccess, isLoading } = useSelector(
     (state) => state.service
   );
+
+  // Call promotion
+  const promotion = useSelector((state) => state.promotion.promotion);
+  const promotionLoading = useSelector((state) => state.promotion.isLoading);
+
   useEffect(() => {
     // Fetch all service
     dispatch(getAllSrv());
-    console.log(service);
+
+    // Fetch all service
+    dispatch(getAllPromo());
   }, [isError, isSuccess, dispatch]);
 
   const serviceClass =
     service.length <= 2 ? "col-lg-6 col-md-6" : "col-lg-4 col-md-4";
+
+  const images = [pic1, pic2, pic3, pic4];
+  const randomPicNum = Math.floor(Math.random() * 4) + 1;
+  console.log(promotion);
   return (
     <Fragment>
       <Header />
@@ -70,52 +85,96 @@ const Homepage = () => {
           </div>
         </div>
 
-        <div class="container mt-4">
-          <h1 class="pb-2 border-bottom text-center">Our Services</h1>
-          <div className="row pt-5 pb-5 container">
-            {isLoading ? (
-              <Spinner />
-            ) : (
-              service.map((perService) => (
-                <div class={serviceClass}>
-                  <HomeService service={perService} />
-                </div>
-              ))
-            )}
-          </div>
-        </div>
-
-        <div className="container pb-5">
-          <div className="row">
-            <div className="col-lg-6">
-              <img src={pic1} />
-            </div>
-            <div className="col-lg-6">
-              <h1>Happy Pet Month!</h1>
-              <p className="mt-5" style={{ fontSize: "1.5em" }}>
-                Let's embrace the bond we share with our pets and shower them
-                with extra love, care, and attention. From playful romps in the
-                park to cozy cuddle sessions at home, every moment spent with
-                our pets becomes a treasured memory, reminding us of the
-                happiness they bring.
-              </p>
-
-              <p className="mt-5" style={{ fontSize: "1.5em" }}>
-                Use this code to get 2% discount on all our services!
-                <button
-                  className="btn btn-register-cta btn-primary btn-lg mt-4 "
-                  style={{ color: "white", width: "12rem" }}
-                  onClick={() => navigator.clipboard.writeText("PETMNTH")}
-                >
-                  <h4>
-                    {" "}
-                    <i class="bi bi-clipboard-check me-3"></i>PETMNTH
-                  </h4>
-                </button>
-              </p>
+        <div className="container-fluid service-container">
+          <div class="container mt-4">
+            <h1 class="pb-2 text-center">Our Services</h1>
+            <div className="row pt-5 pb-5 container">
+              {isLoading ? (
+                <Spinner />
+              ) : (
+                service.map((perService) => (
+                  <div class={serviceClass}>
+                    <HomeService service={perService} />
+                  </div>
+                ))
+              )}
             </div>
           </div>
         </div>
+
+        {promotionLoading ? (
+          <Spinner />
+        ) : (
+          <div className="container-fluid pb-5">
+            <div id="carouselExample" class="carousel slide">
+              <div class="carousel-inner">
+                {promotion.map((promo, index) => (
+                  <div
+                    className={
+                      index === 0 ? "carousel-item active" : "carousel-item"
+                    }
+                  >
+                    <div className="container">
+                      <div className="row">
+                        <div className="col-lg-6">
+                          <img src={images[index + 1]} className="ms-5" />
+                        </div>
+                        <div className="col-lg-6">
+                          <h1>{promo.promoName}</h1>
+                          <p className="mt-5" style={{ fontSize: "1.5em" }}>
+                            {promo.promoDesc}
+                          </p>
+
+                          <p className="mt-5" style={{ fontSize: "1.5em" }}>
+                            Use this code to get {promo.promoDiscount}% discount
+                            on all our services!
+                            <button
+                              className="btn btn-register-cta btn-primary btn-lg mt-4 "
+                              style={{ color: "white", width: "15rem" }}
+                              onClick={() =>
+                                navigator.clipboard.writeText(promo.promoCode)
+                              }
+                            >
+                              <h4>
+                                {" "}
+                                <i class="bi bi-clipboard-check me-3"></i>
+                                {promo.promoCode}
+                              </h4>
+                            </button>
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <button
+                class="carousel-control-prev"
+                type="button"
+                data-bs-target="#carouselExample"
+                data-bs-slide="prev"
+              >
+                <span
+                  class="carousel-control-prev-icon"
+                  aria-hidden="true"
+                ></span>
+                <span class="visually-hidden">Previous</span>
+              </button>
+              <button
+                class="carousel-control-next"
+                type="button"
+                data-bs-target="#carouselExample"
+                data-bs-slide="next"
+              >
+                <span
+                  class="carousel-control-next-icon"
+                  aria-hidden="true"
+                ></span>
+                <span class="visually-hidden">Next</span>
+              </button>
+            </div>
+          </div>
+        )}
       </div>
       <Footer />
     </Fragment>
