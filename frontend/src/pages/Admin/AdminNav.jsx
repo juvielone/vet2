@@ -79,20 +79,6 @@ function AdminNav({ handleFilter }) {
                   </Link>
                 </li>
 
-                {/*Our Services */}
-                {/* <li className="nav-item mt-3">
-                  <Link
-                    to="/admin/cal"
-                    className="btn btn-light"
-                    style={{ width: "100%" }}
-                  >
-                    <span className="me-5 fs-5 ">
-                      <i class="bi bi-people-fill pe-2"></i>
-                      Our Services
-                    </span>
-                  </Link>
-                </li> */}
-
                 <li class="border-top my-3 mt-3"></li>
 
                 {/* Appointment Collapse */}
@@ -159,6 +145,33 @@ function AdminNav({ handleFilter }) {
                   </div>
                 </li>
 
+                {/* Promotion */}
+                {/* Services Collpase */}
+                <li class="mb-1 mt-3">
+                  <button
+                    class=" fs-5 btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#promo-collapse"
+                    aria-expanded="true"
+                  >
+                    Promotions
+                    <i class="bi bi-funnel-fill ms-3"></i>
+                  </button>
+                  <div class="collapse show" id="promo-collapse">
+                    <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small fs-6">
+                      <li>
+                        <a
+                          onClick={() => {
+                            navigate("/admin/promo");
+                          }}
+                          class="link-dark d-inline-flex text-decoration-none rounded"
+                        >
+                          Promo Table
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </li>
                 <li class="border-top my-3"></li>
 
                 {/* Account Setting */}

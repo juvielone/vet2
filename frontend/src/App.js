@@ -17,6 +17,7 @@ import Calendar from "./pages/Admin/calendar/Calendar";
 import ApmFormAdmin from "./pages/Admin/AddApmPage";
 import TimeSlotPage from "./pages/Admin/TimeSlotPage";
 import ServicePage from "./pages/Admin/ServicePage";
+import PromoPage from "./pages/Admin/PromoPage";
 function App() {
   const [viewApm, setViewApm] = useState(true);
   const handleFilter = (viewState) => {
@@ -48,6 +49,7 @@ function App() {
             <Route path="/admin/apmform" element={<ApmFormAdmin />} />
             <Route path="/admin/timeslot" element={<TimeSlotPage />} />
             <Route path="/admin/service" element={<ServicePage />} />
+            <Route path="/admin/promo" element={<PromoPage />} />
           </Routes>
         </div>
       </Router>
