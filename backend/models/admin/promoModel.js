@@ -12,6 +12,10 @@ const promoSchema = mongoose.Schema({
   promoCode: {
     type: String,
   },
+
+  promoDiscount: {
+    type: Number,
+  },
 });
 
 module.exports = mongoose.model("Promo", promoSchema);
