@@ -64,9 +64,24 @@ const Homepage = () => {
               </div>
             </div>
 
-            <div class="col-lg-6 dog-container" style={{ height: "35rem" }}>
+            <div class="col-lg-6 dog-container" style={{ height: "30rem" }}>
               <img src={homePic} className="dog-pic" />
             </div>
+          </div>
+        </div>
+
+        <div class="container mt-4">
+          <h1 class="pb-2 border-bottom text-center">Our Services</h1>
+          <div className="row pt-5 pb-5 container">
+            {isLoading ? (
+              <Spinner />
+            ) : (
+              service.map((perService) => (
+                <div class={serviceClass}>
+                  <HomeService service={perService} />
+                </div>
+              ))
+            )}
           </div>
         </div>
 
@@ -99,21 +114,6 @@ const Homepage = () => {
                 </button>
               </p>
             </div>
-          </div>
-        </div>
-
-        <div class="container" id="hanging-icons">
-          <h1 class="pb-2 border-bottom text-center">Our Services</h1>
-          <div className="row pt-5 pb-5">
-            {isLoading ? (
-              <Spinner />
-            ) : (
-              service.map((perService) => (
-                <div class={serviceClass}>
-                  <HomeService service={perService} />
-                </div>
-              ))
-            )}
           </div>
         </div>
       </div>
