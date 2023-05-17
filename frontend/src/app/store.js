@@ -5,6 +5,7 @@ import adminReducer from "../features/admin/adminSlice";
 import schedReducer from "../features/schedule/schedSlice";
 import timeReducer from "../features/time/timeSlice";
 import serviceReducer from "../features/service/srvSlice";
+import promoReducer from "../features/promotion/promoSlice";
 
 export const store = configureStore({
   reducer: {
@@ -14,5 +15,6 @@ export const store = configureStore({
     schedule: schedReducer,
     timeslot: timeReducer,
     service: serviceReducer,
+    promotion: promoReducer,
   },
 });

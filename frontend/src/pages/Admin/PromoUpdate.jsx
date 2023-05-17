@@ -1,29 +1,40 @@
-function PromoAddModal({ promoData, setPromoData, handleSubmit }) {
+import React, { useState } from "react";
+
+function PromoUpdate({ promo, handleUpdate }) {
+  const [promoData, setPromoData] = useState({
+    _id: promo._id,
+    promoName: promo.promoName,
+    promoDesc: promo.promoDesc,
+    promoCode: promo.promoCode,
+    promoDiscount: promo.promoDiscount,
+  });
+  const btnId = promo.promoName.replace(/\s+/g, "");
+
   return (
     <>
       {/* <!-- Button trigger modal --> */}
       <button
         type="button"
-        class="btn btn-primary"
+        class="btn btn-warning ms-3"
         data-bs-toggle="modal"
-        data-bs-target="#promotionModal"
+        data-bs-target={`#${btnId}`}
       >
-        Add Promotions
+        Update
       </button>
       {/* <!-- Modal --> */}
       <div
         class="modal fade"
-        id="promotionModal"
+        id={btnId}
         tabindex="-1"
-        aria-labelledby="promotionModalLabel"
+        aria-labelledby="updatePromotionModalLabel"
         aria-hidden="true"
       >
         <div class="modal-dialog">
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={() => handleUpdate(promoData)}>
             <div class="modal-content">
               <div class="modal-header">
-                <h1 class="modal-title fs-5" id="promotionModalLabel">
-                  Add Promotions
+                <h1 class="modal-title fs-5" id="updatePromotionModalLabel">
+                  Update Promotions
                 </h1>
                 <button
                   type="button"
@@ -103,7 +114,6 @@ function PromoAddModal({ promoData, setPromoData, handleSubmit }) {
                           promoDesc: e.target.value,
                         })
                       }
-                      required
                     />
                   </div>
                 </div>
@@ -117,7 +127,7 @@ function PromoAddModal({ promoData, setPromoData, handleSubmit }) {
                   Close
                 </button>
                 <button type="submit" class="btn btn-primary">
-                  Add Promotions
+                  Update Promotions
                 </button>
               </div>
             </div>
@@ -128,4 +138,4 @@ function PromoAddModal({ promoData, setPromoData, handleSubmit }) {
   );
 }
 
-export default PromoAddModal;
+export default PromoUpdate;
