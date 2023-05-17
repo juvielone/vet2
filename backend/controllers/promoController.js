@@ -15,10 +15,10 @@ const getAllPromo = asyncHandler(async (req, res) => {
 // @route   POST api/Promos
 // @acess   Private
 const sendPromo = asyncHandler(async (req, res) => {
-  const { promoName, promoDesc, promoCode } = req.body;
+  const { promoName, promoDesc, promoCode, promoDiscount } = req.body;
 
   //send error if any field is missing
-  if (!promoName || !promoDesc || !promoCode) {
+  if (!promoName || !promoDesc || !promoCode || !promoDiscount) {
     res.status(400);
     throw new Error("Please complete all Promo field ");
   }
@@ -26,6 +26,7 @@ const sendPromo = asyncHandler(async (req, res) => {
     promoName: promoName,
     promoDesc: promoDesc,
     promoCode: promoCode,
+    promoDiscount: promoDiscount,
   });
 
   res.status(200).json(promos);
