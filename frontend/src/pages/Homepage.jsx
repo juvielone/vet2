@@ -70,6 +70,38 @@ const Homepage = () => {
           </div>
         </div>
 
+        <div className="container pb-5">
+          <div className="row">
+            <div className="col-lg-6">
+              <img src={pic1} />
+            </div>
+            <div className="col-lg-6">
+              <h1>Happy Pet Month!</h1>
+              <p className="mt-5" style={{ fontSize: "1.5em" }}>
+                Let's embrace the bond we share with our pets and shower them
+                with extra love, care, and attention. From playful romps in the
+                park to cozy cuddle sessions at home, every moment spent with
+                our pets becomes a treasured memory, reminding us of the
+                happiness they bring.
+              </p>
+
+              <p className="mt-5" style={{ fontSize: "1.5em" }}>
+                Use this code to get 2% discount on all our services!
+                <button
+                  className="btn btn-register-cta btn-primary btn-lg mt-4 "
+                  style={{ color: "white", width: "12rem" }}
+                  onClick={() => navigator.clipboard.writeText("PETMNTH")}
+                >
+                  <h4>
+                    {" "}
+                    <i class="bi bi-clipboard-check me-3"></i>PETMNTH
+                  </h4>
+                </button>
+              </p>
+            </div>
+          </div>
+        </div>
+
         <div class="container" id="hanging-icons">
           <h1 class="pb-2 border-bottom text-center">Our Services</h1>
           <div className="row pt-5 pb-5">
