@@ -7,10 +7,10 @@ import { getTimeSlot, updateTimeSlot } from "../features/time/timeSlice";
 import { getAllSrv } from "../features/service/srvSlice";
 import moment from "moment";
 import { toast } from "react-toastify";
-
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Spinner from "../components/Spinner";
+import ServiceRegForm from "../components/register/ServiceRegForm";
 import DatetimeForm from "../components/register/DatetimeForm";
 import PatientForm from "../components/register/PatientForm";
 import ConfirmDetails from "../components/register/ConfirmDetails";
@@ -67,6 +67,10 @@ function RegisterX() {
 
   // Call service selector
   const { service } = useSelector((state) => state.service);
+  const serviceLoading = useSelector((state) => state.service.isLoading);
+  const serviceClass =
+    service.length <= 2 ? "col-lg-6 col-md-6" : "col-lg-4 col-md-4";
+
   // Services Options
   const db = service.map((srv) => ({
     value: srv.srvName,
@@ -189,6 +193,7 @@ function RegisterX() {
           <div className=" pt-5">
             <div className="bread-container mx-auto">
               {/* BreadCrumbs */}
+              {/* Service */}
               <button
                 type="button"
                 className="btn bread one"
@@ -197,9 +202,11 @@ function RegisterX() {
                 aria-current="true"
                 aria-label="Slide 1"
               >
-                <i class="bi bi-calendar-check-fill me-3"></i>
-                Confirm Date & Time
+                <i class="bi bi-collection-fill me-3"></i>
+                Choose A Service
               </button>
+
+              {/* Confirm Date and Time */}
               <button
                 type="button"
                 className="btn bread one"
@@ -207,9 +214,11 @@ function RegisterX() {
                 data-bs-slide-to="1"
                 aria-label="Slide 2"
               >
-                <i class="bi bi-person-circle me-2"></i>
-                Patient Details
+                <i class="bi bi-calendar-check-fill me-3"></i>
+                Confirm Date & Time
               </button>
+
+              {/* Patient Details */}
               <button
                 type="button"
                 className="btn bread one"
@@ -217,11 +226,23 @@ function RegisterX() {
                 data-bs-slide-to="2"
                 aria-label="Slide 3"
               >
+                <i class="bi bi-person-circle me-2"></i>
+                Patient Details
+              </button>
+
+              {/* Confirmed Details */}
+              <button
+                type="button"
+                className="btn bread one"
+                data-bs-target="#carouselExampleCaptions"
+                data-bs-slide-to="3"
+                aria-label="Slide 4"
+              >
                 <i class="bi bi-file-earmark-check-fill me-2"></i>
                 Confirm Details
               </button>
 
-              {/* BreadCrumbs */}
+              {/* BreadCrumbs =========================== */}
             </div>
 
             {/* Carousel Container */}
@@ -236,13 +257,26 @@ function RegisterX() {
               <div class="carousel-inner pt-5">
                 {/*  First Slide */}
                 <div class="carousel-item active">
+                  {/* Date time components */}
+                  <h1>Service Form</h1>
+                  <div className="row pt-5 pb-5 container">
+                    <ServiceRegForm
+                      service={service}
+                      serviceLoading={serviceLoading}
+                      serviceClass={serviceClass}
+                    />
+                  </div>
+                </div>
+
+                {/* Second Slide */}
+                <div class="carousel-item">
+                  {/* Date time components */}
                   <div style={{ padding: "1rem" }}>
                     <h3 className="text-center">
                       {moment(userApm.apmDate).format("ddd, MMMM Do YYYY")}
                     </h3>
                     <h3 className="text-center">{userApm.apmTime}</h3>
                   </div>
-                  {/* Date time components */}
                   <DatetimeForm
                     handleTimeUpdate={handleTimeUpdate}
                     userApm={userApm}
@@ -254,7 +288,7 @@ function RegisterX() {
                   />
                 </div>
 
-                {/* Second Slide */}
+                {/* Third Slide */}
                 <div class="carousel-item">
                   <PatientForm
                     newUser={newUser}
@@ -267,7 +301,7 @@ function RegisterX() {
                     // submitAppointment={submitAppointment}
                   />
                 </div>
-                {/*  */}
+                {/* Fourth Slide */}
                 <div class="carousel-item">
                   <ConfirmDetails
                     newUser={newUser}
