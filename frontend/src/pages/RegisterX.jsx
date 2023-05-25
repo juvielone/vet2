@@ -258,11 +258,12 @@ function RegisterX() {
                 {/*  First Slide */}
                 <div class="carousel-item active">
                   {/* Date time components */}
-                  <h1>Service Form</h1>
                   <div className="row pt-5 pb-5 container">
                     <ServiceRegForm
                       service={service}
                       serviceLoading={serviceLoading}
+                      userApm={userApm}
+                      setUserApm={setUserApm}
                       serviceClass={serviceClass}
                     />
                   </div>
