@@ -5,6 +5,7 @@ import { getAllSrv } from "../features/service/srvSlice";
 import { getAllPromo } from "../features/promotion/promoSlice";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import MessengerChatBot from "../components/MessengerChatBot";
 import paw from "../img/paw.svg";
 import pic1 from "../img/pic1.png";
 import pic2 from "../img/pic2.png";
@@ -176,6 +177,7 @@ const Homepage = () => {
           </div>
         )}
       </div>
+      <MessengerChatBot />
       <Footer />
     </Fragment>
   );
