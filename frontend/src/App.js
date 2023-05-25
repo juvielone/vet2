@@ -25,6 +25,7 @@ function App() {
     console.log(viewApm);
   };
 
+  console.log("AppIDD: " + process.env.REACT_APP_PAGE_ID);
   return (
     <div className="App">
       <Router>
