@@ -1,6 +1,8 @@
 import { Fragment } from "react";
 import Dropdown from "react-dropdown";
 import "react-dropdown/style.css";
+import DogBreedsDropdown from "./DogBreedsDropdown";
+import CatBreedsDropdown from "./CatBreedsDropdown";
 
 const PatientForm = ({
   newUser,
@@ -204,7 +206,7 @@ const PatientForm = ({
         <span class="needs-validation" novalidate>
           <div class="row g-3">
             {/* First Name */}
-            <div class="col-sm-12">
+            <div class="col-sm-6">
               <label for="petName" class="form-label">
                 Pet name
               </label>
@@ -238,23 +240,6 @@ const PatientForm = ({
               <div class="invalid-feedback">Please enter your pet age.</div>
             </div>
 
-            {/* Pet Breed */}
-            <div class="col-sm-6">
-              <label for="petBreed" class="form-label">
-                Pet Breed
-              </label>
-              <input
-                type="text"
-                class="form-control"
-                id="breed"
-                placeholder="Poodle, Pug, Persian"
-                onChange={onChangeApm}
-                value={breed}
-                name="breed"
-                required
-              />
-            </div>
-
             {/* Pet Type */}
             <div class="col-sm-12">
               <label for="text" class="form-label">
@@ -279,6 +264,33 @@ const PatientForm = ({
                 ))}
               </select>
               <div class="invalid-feedback">Please select pet type.</div>
+            </div>
+            {/* Pet Breed */}
+
+            <div>
+              {userApm.petType == "Dog" ? (
+                <DogBreedsDropdown setUserApm={setUserApm} userApm={userApm} />
+              ) : userApm.petType == "Cat" ? (
+                <CatBreedsDropdown setUserApm={setUserApm} userApm={userApm} />
+              ) : (
+                <div>
+                  <div class="col-sm-12">
+                    <label for="petBreed" class="form-label">
+                      Pet Breed
+                    </label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="breed"
+                      placeholder="Poodle, Pug, Persian"
+                      onChange={onChangeApm}
+                      value={breed}
+                      name="breed"
+                      required
+                    />
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* Pet Service */}
