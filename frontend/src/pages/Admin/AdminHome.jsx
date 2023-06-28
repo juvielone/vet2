@@ -69,17 +69,32 @@ const AdminPanel = ({ handleFilter, viewApm }) => {
     apm.apmStatus.includes("Archived")
   );
 
-  // Current Filter
-  const currentAppointments = appointments.filter(
+  // All appointment Filter
+  const allAppointments = appointments.filter(
     (apm) => !apm.apmStatus.includes("Archived")
   );
+
+  // All pending appointment Filter
+  const pendingAppointments = appointments.filter((apm) =>
+    apm.apmStatus.includes("Pending")
+  );
+
+  // All approve appointment Filter
+  const approvedAppointments = appointments.filter((apm) =>
+    apm.apmStatus.includes("Approved")
+  );
+
+  // All reject appointment Filter
+  const rejectAppointments = appointments.filter((apm) =>
+    apm.apmStatus.includes("Cancelled")
+  );
+
+  const [apointmentView, setAppointmentView] = useState(allAppointments);
 
   const viewTable = (filter) => {
     switch (filter) {
       case "Appointment":
-        return (
-          <ApmTable appointments={currentAppointments} dispatch={dispatch} />
-        );
+        return <ApmTable appointments={apointmentView} dispatch={dispatch} />;
       case "Users":
         return <UserTable users={users} />;
       case "Archive":
@@ -105,8 +120,11 @@ const AdminPanel = ({ handleFilter, viewApm }) => {
 
         {/* Pending */}
         <div className="row container">
-          <div className="col-lg-3 btn btn-primary card-genre">
-            <div className="card-body">
+          <div className="col-lg-2 btn btn-primary card-genre">
+            <div
+              className="card-body"
+              onClick={() => setAppointmentView(pendingAppointments)}
+            >
               <span className="card-icon">
                 <i class="bi bi-calendar-plus"></i>
               </span>
@@ -116,7 +134,10 @@ const AdminPanel = ({ handleFilter, viewApm }) => {
           </div>
 
           {/* Approved */}
-          <div className="col-lg-3 btn btn-success card-genre">
+          <div
+            className="col-lg-2 btn btn-success card-genre"
+            onClick={() => setAppointmentView(approvedAppointments)}
+          >
             <div className="card-body">
               <span className="card-icon">
                 <i class="bi bi-calendar2-check-fill"></i>
@@ -127,13 +148,30 @@ const AdminPanel = ({ handleFilter, viewApm }) => {
           </div>
 
           {/* Rejected */}
-          <div className="col-lg-3 btn btn-danger card-genre">
+          <div
+            className="col-lg-2 btn btn-danger card-genre"
+            onClick={() => setAppointmentView(rejectAppointments)}
+          >
             <div className="card-body">
               <span className="card-icon">
                 <i class="bi bi-calendar-x-fill"></i>
               </span>
               <span className="card-desc">Rejected</span>
               <h5>{rejectFilter.length}</h5>
+            </div>
+          </div>
+
+          {/* All */}
+          <div
+            className="col-lg-2 btn btn-dark card-genre"
+            onClick={() => setAppointmentView(allAppointments)}
+          >
+            <div className="card-body">
+              <span className="card-icon">
+                <i class="bi bi-calendar-week-fill"></i>
+              </span>
+              <span className="card-desc">All</span>
+              <h5>{allAppointments.length}</h5>
             </div>
           </div>
         </div>
@@ -146,7 +184,12 @@ const AdminPanel = ({ handleFilter, viewApm }) => {
             onChange={(e) => setFilter(e.target.value)}
             style={{ width: "25%" }}
           >
-            <option selected onClick={() => setFilter("Appointment")}>
+            <option
+              selected
+              onClick={() => {
+                setFilter("Appointment");
+              }}
+            >
               Appointment
             </option>
             <option onClick={() => setFilter("Users")} value="Users">
